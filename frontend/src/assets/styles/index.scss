@@ -1,15 +1,9 @@
 // src/assets/styles/index.scss
 
-// Abstracts
-@import "./abstracts/variables";
-@import "./abstracts/mixins";
-
-// Base
-@import "./base/reset";
-
-// Components
-@import "./components/Footer.scss";
-@import "./components/Navbar.scss";
+@use "sass:math";
+@use "./abstracts" as *;
+@use "./base" as *;
+@use "./components" as *;
 
 // Your existing base styles
 :root {

@@ -1,4 +1,6 @@
 // src/components/layout/Navbar/Navbar.scss
+@use "../abstracts" as *;
+
 .navbar {
   position: fixed;
   top: 0;
