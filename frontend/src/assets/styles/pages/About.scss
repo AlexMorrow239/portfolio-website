@@ -1,0 +1,133 @@
+@use "../abstracts" as *;
+
+.about {
+  padding: var(--spacing-xl) 0;
+
+  &__intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto var(--spacing-xl);
+  }
+
+  &__icon {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  &__title {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(
+      45deg,
+      var(--color-primary),
+      var(--color-secondary)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  &__description {
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+  }
+
+  &__section-title {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+    color: var(--color-text);
+  }
+}
+
+.tech-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  grid-template-columns: 1fr;
+
+  @include respond-to("md") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.tech-card {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: var(--spacing-lg);
+
+  &__title {
+    font-family: var(--font-mono);
+    color: var(--color-primary);
+    text-transform: uppercase;
+    font-size: 1rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  &__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+  }
+}
+
+.tech-tag {
+  background-color: var(--color-background-alt);
+  color: var(--color-text);
+  padding: 0.25rem 0.75rem;
+  border-radius: 16px;
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+}
+
+.timeline {
+  max-width: 800px;
+  margin: 0 auto;
+
+  &__item {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+    position: relative;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 150px;
+      top: 0;
+      bottom: -40px;
+      width: 2px;
+      background-color: var(--color-border);
+    }
+
+    &:last-child::before {
+      display: none;
+    }
+  }
+
+  &__year {
+    font-family: var(--font-mono);
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  &__content {
+    h3 {
+      font-size: 1.25rem;
+      color: var(--color-text);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    h4 {
+      color: var(--color-text-light);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    p {
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+  }
+}
