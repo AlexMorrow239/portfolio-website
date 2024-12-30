@@ -122,12 +122,6 @@ export class ProjectsController {
     @UploadedFile() file?: Express.Multer.File,
   ): Promise<Project> {
     try {
-      console.log('Update project request:', {
-        id,
-        rawBody,
-        hasFile: !!file,
-      });
-
       let technologies: string[];
       let skills: string[];
 
@@ -136,7 +130,6 @@ export class ProjectsController {
         const updateProjectDto: UpdateProjectDto = {
           visible: rawBody.visible,
         };
-        console.log('Updating visibility only:', updateProjectDto);
         return await this.projectsService.update(id, updateProjectDto);
       }
 

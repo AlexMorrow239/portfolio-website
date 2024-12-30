@@ -62,12 +62,6 @@ export class ProjectsService {
     file?: Express.Multer.File,
   ): Promise<Project> {
     try {
-      console.log('Updating project:', {
-        id,
-        updateProjectDto,
-        hasFile: !!file,
-      });
-
       const project = await this.projectModel.findById(id);
       if (!project) {
         throw new NotFoundException('Project not found');
@@ -84,8 +78,6 @@ export class ProjectsService {
         { $set: updateProjectDto },
         { new: true },
       );
-
-      console.log('Project updated:', updatedProject);
 
       if (!updatedProject) {
         throw new NotFoundException('Project not found');
