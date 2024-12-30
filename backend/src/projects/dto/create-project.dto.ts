@@ -24,20 +24,21 @@ export class CreateProjectDto {
   @IsString({ each: true })
   technologies: string[];
 
-  @ApiPropertyOptional({
-    description: 'Project media (images, videos)',
-    type: 'array',
-    items: {
-      type: 'object',
-      properties: {
-        url: { type: 'string' },
-        alt: { type: 'string' },
-      },
-    },
+  @ApiProperty({
+    description: 'Skills used in the project',
+    type: [String],
   })
   @IsArray()
+  @IsString({ each: true })
+  skills: string[];
+
+  @ApiPropertyOptional({
+    description: 'Project image URL',
+    type: 'string',
+  })
+  @IsString()
   @IsOptional()
-  media?: { url: string; alt: string }[];
+  imageUrl?: string;
 
   @ApiPropertyOptional({
     description: 'Whether the project is featured',

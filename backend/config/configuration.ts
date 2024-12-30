@@ -10,6 +10,11 @@ export default () => ({
   media: {
     uploadDir: process.env.UPLOAD_DIR || 'uploads',
     maxFileSize: parseInt(process.env.MAX_FILE_SIZE, 10) || 5242880, // 5MB
-    allowedMimeTypes: ['image/jpeg', 'image/png', 'image/webp'],
+    allowedMimeTypes: [
+      'image/jpeg',
+      'image/png',
+      'image/webp',
+      'application/pdf',
+    ],
   },
 });

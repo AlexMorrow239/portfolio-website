@@ -11,6 +11,6 @@ export class AuthController {
   @Post('login')
   @ApiOperation({ summary: 'Admin login' })
   async login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
+    return await this.authService.login(loginDto);
   }
 }

@@ -12,8 +12,11 @@ export class Project extends Document {
   @Prop([String])
   technologies: string[];
 
-  @Prop({ type: [{ url: String, alt: String }] })
-  media: { url: string; alt: string }[];
+  @Prop([String])
+  skills: string[];
+
+  @Prop({ type: String })
+  imageUrl?: string;
 
   @Prop({ default: false })
   featured: boolean;
