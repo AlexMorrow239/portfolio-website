@@ -1,131 +1,111 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import {
-  Database,
-  Server,
-  Cloud,
-  GitBranch,
-  Scale,
-  Shield,
-} from "lucide-react";
-
-interface Project {
-  title: string;
-  description: string;
-  icon: React.ReactNode;
-  tags: string[];
-  metrics?: {
-    label: string;
-    value: string;
-  }[];
-  githubUrl?: string;
-  demoUrl?: string;
-}
+import { ExternalLink } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { Project } from "../../types/project";
+import { ProjectsService } from "../../services/projects.service";
+import Loader from "@/components/common/Loader/Loader";
 
 const Projects: React.FC = () => {
-  const projects: Project[] = [
-    {
-      title: "Distributed Cache System",
-      description:
-        "High-performance distributed caching system built with Redis and Go, supporting multiple eviction policies and cluster sharding.",
-      icon: <Database size={24} />,
-      tags: ["Go", "Redis", "Docker", "Kubernetes"],
-      metrics: [
-        { label: "Throughput", value: "100k ops/sec" },
-        { label: "Latency", value: "<5ms" },
-      ],
-      githubUrl: "#",
-    },
-    {
-      title: "API Gateway Service",
-      description:
-        "Scalable API gateway with rate limiting, authentication, and request transformation capabilities.",
-      icon: <Server size={24} />,
-      tags: ["Node.js", "Express", "MongoDB", "JWT"],
-      metrics: [
-        { label: "Uptime", value: "99.99%" },
-        { label: "Daily Requests", value: "1M+" },
-      ],
-      githubUrl: "#",
-      demoUrl: "#",
-    },
-    {
-      title: "Load Balancer",
-      description:
-        "Custom load balancer implementing various algorithms (Round Robin, Least Connections, etc.) with health checking.",
-      icon: <Scale size={24} />,
-      tags: ["Python", "FastAPI", "Docker"],
-      metrics: [
-        { label: "Response Time", value: "<50ms" },
-        { label: "Availability", value: "99.9%" },
-      ],
-      githubUrl: "#",
-    },
-  ];
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const data = await ProjectsService.getAllProjects();
+        setProjects(data);
+        setIsSuccess(true);
+      } catch (err) {
+        setError("Failed to load projects");
+        setIsSuccess(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  if (loading) {
+    return (
+      <Loader
+        messages={[
+          "Fetching projects...",
+          "Loading details...",
+          "Preparing display...",
+        ]}
+        completionMessage="Projects loaded successfully!"
+        duration={3500}
+        onComplete={() => setLoading(false)}
+        isSuccess={isSuccess}
+      />
+    );
+  }
+
+  if (error) {
+    return <div className="error-message">Error: {error}</div>;
+  }
 
   return (
     <div className="projects">
-      <motion.h1
-        className="projects__title"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        Backend Projects & Systems
-      </motion.h1>
+      <div className="projects__header">
+        <h1>Featured Projects</h1>
+        <p>A collection of my recent work and technical explorations</p>
+      </div>
 
       <div className="projects__grid">
         {projects.map((project, index) => (
           <motion.div
-            key={index}
+            key={project._id}
             className="project-card"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
           >
-            <div className="project-card__icon">{project.icon}</div>
-            <h2 className="project-card__title">{project.title}</h2>
-            <p className="project-card__description">{project.description}</p>
-
-            <div className="project-card__tags">
-              {project.tags.map((tag, tagIndex) => (
-                <span key={tagIndex} className="project-card__tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-
-            {project.metrics && (
-              <div className="project-card__metrics">
-                {project.metrics.map((metric, metricIndex) => (
-                  <div key={metricIndex} className="project-card__metric">
-                    <span className="project-card__metric-value">
-                      {metric.value}
-                    </span>
-                    <span className="project-card__metric-label">
-                      {metric.label}
-                    </span>
-                  </div>
-                ))}
+            {project.imageUrl && (
+              <div className="project-card__image">
+                <img src={project.imageUrl} alt={project.title} />
               </div>
             )}
 
-            <div className="project-card__links">
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  className="button button--secondary button--sm"
-                >
-                  View Source
-                </a>
-              )}
-              {project.demoUrl && (
-                <a
-                  href={project.demoUrl}
-                  className="button button--primary button--sm"
-                >
-                  Live Demo
-                </a>
-              )}
+            <div className="project-card__content">
+              <h3 className="project-card__title">{project.title}</h3>
+              <p className="project-card__description">{project.description}</p>
+
+              <div className="project-card__tags">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="project-card__tag">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+
+              <div className="project-card__links">
+                {project.links?.github && (
+                  <a
+                    href={project.links.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-card__link project-card__link--secondary"
+                  >
+                    <FontAwesomeIcon icon={faGithub} size="sm" />
+                    GitHub
+                  </a>
+                )}
+                {project.links?.live && (
+                  <a
+                    href={project.links.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-card__link project-card__link--primary"
+                  >
+                    <ExternalLink size={16} />
+                    Live Demo
+                  </a>
+                )}
+              </div>
             </div>
           </motion.div>
         ))}

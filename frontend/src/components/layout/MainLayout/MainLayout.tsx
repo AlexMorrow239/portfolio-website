@@ -1,14 +1,10 @@
-// src/components/layout/MainLayout/MainLayout.tsx
 import React from "react";
 import Navbar from "@/components/layout/Navbar/Navbar";
 import Footer from "@/components/layout/Footer/Footer";
 import Container from "@/components/layout/Container/Container";
+import { Outlet } from "react-router-dom";
 
-interface MainLayoutProps {
-  children: React.ReactNode;
-}
-
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: React.FC = () => {
   return (
     <div className="app-layout">
       <header className="header">
@@ -17,7 +13,9 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         </Container>
       </header>
       <main className="main-content">
-        <Container>{children}</Container>
+        <Container>
+          <Outlet />
+        </Container>
       </main>
       <Footer />
     </div>

@@ -1,7 +1,9 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { Terminal, Send, AlertCircle } from "lucide-react";
+import { Terminal, AlertCircle, Send } from "lucide-react";
+import { APP_CONFIG } from "../../config";
+import Loader from "@/components/common/Loader/Loader";
 
 interface ContactFormData {
   name: string;
@@ -11,16 +13,67 @@ interface ContactFormData {
 }
 
 const Contact: React.FC = () => {
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [submitStatus, setSubmitStatus] = React.useState<
+    "idle" | "success" | "error"
+  >("idle");
+  const [isSuccess, setIsSuccess] = React.useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<ContactFormData>();
 
   const onSubmit = async (data: ContactFormData) => {
-    // TODO: Implement form submission
-    console.log(data);
+    setIsSubmitting(true);
+    setSubmitStatus("idle");
+
+    try {
+      const response = await fetch(APP_CONFIG.endpoints.contact, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        setIsSubmitting(false);
+        setIsSuccess(false);
+        throw new Error("Failed to send message");
+      }
+
+      setSubmitStatus("success");
+      setIsSuccess(true);
+      // reset();
+    } catch (error) {
+      setIsSubmitting(false);
+      setIsSuccess(false);
+      console.error("Error sending message:", error);
+      setSubmitStatus("error");
+    }
   };
+
+  if (isSubmitting) {
+    return (
+      <Loader
+        messages={[
+          "Sending your message...",
+          "Establishing connection...",
+          "Processing request...",
+        ]}
+        completionMessage="Message sent successfully!"
+        duration={3000}
+        onComplete={() => {
+          setIsSubmitting(false);
+          setIsSuccess(false);
+        }}
+        isSuccess={isSuccess}
+      />
+    );
+  }
 
   return (
     <div className="contact">
@@ -51,7 +104,10 @@ const Contact: React.FC = () => {
               <input
                 type="text"
                 id="name"
-                {...register("name", { required: "Name is required" })}
+                {...register("name", {
+                  required: "Name is required",
+                  minLength: { value: 2, message: "Name is too short" },
+                })}
                 className={errors.name ? "error" : ""}
               />
               {errors.name && (
@@ -105,7 +161,10 @@ const Contact: React.FC = () => {
               <textarea
                 id="message"
                 rows={5}
-                {...register("message", { required: "Message is required" })}
+                {...register("message", {
+                  required: "Message is required",
+                  minLength: { value: 20, message: "Message is too short" },
+                })}
                 className={errors.message ? "error" : ""}
               />
               {errors.message && (
@@ -116,10 +175,36 @@ const Contact: React.FC = () => {
               )}
             </div>
 
-            <button type="submit" className="button button--primary">
-              <Send size={18} />
-              Send Message
+            <button
+              type="submit"
+              className="button button--primary"
+              disabled={isSubmitting}
+            >
+              <>
+                <Send size={20} />
+                Send Message
+              </>
             </button>
+
+            {submitStatus === "success" && (
+              <motion.div
+                className="form-status form-status--success"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                Message sent successfully!
+              </motion.div>
+            )}
+
+            {submitStatus === "error" && (
+              <motion.div
+                className="form-status form-status--error"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+              >
+                Failed to send message. Please try again.
+              </motion.div>
+            )}
           </motion.form>
         </div>
       </section>

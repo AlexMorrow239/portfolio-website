@@ -4,35 +4,34 @@ import { Link } from "react-router-dom";
 import {
   Database,
   Server,
-  Cloud,
   Lock,
   GitBranch,
   Terminal,
-  Clock,
-  Activity,
+  Workflow,
+  Boxes,
+  Code,
+  Cpu,
 } from "lucide-react";
-
-import SystemMetrics from "@components/SystemMetrics/SystemMetrics";
 
 const Home: React.FC = () => {
   const skills = [
     {
-      icon: <Database size={24} />,
-      title: "Database Architecture",
-      description:
-        "Designing and optimizing complex database systems with PostgreSQL, MongoDB, and Redis",
-    },
-    {
       icon: <Server size={24} />,
-      title: "System Design",
+      title: "Backend Engineering",
       description:
-        "Building scalable, distributed systems with microservices architecture",
+        "Architecting robust server systems and APIs that prioritize performance, scalability, and clean code architecture",
     },
     {
-      icon: <Cloud size={24} />,
-      title: "Cloud Infrastructure",
+      icon: <Database size={24} />,
+      title: "Database Systems",
       description:
-        "Deploying and managing applications on AWS, with expertise in containerization and orchestration",
+        "Designing efficient database schemas and implementing optimized query patterns using MongoDB, PostgreSQL, and modern ORMs",
+    },
+    {
+      icon: <Workflow size={24} />,
+      title: "System Architecture",
+      description:
+        "Building scalable distributed systems with a focus on microservices, API design, and efficient data processing pipelines",
     },
     {
       icon: <Lock size={24} />,
@@ -41,16 +40,37 @@ const Home: React.FC = () => {
         "Implementing robust security measures and OAuth2/JWT authentication systems",
     },
     {
-      icon: <GitBranch size={24} />,
-      title: "API Development",
+      icon: <Terminal size={24} />,
+      title: "Tech Explorer",
       description:
-        "Creating RESTful and GraphQL APIs with comprehensive documentation",
+        "Constantly discovering and implementing cutting-edge tools and frameworks to enhance development efficiency",
     },
     {
-      icon: <Terminal size={24} />,
-      title: "DevOps & CI/CD",
+      icon: <Code size={24} />,
+      title: "Algorithm Enthusiast",
       description:
-        "Automating deployment pipelines and maintaining infrastructure as code",
+        "Deep passion for computational problem-solving, from optimizing complex algorithms to implementing efficient data structures",
+    },
+  ];
+
+  const featuredMetrics = [
+    {
+      icon: <Cpu className="text-blue-600" size={24} />,
+      label: "Systems Built",
+      value: "10+",
+      description: "Including distributed backends and data pipelines",
+    },
+    {
+      icon: <GitBranch className="text-blue-600" size={24} />,
+      label: "Technologies",
+      value: "15+",
+      description: "From Node.js to advanced cloud services",
+    },
+    {
+      icon: <Boxes className="text-blue-600" size={24} />,
+      label: "Code Quality",
+      value: "A+",
+      description: "Emphasis on clean, maintainable architecture",
     },
   ];
 
@@ -58,25 +78,44 @@ const Home: React.FC = () => {
     <>
       <section className="hero">
         <div className="hero__content">
-          <h1 className="hero__title">Backend Engineering Excellence</h1>
-          <p className="hero__subtitle">
-            Architecting robust, scalable systems and APIs that power modern
-            applications
-          </p>
-          <div className="hero__cta">
-            <Link to="/projects" className="button button--primary">
-              View My Systems
-            </Link>
-            <Link to="/contact" className="button button--secondary">
-              Discuss Architecture
-            </Link>
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center"
+          >
+            <h1 className="hero__title">Aspiring Software Engineer</h1>
+            <p className="hero__subtitle">
+              Passionate about building robust, scalable systems and exploring
+              the endless possibilities of backend technology. Every line of
+              code is an opportunity to create something extraordinary.
+            </p>
+            <div className="hero__cta">
+              <Link to="/projects" className="button button--primary">
+                See My Work
+              </Link>
+              <Link to="/about" className="button button--secondary">
+                Get to Know Me
+              </Link>
+            </div>
+          </motion.div>
         </div>
+        {/* Dynamic Terminal Effect */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+          className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"
+        />
       </section>
 
       <section className="skills">
         <div className="container">
-          <h2 className="skills__title">Core Competencies</h2>
+          <h2 className="skills__title">Engineering Excellence</h2>
+          <p className="skills__subtitle">
+            Turning complex backend challenges into elegant, efficient solutions
+          </p>
+
           <div className="skills__grid">
             {skills.map((skill, index) => (
               <motion.div
@@ -96,36 +135,31 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <SystemMetrics
-        title="System Performance"
-        variant="detailed"
-        metrics={[
-          {
-            icon: <Clock size={24} />,
-            value: "<100ms",
-            label: "Response Time",
-            description: "Average API response time across all endpoints",
-          },
-          {
-            icon: <Activity size={24} />,
-            value: "99.99%",
-            label: "Uptime",
-            description: "System availability over the last 12 months",
-          },
-          {
-            icon: <Server size={24} />,
-            value: "10k+",
-            label: "RPS",
-            description: "Requests handled per second at peak load",
-          },
-          {
-            icon: <Database size={24} />,
-            value: "50TB+",
-            label: "Data",
-            description: "Total data processed monthly through our pipelines",
-          },
-        ]}
-      />
+      <section className="metrics">
+        <div className="container">
+          <div className="metrics__grid">
+            {featuredMetrics.map((metric, index) => (
+              <motion.div
+                key={index}
+                className="metric-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+              >
+                <div className="metric-card__icon">{metric.icon}</div>
+                <div className="metric-card__content">
+                  <h3 className="metric-card__value">{metric.value}</h3>
+                  <p className="metric-card__label">{metric.label}</p>
+                  <span className="metric-card__description">
+                    {metric.description}
+                  </span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 };

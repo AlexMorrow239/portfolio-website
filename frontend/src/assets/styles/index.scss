@@ -77,7 +77,10 @@ body {
 
 .main-content {
   flex: 1;
-  padding: var(--spacing-xl) 0;
+  padding-bottom: var(--spacing-xl);
+  padding-top: 80px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 // Reset default styles

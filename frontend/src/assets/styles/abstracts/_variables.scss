@@ -1,19 +1,31 @@
-// src/assets/styles/abstracts/_variables.scss
-
 :root {
-  // Colors
+  // Colors - Light Theme
   --color-primary: #2563eb;
+  --color-primary-dark: #1d4ed8;
+  --color-primary-light: #3b82f6;
   --color-secondary: #4f46e5;
+  --color-secondary-dark: #4338ca;
+  --color-secondary-light: #6366f1;
   --color-text: #1f2937;
   --color-text-light: #6b7280;
   --color-background: #ffffff;
   --color-border: #e5e7eb;
   --color-background-alt: #f8fafc;
   --color-error: #dc2626;
+  --color-success: #059669;
+
+  // Shadow and overlay colors
+  --shadow-primary: rgba(37, 99, 235, 0.2);
+  --shadow-sm: rgba(0, 0, 0, 0.1);
+  --shadow-md: rgba(0, 0, 0, 0.12);
+  --overlay-primary: rgba(37, 99, 235, 0.1);
+  --overlay-success: rgba(16, 185, 129, 0.1);
+  --overlay-error: rgba(220, 38, 38, 0.1);
 
   // Typography
   --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
   --font-size-base: 16px;
   --line-height-base: 1.5;
 
@@ -39,4 +51,21 @@
   --color-border: #374151;
   --color-background-alt: #1e293b;
   --color-error: #ef4444;
+  --color-success: #10b981;
+
+  // Adjust primary and secondary colors for dark mode
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-primary-light: #60a5fa;
+  --color-secondary: #6366f1;
+  --color-secondary-dark: #4f46e5;
+  --color-secondary-light: #818cf8;
+
+  // Adjust shadow and overlay colors for dark mode
+  --shadow-primary: rgba(59, 130, 246, 0.2);
+  --shadow-sm: rgba(0, 0, 0, 0.2);
+  --shadow-md: rgba(0, 0, 0, 0.24);
+  --overlay-primary: rgba(59, 130, 246, 0.1);
+  --overlay-success: rgba(16, 185, 129, 0.15);
+  --overlay-error: rgba(239, 68, 68, 0.15);
 }
