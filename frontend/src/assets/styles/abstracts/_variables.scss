@@ -13,6 +13,19 @@
   --color-background-alt: #f8fafc;
   --color-error: #dc2626;
   --color-success: #059669;
+  // Brand Colors
+  --github-color: #6e40c9;
+  --github-gradient: linear-gradient(135deg, #6e40c9 0%, #8957e5 100%);
+  --linkedin-color: #0a66c2;
+  --linkedin-gradient: linear-gradient(135deg, #0a66c2 0%, #0288d1 100%);
+  // Theme toggle colors
+  --sun-color: #ff9500;
+  --sun-gradient: linear-gradient(135deg, #ff9500 0%, #ffbd0d 100%);
+  --moon-color: #6366f1;
+  --moon-gradient: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+  // Menu toggle colors
+  --menu-color: #3b82f6;
+  --menu-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
 
   // Shadow and overlay colors
   --shadow-primary: rgba(37, 99, 235, 0.2);
@@ -23,9 +36,9 @@
   --overlay-error: rgba(220, 38, 38, 0.1);
 
   // Typography
+  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
   --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
   --font-size-base: 16px;
   --line-height-base: 1.5;
 
@@ -45,6 +58,7 @@
 
 // Dark mode variables
 [data-theme="dark"] {
+  // Colors - Dark Theme
   --color-text: #f3f4f6;
   --color-text-light: #9ca3af;
   --color-background: #111827;
@@ -52,14 +66,25 @@
   --color-background-alt: #1e293b;
   --color-error: #ef4444;
   --color-success: #10b981;
-
-  // Adjust primary and secondary colors for dark mode
   --color-primary: #3b82f6;
   --color-primary-dark: #2563eb;
   --color-primary-light: #60a5fa;
   --color-secondary: #6366f1;
   --color-secondary-dark: #4f46e5;
   --color-secondary-light: #818cf8;
+  // Brand Colors
+  --github-color: #a371f7; // Lighter GitHub purple for dark mode
+  --github-gradient: linear-gradient(135deg, #a371f7 0%, #bc8cff 100%);
+  --linkedin-color: #70b5f9;
+  --linkedin-gradient: linear-gradient(135deg, #70b5f9 0%, #39a0ff 100%);
+  // Theme toggle colors - Dark Mode
+  --sun-color: #fbbf24;
+  --sun-gradient: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
+  --moon-color: #a5b4fc;
+  --moon-gradient: linear-gradient(135deg, #a5b4fc 0%, #c7d2fe 100%);
+  // Menu toggle colors - Dark Mode
+  --menu-color: #60a5fa;
+  --menu-gradient: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
 
   // Adjust shadow and overlay colors for dark mode
   --shadow-primary: rgba(59, 130, 246, 0.2);

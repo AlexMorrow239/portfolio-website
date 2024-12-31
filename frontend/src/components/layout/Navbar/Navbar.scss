@@ -156,28 +156,46 @@
       gap: var(--spacing-lg);
 
       .navbar__social-link {
-        width: 50px;
-        height: 50px;
+        color: var(--color-text);
+        transition: all 0.15s cubic-bezier(0.4, 0, 1.1);
+        font-size: 1.25rem;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 50%;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
         svg {
-          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-          font-size: 1.5rem;
+          transition: transform 0.15s cubic-bezier(0.4, 0, 1.1);
         }
 
-        &:hover {
-          color: var(--color-primary);
-          background-color: var(--color-background-alt);
-          transform: translateY(-2px);
+        // GitHub brand styling
+        &[aria-label="GitHub"]:hover {
+          color: #333; // GitHub's brand color
+          background-color: rgba(51, 51, 51, 0.1);
+          transform: translateY(-3px);
 
           svg {
-            transform: scale(1.1);
+            transform: scale(1.2);
+          }
+        }
+
+        // LinkedIn brand styling
+        &[aria-label="LinkedIn"]:hover {
+          color: #0077b5; // LinkedIn's brand color
+          background-color: rgba(0, 119, 181, 0.1);
+          transform: translateY(-3px);
+
+          svg {
+            transform: scale(1.2);
           }
         }
 
         &:active {
-          transform: translateY(0) scale(0.95);
+          transform: translateY(0) scale(0.9);
+          transition: all 0.1s cubic-bezier(0.4, 0, 1.1);
         }
       }
     }
@@ -189,7 +207,82 @@
     gap: var(--spacing-md);
   }
 
-  &__theme-toggle,
+  &__theme-toggle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    isolation: isolate;
+    color: var(--color-text);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+
+    svg {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    // Sun icon styling
+    &:has(svg[data-icon="sun"]) {
+      &::before {
+        background: var(--sun-gradient);
+      }
+
+      &:hover {
+        color: var(--sun-color);
+
+        &::before {
+          opacity: 0.15;
+          transform: scale(1);
+        }
+
+        svg {
+          transform: rotate(15deg) scale(1.15);
+        }
+      }
+    }
+
+    // Moon icon styling
+    &:has(svg[data-icon="moon"]) {
+      &::before {
+        background: var(--moon-gradient);
+      }
+
+      &:hover {
+        color: var(--moon-color);
+
+        &::before {
+          opacity: 0.15;
+          transform: scale(1);
+        }
+
+        svg {
+          transform: rotate(-15deg) scale(1.15);
+        }
+      }
+    }
+
+    &:active {
+      transform: scale(0.9);
+
+      svg {
+        transform: scale(0.95);
+      }
+    }
+  }
+
   &__mobile-toggle {
     width: 40px;
     height: 40px;
@@ -199,23 +292,59 @@
     border-radius: 50%;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    overflow: hidden;
+    isolation: isolate;
+    color: var(--color-text);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+      background: var(--menu-gradient);
+    }
 
     svg {
-      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     &:hover {
-      background-color: var(--color-background-alt);
-      transform: scale(1.1);
+      color: var(--menu-color);
+
+      &::before {
+        opacity: 0.12;
+        transform: scale(1);
+      }
 
       svg {
-        transform: rotate(12deg);
+        transform: scale(1.15);
       }
     }
 
     &:active {
-      transform: scale(0.95);
+      transform: scale(0.9);
+
+      svg {
+        transform: scale(0.95);
+      }
+    }
+
+    // Special animation for the close icon
+    &[aria-expanded="true"] {
+      svg {
+        transform: rotate(90deg);
+      }
+
+      &:hover svg {
+        transform: rotate(90deg) scale(1.15);
+      }
+    }
+
+    @include respond-to("md") {
+      display: none;
     }
   }
 
@@ -244,32 +373,147 @@
 
   &__social-link {
     color: var(--color-text);
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     font-size: 1.25rem;
-    position: relative;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     width: 40px;
     height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
+    position: relative;
+    isolation: isolate;
 
-    svg {
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
       transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
     }
 
-    &:hover {
-      color: var(--color-primary);
-      background-color: var(--color-background-alt);
-      transform: translateY(-2px);
+    svg {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
 
-      svg {
-        transform: scale(1.1);
+    // GitHub brand styling
+    &[aria-label="GitHub"] {
+      &::before {
+        border-radius: 50%;
+        background: var(--github-gradient);
+      }
+
+      &:hover {
+        color: var(--github-color);
+        transform: translateY(-3px);
+
+        &::before {
+          opacity: 0.12;
+          transform: scale(1);
+        }
+
+        svg {
+          transform: scale(1.15);
+        }
+      }
+    }
+
+    // LinkedIn brand styling
+    &[aria-label="LinkedIn"] {
+      &::before {
+        border-radius: 8px;
+        background: var(--linkedin-gradient);
+      }
+
+      &:hover {
+        color: var(--linkedin-color);
+        transform: translateY(-3px);
+
+        &::before {
+          opacity: 0.12;
+          transform: scale(1);
+        }
+
+        svg {
+          transform: scale(1.15);
+        }
       }
     }
 
     &:active {
-      transform: translateY(0) scale(0.95);
+      transform: translateY(0) scale(0.9);
+    }
+  }
+}
+
+.navbar__mobile-footer {
+  .navbar__mobile-socials {
+    .navbar__social-link {
+      // Same styles as above, just with different selector
+      color: var(--color-text);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      isolation: isolate;
+
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: -1;
+      }
+
+      svg {
+        transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      &[aria-label="GitHub"] {
+        &::before {
+          border-radius: 50%;
+          background: var(--github-gradient);
+        }
+
+        &:hover {
+          color: var(--github-color);
+          transform: translateY(-3px);
+
+          &::before {
+            opacity: 0.12;
+            transform: scale(1);
+          }
+
+          svg {
+            transform: scale(1.15);
+          }
+        }
+      }
+
+      &[aria-label="LinkedIn"] {
+        &::before {
+          border-radius: 8px;
+          background: var(--linkedin-gradient);
+        }
+
+        &:hover {
+          color: var(--linkedin-color);
+          transform: translateY(-3px);
+
+          &::before {
+            opacity: 0.12;
+            transform: scale(1);
+          }
+
+          svg {
+            transform: scale(1.15);
+          }
+        }
+      }
+
+      &:active {
+        transform: translateY(0) scale(0.9);
+      }
     }
   }
 }

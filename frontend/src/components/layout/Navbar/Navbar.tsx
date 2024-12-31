@@ -98,7 +98,11 @@ const Navbar: React.FC = () => {
             onClick={toggleTheme}
             aria-label="Toggle theme"
           >
-            {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
+            {isDarkMode ? (
+              <Sun size={20} data-icon="sun" />
+            ) : (
+              <Moon size={20} data-icon="moon" />
+            )}
           </button>
 
           {/* Mobile Toggle - Now only shows on mobile */}

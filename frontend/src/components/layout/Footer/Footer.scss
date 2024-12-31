@@ -25,10 +25,74 @@
   &__social-link {
     color: var(--color-text-light);
     font-size: 1.5rem;
-    transition: color 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 0.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    isolation: isolate;
 
-    &:hover {
-      color: var(--color-primary);
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: -1;
+    }
+
+    svg {
+      transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    // GitHub brand styling
+    &:has(.fa-github) {
+      &::before {
+        border-radius: 50%;
+        background: var(--github-gradient);
+      }
+
+      &:hover {
+        color: var(--github-color);
+        transform: translateY(-3px);
+
+        &::before {
+          opacity: 0.12;
+          transform: scale(1);
+        }
+
+        svg {
+          transform: scale(1.15);
+        }
+      }
+    }
+
+    // LinkedIn brand styling
+    &:has(.fa-linkedin) {
+      &::before {
+        border-radius: 8px;
+        background: var(--linkedin-gradient);
+      }
+
+      &:hover {
+        color: var(--linkedin-color);
+        transform: translateY(-3px);
+
+        &::before {
+          opacity: 0.12;
+          transform: scale(1);
+        }
+
+        svg {
+          transform: scale(1.15);
+        }
+      }
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.9);
     }
   }
 
