@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ReactTyped } from "react-typed";
 import { Terminal, CheckCircle2 } from "lucide-react";
+import "./Loader.scss";
 
 interface LoaderProps {
   messages?: string[];

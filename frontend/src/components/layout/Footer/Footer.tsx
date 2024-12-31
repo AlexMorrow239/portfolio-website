@@ -3,6 +3,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import Container from "../Container/Container";
+import "./Footer.scss";
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();

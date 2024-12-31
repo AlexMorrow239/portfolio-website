@@ -5,6 +5,7 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { useTheme } from "@hooks/useTheme";
+import "./Navbar.scss";
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

@@ -6,6 +6,7 @@ import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import { Project } from "../../types/project";
 import { ProjectsService } from "../../services/projects.service";
 import Loader from "@/components/common/Loader/Loader";
+import "./Projects.scss";
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);

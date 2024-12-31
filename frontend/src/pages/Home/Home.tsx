@@ -12,6 +12,7 @@ import {
   Code,
   Cpu,
 } from "lucide-react";
+import "./Home.scss";
 
 const Home: React.FC = () => {
   const skills = [

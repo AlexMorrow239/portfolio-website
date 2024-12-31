@@ -1,10 +1,6 @@
-// src/assets/styles/index.scss
-
 @use "sass:math";
-@use "./abstracts" as *;
-@use "./base" as *;
-@use "./components" as *;
-@use "./pages" as *;
+@use "abstracts" as *;
+@use "base" as *;
 
 // Your existing base styles
 :root {

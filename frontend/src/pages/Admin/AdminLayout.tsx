@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FolderKanban, LogOut } from "lucide-react";
+import "./Admin.scss";
 
 interface AdminLayoutProps {
   isAuthenticated: boolean;

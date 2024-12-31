@@ -10,6 +10,7 @@ import {
   Mountain,
   TreePine,
 } from "lucide-react";
+import "./About.scss";
 
 const About: React.FC = () => {
   const techStack = {

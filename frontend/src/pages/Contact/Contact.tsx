@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { Terminal, AlertCircle, Send } from "lucide-react";
 import { APP_CONFIG } from "../../config";
 import Loader from "@/components/common/Loader/Loader";
+import "./Contact.scss";
 
 interface ContactFormData {
   name: string;
@@ -47,7 +48,7 @@ const Contact: React.FC = () => {
 
       setSubmitStatus("success");
       setIsSuccess(true);
-      // reset();
+      reset();
     } catch (error) {
       setIsSubmitting(false);
       setIsSuccess(false);
