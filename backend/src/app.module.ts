@@ -7,6 +7,7 @@ import { MediaModule } from './media/media.module';
 import { CommonModule } from './common/common.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ContactModule } from './contact/contact.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { AppService } from './app.service';
     ProjectsModule,
     MediaModule,
     CommonModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService],

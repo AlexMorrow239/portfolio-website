@@ -48,6 +48,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  // Add global prefix for all routes
+  app.setGlobalPrefix('api');
+
   // Add global middleware for logging requests
   app.use((req, res, next) => {
     // Log the request after the body has been parsed

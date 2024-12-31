@@ -7,7 +7,6 @@ import {
   Put,
   Delete,
   UseGuards,
-  UploadedFiles,
   UseInterceptors,
   NotFoundException,
   BadRequestException,
@@ -18,14 +17,13 @@ import {
   ApiOperation,
   ApiBearerAuth,
   ApiConsumes,
-  ApiBody,
 } from '@nestjs/swagger';
 import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { Project } from './schemas/project.schema';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('projects')
 @Controller('projects')
