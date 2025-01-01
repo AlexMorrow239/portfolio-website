@@ -1,12 +1,12 @@
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
-import { Project } from "../../types/project";
-import { ProjectsService } from "../../services/projects.service";
-import Loader from "@/components/common/Loader/Loader";
-import "./Projects.scss";
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { Project } from '../../types/project';
+import { ProjectsService } from '../../services/projects.service';
+import Loader from '@/components/common/Loader/Loader';
+import './Projects.scss';
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -21,7 +21,7 @@ const Projects: React.FC = () => {
         setProjects(data);
         setIsSuccess(true);
       } catch (err) {
-        setError("Failed to load projects");
+        setError('Failed to load projects');
         setIsSuccess(false);
       }
     };
@@ -32,11 +32,7 @@ const Projects: React.FC = () => {
   if (loading) {
     return (
       <Loader
-        messages={[
-          "Fetching projects...",
-          "Loading details...",
-          "Preparing display...",
-        ]}
+        messages={['Fetching projects...', 'Loading details...', 'Preparing display...']}
         completionMessage="Projects loaded successfully!"
         duration={3500}
         onComplete={() => setLoading(false)}
@@ -67,7 +63,7 @@ const Projects: React.FC = () => {
           >
             {project.imageUrl && (
               <div className="project-card__image">
-                <img src={project.imageUrl} alt={project.title} />
+                <img src={project.imageUrl} alt={project.title} loading="lazy" />
               </div>
             )}
 

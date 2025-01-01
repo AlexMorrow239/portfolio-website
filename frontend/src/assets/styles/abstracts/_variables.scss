@@ -36,9 +36,17 @@
   --overlay-error: rgba(220, 38, 38, 0.1);
 
   // Typography
-  --font-mono: "JetBrains Mono", "Fira Code", "Consolas", monospace;
-  --font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  /* Primary font stack */
+  --primary-font: system-ui;
+  --primary-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  
+  /* Monospace font stack */
+  --mono-font: 'JetBrains Mono';
+  --mono-fallback: 'Fira Code', monospace;
+  
+  /* Optional: Add any other font stacks you need */
+  --heading-font: system-ui;
+  --heading-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --font-size-base: 16px;
   --line-height-base: 1.5;
 
@@ -57,7 +65,7 @@
 }
 
 // Dark mode variables
-[data-theme="dark"] {
+[data-theme='dark'] {
   // Colors - Dark Theme
   --color-text: #f3f4f6;
   --color-text-light: #9ca3af;
@@ -66,9 +74,9 @@
   --color-background-alt: #1e293b;
   --color-error: #ef4444;
   --color-success: #10b981;
-  --color-primary: #3b82f6;
-  --color-primary-dark: #2563eb;
-  --color-primary-light: #60a5fa;
+  --color-primary: #60a5fa;
+  --color-primary-dark: #3b82f6;
+  --color-primary-light: #93c5fd;
   --color-secondary: #6366f1;
   --color-secondary-dark: #4f46e5;
   --color-secondary-light: #818cf8;

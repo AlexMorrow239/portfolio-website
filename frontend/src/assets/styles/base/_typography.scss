@@ -1,23 +1,80 @@
-body {
-  font-family: var(--font-primary);
+html {
+  font-size: var(--font-size-base);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: var(--line-height-base);
-  font-size: var(--font-size-base);
-  color: var(--color-text);
-  background-color: var(--color-background);
 }
 
+body {
+  line-height: var(--line-height-base);
+  color: var(--color-text);
+  background-color: var(--color-background);
+  font-family: var(--mono-font), var(--mono-fallback);
+}
+
+// Monospace elements
+code,
+pre,
+.mono {
+  font-family: var(--font-mono);
+}
+
+// Heading styles
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  margin-bottom: var(--spacing-md);
+  font-family: var(--heading-font), var(--heading-fallback);
+  font-weight: 700;
   line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
 }
 
 p {
   margin-bottom: var(--spacing-md);
+}
+
+/* Monospace elements */
+pre,
+code,
+.mono {
+  font-family: var(--mono-font), var(--mono-fallback);
+}
+
+/* Form elements */
+input,
+textarea,
+button {
+  font-family: var(--primary-font), var(--primary-fallback);
+}
+
+// Add font weights
+strong,
+b {
+  font-weight: 600;
 }
