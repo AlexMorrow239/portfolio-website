@@ -1,7 +1,7 @@
 @use "../../assets/styles/abstracts/index" as *;
 
 .projects {
-  padding: var(--spacing-xl) 0;
+  padding: var(--spacing-xl) var(--spacing-md);
 
   &__header {
     text-align: center;
@@ -18,6 +18,11 @@
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+
+      @include respond-to("max-sm") {
+        font-size: 2rem;
+        margin-bottom: var(--spacing-sm);
+      }
     }
 
     p {
@@ -25,15 +30,24 @@
       max-width: 600px;
       margin: 0 auto;
       line-height: 1.6;
+
+      @include respond-to("max-sm") {
+        font-size: 0.95rem;
+        padding: 0 var(--spacing-sm);
+      }
     }
   }
 
   &__grid {
     display: grid;
-    gap: var(--spacing-xl);
-    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+
+    @include respond-to("max-sm") {
+      grid-template-columns: 1fr;
+    }
 
     @include respond-to("md") {
+      gap: var(--spacing-xl);
       grid-template-columns: repeat(2, 1fr);
     }
   }
@@ -45,6 +59,15 @@
   border-radius: 16px;
   overflow: hidden;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px;
+  backdrop-filter: blur(8px);
+
+  @include respond-to("max-sm") {
+    min-height: 350px;
+  }
 
   &:hover {
     transform: translateY(-5px);
@@ -53,9 +76,27 @@
   }
 
   &__image {
+    position: relative;
     width: 100%;
-    height: 200px;
-    overflow: hidden;
+    height: 220px;
+
+    @include respond-to("max-sm") {
+      height: 180px;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--color-background)
+      );
+    }
 
     img {
       width: 100%;
@@ -70,26 +111,57 @@
   }
 
   &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     padding: var(--spacing-lg);
+    position: relative;
+    
+    @include respond-to("max-sm") {
+      padding: var(--spacing-md);
+    }
+    
+    .project-card:not(:has(.project-card__image)) & {
+      padding-top: var(--spacing-xl);
+    }
   }
 
   &__title {
     font-size: 1.5rem;
     margin-bottom: var(--spacing-sm);
     color: var(--color-text);
+
+    @include respond-to("max-sm") {
+      font-size: 1.25rem;
+      margin-bottom: var(--spacing-xs);
+    }
   }
 
   &__description {
     color: var(--color-text-light);
     margin-bottom: var(--spacing-md);
     line-height: 1.6;
+
+    @include respond-to("max-sm") {
+      font-size: 0.9rem;
+      margin-bottom: var(--spacing-sm);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
   }
 
   &__tags {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
-    margin-bottom: var(--spacing-md);
+    margin: auto 0 var(--spacing-md);
+
+    @include respond-to("max-sm") {
+      gap: calc(var(--spacing-xs) / 2);
+      margin-bottom: var(--spacing-sm);
+    }
   }
 
   &__tag {
@@ -98,7 +170,18 @@
     padding: 0.25rem 0.75rem;
     border-radius: 16px;
     font-size: 0.875rem;
-    font-family: var(--font-mono);
+    font-family: var(--mono-font), var(--mono-fallback);
+    transition: all 0.2s ease;
+    
+    @include respond-to("max-sm") {
+      font-size: 0.75rem;
+      padding: 0.2rem 0.5rem;
+    }
+    
+    &:hover {
+      background-color: var(--color-primary);
+      color: var(--color-background);
+    }
   }
 
   &__links {
@@ -106,6 +189,12 @@
     gap: var(--spacing-sm);
     padding-top: var(--spacing-md);
     border-top: 1px solid var(--color-border);
+    margin-top: auto;
+
+    @include respond-to("max-sm") {
+      padding-top: var(--spacing-sm);
+      gap: var(--spacing-xs);
+    }
   }
 
   &__link {
@@ -116,15 +205,51 @@
     border-radius: 8px;
     font-size: 0.875rem;
     transition: all 0.2s ease;
+    font-weight: 500;
+    
+    @include respond-to("max-sm") {
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+    
+    svg {
+      transition: transform 0.2s ease;
+    }
+    
+    &:hover svg {
+      transform: translateX(2px);
+    }
 
     &--primary {
       background-color: var(--color-primary);
       color: white;
+      position: relative;
+      overflow: hidden;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 120%;
+        height: 120%;
+        background: rgba(255, 255, 255, 0.1);
+        transform: translate(-50%, -50%) scale(0);
+        border-radius: 50%;
+        transition: transform 0.4s ease;
+      }
+      
+      &:hover::before {
+        transform: translate(-50%, -50%) scale(1);
+      }
 
       &:hover {
-        background-color: var(
-          --color-primary-dark
-        ); // Use variable instead of darken()
+        background-color: var(--color-primary-dark);
       }
     }
 
