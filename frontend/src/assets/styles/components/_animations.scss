@@ -1,0 +1,39 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeInAccent {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.5s ease-in forwards;
+    
+    &--delay-1 {
+      animation-delay: 0.1s;
+    }
+    &--delay-2 {
+      animation-delay: 0.2s;
+    }
+    // ... other delay classes ...
+  }
+  
+  .fade-in-accent {
+    animation: fadeInAccent 0.5s ease-out forwards;
+    color: var(--color-primary);
+    transition: none;
+  }

@@ -1,52 +1,77 @@
+// Base color palette
+$color-blue-400: #60a5fa;
+$color-blue-500: #3b82f6;
+$color-blue-600: #2563eb;
+$color-blue-700: #1d4ed8;
+$color-indigo-400: #818cf8;
+$color-indigo-500: #6366f1;
+$color-indigo-600: #4f46e5;
+$color-indigo-700: #4338ca;
+$color-gray-50: #f8fafc;
+$color-gray-100: #f3f4f6;
+$color-gray-200: #e5e7eb;
+$color-gray-300: #d1d5db;
+$color-gray-400: #9ca3af;
+$color-gray-500: #6b7280;
+$color-gray-700: #374151;
+$color-gray-800: #1f2937;
+$color-gray-900: #111827;
+$color-red-500: #ef4444;
+$color-red-600: #dc2626;
+$color-green-500: #10b981;
+$color-green-600: #059669;
+
 :root {
   // Colors - Light Theme
-  --color-primary: #2563eb;
-  --color-primary-dark: #1d4ed8;
-  --color-primary-light: #3b82f6;
-  --color-secondary: #4f46e5;
-  --color-secondary-dark: #4338ca;
-  --color-secondary-light: #6366f1;
-  --color-text: #1f2937;
-  --color-text-light: #6b7280;
+  --color-primary: #{$color-blue-600};
+  --color-primary-dark: #{$color-blue-700};
+  --color-primary-light: #{$color-blue-500};
+  --color-secondary: #{$color-indigo-600};
+  --color-secondary-dark: #{$color-indigo-700};
+  --color-secondary-light: #{$color-indigo-500};
+  --color-text: #{$color-gray-800};
+  --color-text-light: #{$color-gray-500};
   --color-background: #ffffff;
-  --color-border: #e5e7eb;
-  --color-background-alt: #f8fafc;
-  --color-error: #dc2626;
-  --color-success: #059669;
+  --color-border: #{$color-gray-200};
+  --color-background-alt: #{$color-gray-50};
+  --color-error: #{$color-red-600};
+  --color-success: #{$color-green-600};
+
   // Brand Colors
   --github-color: #6e40c9;
   --github-gradient: linear-gradient(135deg, #6e40c9 0%, #8957e5 100%);
   --linkedin-color: #0a66c2;
   --linkedin-gradient: linear-gradient(135deg, #0a66c2 0%, #0288d1 100%);
+
   // Theme toggle colors
   --sun-color: #ff9500;
   --sun-gradient: linear-gradient(135deg, #ff9500 0%, #ffbd0d 100%);
-  --moon-color: #6366f1;
-  --moon-gradient: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
+  --moon-color: #{$color-indigo-500};
+  --moon-gradient: linear-gradient(135deg, #{$color-indigo-500} 0%, #{$color-indigo-400} 100%);
+
   // Menu toggle colors
-  --menu-color: #3b82f6;
-  --menu-gradient: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%);
+  --menu-color: #{$color-blue-500};
+  --menu-gradient: linear-gradient(135deg, #{$color-blue-500} 0%, #{$color-blue-400} 100%);
 
   // Shadow and overlay colors
-  --shadow-primary: rgba(37, 99, 235, 0.2);
-  --shadow-sm: rgba(0, 0, 0, 0.1);
-  --shadow-md: rgba(0, 0, 0, 0.12);
-  --overlay-primary: rgba(37, 99, 235, 0.1);
-  --overlay-success: rgba(16, 185, 129, 0.1);
-  --overlay-error: rgba(220, 38, 38, 0.1);
+  --shadow-primary: #{rgba($color-blue-600, 0.2)};
+  --shadow-sm: #{rgba(#000000, 0.1)};
+  --shadow-md: #{rgba(#000000, 0.12)};
+  --overlay-primary: #{rgba($color-blue-600, 0.1)};
+  --overlay-success: #{rgba($color-green-500, 0.1)};
+  --overlay-error: #{rgba($color-red-600, 0.1)};
+// Typography
+/* Primary font stack */
+--font-primary: var(--mono-font), var(--mono-fallback);  // Changed to use mono font as primary
+--primary-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
 
-  // Typography
-  /* Primary font stack */
-  --primary-font: system-ui;
-  --primary-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
-  
-  /* Monospace font stack */
-  --mono-font: 'JetBrains Mono';
-  --mono-fallback: 'Fira Code', monospace;
-  
-  /* Optional: Add any other font stacks you need */
-  --heading-font: system-ui;
-  --heading-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+/* Monospace font stack */
+--mono-font: 'JetBrains Mono';
+--mono-fallback: 'Fira Code', monospace;
+
+/* Heading font stack - using mono font for consistency */
+--heading-font: var(--mono-font);
+--heading-fallback: var(--mono-fallback);
   --font-size-base: 16px;
   --line-height-base: 1.5;
 
@@ -66,39 +91,41 @@
 
 // Dark mode variables
 [data-theme='dark'] {
-  // Colors - Dark Theme
-  --color-text: #f3f4f6;
-  --color-text-light: #9ca3af;
-  --color-background: #111827;
-  --color-border: #374151;
-  --color-background-alt: #1e293b;
-  --color-error: #ef4444;
-  --color-success: #10b981;
-  --color-primary: #60a5fa;
-  --color-primary-dark: #3b82f6;
-  --color-primary-light: #93c5fd;
-  --color-secondary: #6366f1;
-  --color-secondary-dark: #4f46e5;
-  --color-secondary-light: #818cf8;
-  // Brand Colors
-  --github-color: #a371f7; // Lighter GitHub purple for dark mode
+  --color-text: #{$color-gray-100};
+  --color-text-light: #{$color-gray-400};
+  --color-background: #{$color-gray-900};
+  --color-border: #{$color-gray-700};
+  --color-background-alt: #{darken($color-gray-900, 3%)};
+  --color-error: #{$color-red-500};
+  --color-success: #{$color-green-500};
+  --color-primary: #{$color-blue-500};
+  --color-primary-dark: #{$color-blue-600};
+  --color-primary-light: #{lighten($color-blue-500, 10%)};
+  --color-secondary: #{$color-indigo-500};
+  --color-secondary-dark: #{$color-indigo-600};
+  --color-secondary-light: #{lighten($color-indigo-500, 10%)};
+
+  // Brand Colors - Lighter versions for dark mode
+  --github-color: #a371f7;
   --github-gradient: linear-gradient(135deg, #a371f7 0%, #bc8cff 100%);
   --linkedin-color: #70b5f9;
   --linkedin-gradient: linear-gradient(135deg, #70b5f9 0%, #39a0ff 100%);
+
   // Theme toggle colors - Dark Mode
   --sun-color: #fbbf24;
   --sun-gradient: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
-  --moon-color: #a5b4fc;
-  --moon-gradient: linear-gradient(135deg, #a5b4fc 0%, #c7d2fe 100%);
+  --moon-color: #{lighten($color-indigo-500, 15%)};
+  --moon-gradient: linear-gradient(135deg, #{lighten($color-indigo-500, 15%)} 0%, #{lighten($color-indigo-500, 25%)} 100%);
+
   // Menu toggle colors - Dark Mode
-  --menu-color: #60a5fa;
-  --menu-gradient: linear-gradient(135deg, #60a5fa 0%, #93c5fd 100%);
+  --menu-color: #{$color-blue-500};
+  --menu-gradient: linear-gradient(135deg, #{$color-blue-500} 0%, #{lighten($color-blue-500, 10%)} 100%);
 
   // Adjust shadow and overlay colors for dark mode
-  --shadow-primary: rgba(59, 130, 246, 0.2);
-  --shadow-sm: rgba(0, 0, 0, 0.2);
-  --shadow-md: rgba(0, 0, 0, 0.24);
-  --overlay-primary: rgba(59, 130, 246, 0.1);
-  --overlay-success: rgba(16, 185, 129, 0.15);
-  --overlay-error: rgba(239, 68, 68, 0.15);
+  --shadow-primary: #{rgba($color-blue-500, 0.2)};
+  --shadow-sm: #{rgba(#000000, 0.2)};
+  --shadow-md: #{rgba(#000000, 0.24)};
+  --overlay-primary: #{rgba($color-blue-500, 0.1)};
+  --overlay-success: #{rgba($color-green-500, 0.15)};
+  --overlay-error: #{rgba($color-red-500, 0.15)};
 }

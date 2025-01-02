@@ -153,7 +153,7 @@ const Home: React.FC = () => {
               <Link to="/projects" className="button button--primary">
                 Explore My Work
               </Link>
-              <Link to="/about" className="button button--secondary">
+              <Link to="/about" className="button button--primary">
                 Get to Know Me
               </Link>
             </motion.div>
@@ -202,6 +202,8 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <div className="section-divider"></div>
 
       {/* Metrics Section */}
       <section className="metrics">
