@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Base color palette
 $color-blue-400: #60a5fa;
 $color-blue-500: #3b82f6;
@@ -96,15 +98,15 @@ $color-green-600: #059669;
   --color-text-light: #{$color-gray-400};
   --color-background: #{$color-gray-900};
   --color-border: #{$color-gray-700};
-  --color-background-alt: #{darken($color-gray-900, 3%)};
+  --color-background-alt: #{color.adjust($color-gray-900, $lightness: -3%)};
   --color-error: #{$color-red-500};
   --color-success: #{$color-green-500};
   --color-primary: #{$color-blue-500};
   --color-primary-dark: #{$color-blue-600};
-  --color-primary-light: #{lighten($color-blue-500, 10%)};
+  --color-primary-light: #{color.adjust($color-blue-500, $lightness: 10%)};
   --color-secondary: #{$color-indigo-500};
   --color-secondary-dark: #{$color-indigo-600};
-  --color-secondary-light: #{lighten($color-indigo-500, 10%)};
+  --color-secondary-light: #{color.adjust($color-indigo-500, $lightness: 10%)};
 
   // Brand Colors - Lighter versions for dark mode
   --github-color: #a371f7;
@@ -113,14 +115,17 @@ $color-green-600: #059669;
   --linkedin-gradient: linear-gradient(135deg, #70b5f9 0%, #39a0ff 100%);
 
   // Theme toggle colors - Dark Mode
-  --sun-color: #fbbf24;
   --sun-gradient: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
-  --moon-color: #{lighten($color-indigo-500, 15%)};
-  --moon-gradient: linear-gradient(135deg, #{lighten($color-indigo-500, 15%)} 0%, #{lighten($color-indigo-500, 25%)} 100%);
+  --moon-color: #{color.adjust($color-indigo-500, $lightness: 15%)};
+  --moon-gradient: linear-gradient(135deg, 
+    #{color.adjust($color-indigo-500, $lightness: 15%)} 0%, 
+    #{color.adjust($color-indigo-500, $lightness: 25%)} 100%);
 
   // Menu toggle colors - Dark Mode
   --menu-color: #{$color-blue-500};
-  --menu-gradient: linear-gradient(135deg, #{$color-blue-500} 0%, #{lighten($color-blue-500, 10%)} 100%);
+  --menu-gradient: linear-gradient(135deg, 
+    #{$color-blue-500} 0%, 
+    #{color.adjust($color-blue-500, $lightness: 10%)} 100%);
 
   // Adjust shadow and overlay colors for dark mode
   --shadow-primary: #{rgba($color-blue-500, 0.2)};
