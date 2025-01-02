@@ -5,45 +5,47 @@ import './Education.scss';
 const Education = () => {
   return (
     <motion.section
-      className="education"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      className="about__section education"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      <motion.div
-        className="education__title"
-        initial={{ x: -20 }}
-        animate={{ x: 0 }}
-        transition={{ delay: 0.2 }}
-      >
+      {/* Section Header */}
+      <div className="about__section-header">
         <GraduationCap className="icon" />
         <h2>Education</h2>
-      </motion.div>
+      </div>
 
+      {/* Timeline Content */}
       <div className="education__timeline">
         <motion.div
           className="education__school"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
         >
-          <h3>
-            <Building2 className="university-icon" />
-            University of Miami
-          </h3>
+          {/* University Title */}
+          <div className="about__inline-icon education__school-title">
+            <Building2 className="icon" />
+            <h3>University of Miami</h3>
+          </div>
 
+          {/* Degrees */}
           <motion.div
             className="education__degree"
             initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.6 }}
-            whileHover={{ x: 10, transition: { duration: 0.2 } }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            whileHover={{ x: 10 }}
           >
-            <Laptop className="education__degree-icon" />
+            <Laptop className="icon" />
             <div className="education__degree-content">
               <h4>
                 B.S. in Computer Science and Data Science/AI
-                <span className="gpa">3.882 GPA</span>
+                <span className="education__gpa">3.882 GPA</span>
               </h4>
             </div>
           </motion.div>
@@ -51,36 +53,41 @@ const Education = () => {
           <motion.div
             className="education__degree"
             initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8 }}
-            whileHover={{ x: 10, transition: { duration: 0.2 } }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            whileHover={{ x: 10 }}
           >
-            <Brain className="education__degree-icon" />
+            <Brain className="icon" />
             <div className="education__degree-content">
               <h4>M.S. in Computer Science</h4>
               <div className="education__degree-detail">4+1 Program</div>
             </div>
           </motion.div>
 
+          {/* Minor */}
           <motion.div
-            className="education__minor"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1 }}
-            whileHover={{ scale: 1.05, transition: { duration: 0.2 } }}
+            className="about__inline-icon education__minor"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.5 }}
+            whileHover={{ scale: 1.05 }}
           >
             <Calculator className="icon" />
-            Minor in Mathematics
+            <span>Minor in Mathematics</span>
           </motion.div>
 
+          {/* Status */}
           <motion.div
-            className="education__status"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.2 }}
+            className="about__inline-icon education__status"
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.6 }}
           >
             <CheckCircle className="icon" />
-            On track for dual graduation in 2027
+            <span>On track for dual graduation in 2027</span>
           </motion.div>
         </motion.div>
       </div>

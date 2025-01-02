@@ -1,0 +1,117 @@
+@use "../../assets/styles/abstracts/index" as *;
+
+.professional {
+  &__timeline {
+    position: relative;
+    padding-left: var(--spacing-xl);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--color-primary);
+      opacity: 0.3;
+    }
+  }
+
+  &__role {
+    position: relative;
+    margin-bottom: var(--spacing-xl);
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spacing-xl) * -1);
+      top: 0.75rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 3px solid var(--color-background);
+      box-shadow: 0 0 0 3px var(--color-primary-transparent);
+    }
+  }
+
+  &__role-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+
+    h3 {
+      font-size: 1.5rem;
+      color: var(--color-primary);
+      margin: 0;
+    }
+  }
+
+  &__company-link {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: var(--color-background-alt);
+      
+      .icon {
+        color: var(--color-primary);
+      }
+    }
+
+    .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--color-text-light);
+      transition: color 0.3s ease;
+    }
+  }
+
+  &__position {
+    margin-left: var(--spacing-sm);
+  }
+
+  &__position-card {
+    background: var(--color-background-alt);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    border: 1px solid var(--color-border);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      margin: 0 0 var(--spacing-xs);
+      color: var(--color-text);
+    }
+
+    p {
+      margin: var(--spacing-sm) 0 0;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+  }
+
+  &__date {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      color: var(--color-text-light);
+    }
+  }
+}
