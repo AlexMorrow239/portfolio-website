@@ -1,15 +1,15 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy package files first to leverage Docker cache
+# Copy package files and TypeScript configs
 COPY package*.json ./
 COPY tsconfig*.json ./
 
-# Install all dependencies (including dev dependencies)
+# Install dependencies
 RUN npm ci
 
 # Copy source code
-COPY . .
+COPY src/ ./src/
 
 # Build the application
 RUN npm run build
