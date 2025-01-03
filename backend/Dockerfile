@@ -1,11 +1,15 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# First copy everything except node_modules
-COPY . .
+# Copy package files first to leverage Docker cache
+COPY package*.json ./
+COPY tsconfig*.json ./
 
-# Install dependencies
+# Install all dependencies (including dev dependencies)
 RUN npm ci
+
+# Copy source code
+COPY . .
 
 # Build the application
 RUN npm run build
@@ -21,6 +25,7 @@ COPY --from=builder /app/package*.json ./
 # Install only production dependencies
 RUN npm ci --omit=dev
 
+# Set environment and expose port
 ENV NODE_ENV=production
 EXPOSE 3000
 
