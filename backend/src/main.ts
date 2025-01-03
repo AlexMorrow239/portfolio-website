@@ -12,6 +12,25 @@ import { json } from 'express';
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
+  const requiredEnvVars = [
+    'JWT_SECRET',
+    'MONGODB_URI',
+    'ADMIN_USERNAME',
+    'ADMIN_PASSWORD',
+  ];
+
+  const missingVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
+
+  if (missingVars.length > 0) {
+    logger.error(
+      `Missing required environment variables: ${missingVars.join(', ')}`,
+    );
+    logger.error(
+      'Please check your .env file and ensure all required variables are set',
+    );
+    process.exit(1);
+  }
+
   // Log all environment variables at startup
   logger.debug('==== All Environment Variables ====');
   Object.keys(process.env).forEach((key) => {
@@ -55,20 +74,6 @@ async function bootstrap() {
     logger.debug(`${key} from ConfigService: ${value}`);
   });
   logger.debug('==== End ConfigService Values ====');
-
-  // Validate required environment variables
-  const requiredEnvVars = [
-    'JWT_SECRET',
-    'ADMIN_USERNAME',
-    'ADMIN_PASSWORD',
-    'MONGODB_URI',
-  ];
-  const missingVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
-  if (missingVars.length > 0) {
-    const errorMessage = `Missing required environment variables: ${missingVars.join(', ')}`;
-    logger.error(errorMessage);
-    throw new Error(errorMessage);
-  }
 
   // Production security middleware
   app.use(helmet());

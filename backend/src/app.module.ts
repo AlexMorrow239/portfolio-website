@@ -53,7 +53,12 @@ import { ContactModule } from './contact/contact.module';
       useFactory: async (configService: ConfigService) => {
         const logger = new Logger('MongooseModule');
         const uri = configService.get<string>('MONGODB_URI');
-        logger.debug(`MongoDB URI ${uri ? 'is set' : 'is NOT set'}`);
+
+        if (!uri) {
+          throw new Error('MONGODB_URI is required for database connection');
+        }
+
+        logger.debug(`MongoDB URI is set`);
         logger.debug(`SSL Mode: ${process.env.NODE_ENV === 'production'}`);
 
         return {

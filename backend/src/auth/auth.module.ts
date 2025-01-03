@@ -14,9 +14,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
       useFactory: async (configService: ConfigService) => {
         const secret = configService.get<string>('JWT_SECRET');
         if (!secret) {
-          throw new Error('JWT_SECRET environment variable is not set!');
+          throw new Error('JWT_SECRET is required for authentication');
         }
-
         return {
           secret,
           signOptions: {
