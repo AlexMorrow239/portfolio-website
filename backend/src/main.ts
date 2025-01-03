@@ -11,8 +11,34 @@ import { json } from 'express';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: ['error', 'warn', 'log', 'debug', 'verbose'],
+  });
   const configService = app.get(ConfigService);
+
+  // Add debugging logs for environment
+  logger.debug('==== Environment Variables Debug ====');
+  logger.debug(`NODE_ENV: ${process.env.NODE_ENV}`);
+  logger.debug(`JWT_SECRET: ${process.env.JWT_SECRET ? 'Set' : 'Not Set'}`);
+  logger.debug(
+    `ADMIN_USERNAME: ${process.env.ADMIN_USERNAME ? 'Set' : 'Not Set'}`,
+  );
+  logger.debug(
+    `ADMIN_PASSWORD: ${process.env.ADMIN_PASSWORD ? 'Set' : 'Not Set'}`,
+  );
+  logger.debug(`MONGODB_URI: ${process.env.MONGODB_URI ? 'Set' : 'Not Set'}`);
+  logger.debug('==== End Environment Variables ====');
+  logger.debug('==== ConfigService Values Debug ====');
+  logger.debug(
+    `JWT_SECRET from ConfigService: ${configService.get('JWT_SECRET') ? 'Set' : 'Not Set'}`,
+  );
+  logger.debug(
+    `ADMIN_USERNAME from ConfigService: ${configService.get('ADMIN_USERNAME') ? 'Set' : 'Not Set'}`,
+  );
+  logger.debug(
+    `ADMIN_PASSWORD from ConfigService: ${configService.get('ADMIN_PASSWORD') ? 'Set' : 'Not Set'}`,
+  );
+  logger.debug('==== End ConfigService Values ====');
 
   // Validate required environment variables
   const requiredEnvVars = ['JWT_SECRET', 'ADMIN_USERNAME', 'ADMIN_PASSWORD'];
