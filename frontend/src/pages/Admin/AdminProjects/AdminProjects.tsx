@@ -102,7 +102,7 @@ const AdminProjects: React.FC = () => {
     <div className="admin-projects">
       <div className="admin-header">
         <h1>Manage Projects</h1>
-        <Link to="/admin/projects/new" className="button button--primary">
+        <Link to="/admin/projects/new" className="btn btn--primary">
           <Plus size={20} />
           New Project
         </Link>
@@ -125,21 +125,21 @@ const AdminProjects: React.FC = () => {
               <div className="project-card__actions">
                 <button
                   onClick={() => toggleVisibility(project._id, project.visible)}
-                  className={`button button--icon ${project.visible ? 'button--active' : ''}`}
+                  className={`btn btn--icon ${project.visible ? 'btn--primary' : 'btn--secondary'}`}
                   title={project.visible ? 'Hide project' : 'Show project'}
                 >
                   {project.visible ? <Eye size={18} /> : <EyeOff size={18} />}
                 </button>
                 <Link
                   to={`/admin/projects/edit/${project._id}`}
-                  className="button button--icon"
+                  className="btn btn--icon btn--secondary"
                   title="Edit project"
                 >
                   <Edit2 size={18} />
                 </Link>
                 <button
                   onClick={() => deleteProject(project._id)}
-                  className="button button--icon button--danger"
+                  className="btn btn--icon btn--danger"
                   title="Delete project"
                 >
                   <Trash2 size={18} />

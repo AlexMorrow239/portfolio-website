@@ -12,14 +12,29 @@ export interface ProjectLinks {
 export interface ProjectFormData {
   title: string;
   description: string;
-  technologies: Array<{ value: string }>; // Matches your CreateProjectDto
+  technologies: string[];
+  skills: string[];
   imageUrl?: string;
-  featured?: boolean;
-  visible?: boolean;
-  metrics?: {
-    [key: string]: string;
+  featured: boolean;
+  visible: boolean;
+  links: {
+    github?: string;
+    live?: string;
+    documentation?: string;
   };
-  links?: ProjectLinks;
+}
+
+export interface ProjectFormErrors {
+  title?: string;
+  description?: string;
+  technologies?: string;
+  skills?: string;
+  image?: string;
+  links?: {
+    github?: string;
+    live?: string;
+    documentation?: string;
+  };
 }
 
 export interface Project {

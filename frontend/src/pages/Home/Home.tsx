@@ -150,10 +150,10 @@ const Home: React.FC = () => {
             </motion.p>
 
             <motion.div className="hero__cta" variants={itemVariants}>
-              <Link to="/projects" className="button button--primary">
+              <Link to="/projects" className="btn btn--primary">
                 Explore My Work
               </Link>
-              <Link to="/about" className="button button--primary">
+              <Link to="/about" className="btn btn--secondary">
                 Get to Know Me
               </Link>
             </motion.div>

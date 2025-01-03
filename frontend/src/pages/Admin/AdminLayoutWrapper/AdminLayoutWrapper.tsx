@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AdminLayout from './AdminLayout';
+import AdminLayout from '../AdminLayout/AdminLayout';
 import { AuthService } from '@/services/auth.service';
 
 const AdminLayoutWrapper: React.FC = () => {

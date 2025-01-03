@@ -70,6 +70,11 @@ $color-green-600: #059669;
   --overlay-primary: #{rgba($color-blue-600, 0.1)};
   --overlay-success: #{rgba($color-green-500, 0.1)};
   --overlay-error: #{rgba($color-red-600, 0.1)};
+
+  // Button specific
+  --shadow-primary: #{rgba($color-blue-600, 0.2)};
+  --border-radius: 6px;
+
   // Typography
   /* Primary font stack */
   --font-primary: var(--mono-font), var(--mono-fallback); // Changed to use mono font as primary
@@ -152,4 +157,7 @@ $color-green-600: #059669;
   --overlay-primary: #{rgba($color-blue-500, 0.1)};
   --overlay-success: #{rgba($color-green-500, 0.15)};
   --overlay-error: #{rgba($color-red-500, 0.15)};
+
+  // Button specific
+  --shadow-primary: #{rgba($color-blue-500, 0.2)};
 }

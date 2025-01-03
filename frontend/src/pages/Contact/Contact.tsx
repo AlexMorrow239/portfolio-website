@@ -174,7 +174,7 @@ const Contact: React.FC = () => {
               )}
             </div>
 
-            <button type="submit" className="button button--primary" disabled={isSubmitting}>
+            <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
               <>
                 <Send size={20} />
                 Send Message

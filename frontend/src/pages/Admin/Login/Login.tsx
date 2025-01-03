@@ -81,7 +81,7 @@ export const Login: React.FC = () => {
               required
             />
           </div>
-          <button type="submit" className="button button--primary button--block" disabled={loading}>
+          <button type="submit" className="btn btn--primary btn--block" disabled={loading}>
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>

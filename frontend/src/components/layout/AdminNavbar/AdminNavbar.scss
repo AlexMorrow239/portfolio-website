@@ -29,11 +29,11 @@
   &__container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
+    padding: 0 var(--spacing-md);
     height: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: var(--spacing-lg);
   }
 
@@ -43,9 +43,60 @@
     color: var(--color-text);
     text-decoration: none;
     transition: color 0.2s ease;
+    white-space: nowrap;
 
     &:hover {
       color: var(--color-primary);
+    }
+  }
+
+  &__mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-text);
+    cursor: pointer;
+    padding: var(--spacing-sm);
+    border-radius: 8px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-background-alt);
+    }
+
+    @media (max-width: 768px) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+    flex: 1;
+    justify-content: space-between;
+
+    @media (max-width: 768px) {
+      display: none;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      right: 0;
+      background-color: var(--color-background);
+      padding: var(--spacing-lg);
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-lg);
+      border-top: 1px solid var(--color-border);
+      box-shadow: 0 4px 12px var(--shadow-sm);
+      max-height: calc(100vh - 80px);
+      overflow-y: auto;
+
+      &--open {
+        display: flex;
+      }
     }
   }
 
@@ -53,6 +104,12 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-lg);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: var(--spacing-md);
+      width: 100%;
+    }
   }
 
   &__link {
@@ -64,6 +121,7 @@
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: 8px;
     transition: all 0.2s ease;
+    white-space: nowrap;
 
     &:hover {
       background-color: var(--color-background-alt);
@@ -79,19 +137,20 @@
         border-color: var(--color-primary);
         transform: translateY(-2px);
       }
-
-      svg {
-        transition: transform 0.2s ease;
-      }
-
-      &:hover svg {
-        transform: translateX(-2px);
-      }
     }
 
     &--active {
       background-color: var(--color-primary);
       color: white;
+
+      &:hover {
+        background-color: var(--color-primary);
+      }
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: flex-start;
     }
   }
 
@@ -99,6 +158,46 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      width: 100%;
+      gap: var(--spacing-md);
+    }
+  }
+
+  &__theme-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: var(--color-background-alt);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      width: 100%;
+      height: 40px;
+      gap: var(--spacing-sm);
+      justify-content: flex-start;
+      padding: 0 var(--spacing-md);
+
+      &::after {
+        content: attr(aria-label);
+        margin-left: var(--spacing-sm);
+        font-size: 0.9rem;
+      }
+    }
   }
 
   &__logout {
@@ -113,6 +212,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
     font-size: 1rem;
+    white-space: nowrap;
 
     &:hover {
       background-color: var(--color-error-light);
@@ -120,17 +220,39 @@
       transform: translateX(4px);
     }
 
-    svg {
-      transition: transform 0.2s ease;
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: flex-start;
     }
+  }
 
-    &:hover svg {
-      transform: translateX(2px);
+  // Add backdrop for mobile menu
+  &::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    pointer-events: none;
+    z-index: -1;
+
+    @media (max-width: 768px) {
+      .admin-navbar__content--open ~ & {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+      }
     }
+  }
 
-    &:focus-visible {
-      outline: 2px solid var(--color-error);
-      outline-offset: 2px;
+  // Reduced motion preferences
+  @media (prefers-reduced-motion: reduce) {
+    &,
+    *,
+    &::after {
+      transition-duration: 0.01ms !important;
     }
   }
 }

@@ -61,7 +61,7 @@
       border-radius: 8px;
       background-color: var(--color-background);
       color: var(--color-text);
-      font-family: var(--font-primary);
+      font-family: var(--font-primary), var(--primary-fallback);
       transition: all 0.3s ease;
 
       &:focus {
@@ -95,33 +95,10 @@
     }
   }
 
-  button {
+  .btn {
     width: 100%;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
     padding: var(--spacing-md);
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-
-    &:hover:not(:disabled) {
-      background-color: var(--color-primary-dark);
-      transform: translateY(-1px);
-    }
-
-    &:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-    }
-
-    .icon-spin {
-      animation: spin 1s linear infinite;
-    }
   }
 
   .form-status {
@@ -140,15 +117,6 @@
       background-color: var(--overlay-error);
       color: var(--color-error);
     }
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
   }
 }
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import './Admin.scss';
+import './AdminLayout.scss';
 import AdminNavbar from '@/components/layout/AdminNavbar/AdminNavbar';
 import Footer from '@/components/layout/Footer/Footer';
 

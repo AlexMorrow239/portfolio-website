@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Terminal } from 'lucide-react';
+import { ExternalLink, Terminal } from 'lucide-react';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
 import { Project } from '@/types/project';
 import { ProjectsService } from '@/services/projects.service';
 import './Projects.scss';
 import Loader from '@/components/common/Loader/Loader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -109,7 +111,7 @@ const Projects: React.FC = () => {
         transition={{ delay: 0.3 }}
       >
         <button
-          className={`filter-btn ${!selectedTech ? 'active' : ''}`}
+          className={`btn btn--secondary ${!selectedTech ? 'active' : ''}`}
           onClick={() => setSelectedTech(null)}
         >
           All Projects
@@ -117,7 +119,7 @@ const Projects: React.FC = () => {
         {allTechnologies.map((tech) => (
           <button
             key={tech}
-            className={`filter-btn ${selectedTech === tech ? 'active' : ''}`}
+            className={`btn btn--secondary ${selectedTech === tech ? 'active' : ''}`}
             onClick={() => setSelectedTech(tech)}
           >
             {tech}
@@ -170,9 +172,9 @@ const Projects: React.FC = () => {
                       href={project.links.github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="project-card__link project-card__link--secondary"
+                      className="btn btn--secondary"
                     >
-                      <Github size={16} />
+                      <FontAwesomeIcon icon={faGithub} size="sm" />
                       GitHub
                     </a>
                   )}
@@ -181,7 +183,7 @@ const Projects: React.FC = () => {
                       href={project.links.live}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="project-card__link project-card__link--primary"
+                      className="btn btn--primary"
                     >
                       <ExternalLink size={16} />
                       Live Demo
