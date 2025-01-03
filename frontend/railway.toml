@@ -6,8 +6,6 @@ buildCommand = "npm ci && npm run build:prod"
 startCommand = "nginx -g 'daemon off;'"
 healthcheckPath = "/"
 healthcheckTimeout = 100
-restartPolicyType = "on-failure"
-restartPolicyMaxRetries = 3
 
 [env]
 NODE_ENV = "production"
