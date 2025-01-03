@@ -3,8 +3,9 @@ WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
-# Install ALL dependencies for building
-RUN npm ci
+
+# Generate a fresh package-lock.json
+RUN npm install
 
 # Copy source code and config files
 COPY . .
@@ -16,21 +17,16 @@ RUN npm run build
 FROM node:20-alpine
 WORKDIR /app
 
-# Copy package files
+# Copy package files and lock file
 COPY package*.json ./
+COPY --from=builder /app/package-lock.json ./
 
-# Install production dependencies with more verbose output
-RUN npm ci --omit=dev --no-audit --no-fund \
-    && npm cache clean --force
+# Install production dependencies
+RUN npm ci --only=production
 
-# Copy built application from builder
+# Copy built application
 COPY --from=builder /app/dist ./dist
 
-# Copy necessary config files
-COPY --from=builder /app/tsconfig*.json ./
-
-# Set NODE_ENV
 ENV NODE_ENV=production
-
 EXPOSE 3000
 CMD ["node", "dist/main"]
