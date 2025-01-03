@@ -1,14 +1,22 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry: './src/main.ts',
   target: 'node',
+  mode: process.env.NODE_ENV === 'production' ? 'production' : 'development',
+  optimization: {
+    minimize: false,
+  },
   output: {
     path: path.join(__dirname, 'dist'),
     filename: 'main.js',
   },
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      '@src': path.resolve(__dirname, 'src/'),
+    },
   },
   module: {
     rules: [
@@ -19,4 +27,9 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production',
+    }),
+  ],
 };
