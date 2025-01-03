@@ -5,16 +5,18 @@ export const ProjectsService = {
   async getAllProjects(): Promise<Project[]> {
     try {
       const response = await fetch(APP_CONFIG.endpoints.projects.base);
-      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to fetch projects');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to fetch projects');
       }
+
+      const data = await response.json();
 
       return data;
     } catch (error) {
       console.error('Failed to fetch projects:', error);
-      return [];
+      throw error;
     }
   },
 

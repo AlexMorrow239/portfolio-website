@@ -102,6 +102,33 @@
       grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     }
   }
+
+  &__error {
+    text-align: center;
+    padding: var(--spacing-xl);
+    max-width: 600px;
+    margin: 0 auto;
+
+    .error-icon {
+      color: var(--color-error);
+      margin-bottom: var(--spacing-md);
+    }
+
+    h3 {
+      color: var(--color-error);
+      margin-bottom: var(--spacing-sm);
+      font-size: 1.5rem;
+    }
+
+    p {
+      color: var(--color-text-light);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    button {
+      margin: 0 auto;
+    }
+  }
 }
 
 // Project Cards

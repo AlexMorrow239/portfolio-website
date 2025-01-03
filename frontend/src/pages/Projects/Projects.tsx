@@ -13,21 +13,27 @@ const Projects: React.FC = () => {
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Fetch projects
+  const fetchProjects = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const fetchedProjects = await ProjectsService.getAllProjects();
+      setProjects(fetchedProjects);
+      setIsSuccess(true);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Failed to fetch projects';
+      console.error('Failed to fetch projects:', error);
+      setError(errorMessage);
+      setIsSuccess(false);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const fetchedProjects = await ProjectsService.getAllProjects();
-        setProjects(fetchedProjects);
-        setIsSuccess(true);
-      } catch (error) {
-        console.error('Failed to fetch projects:', error);
-        setIsSuccess(false);
-      }
-    };
-
-    fetchProjects();
+    void fetchProjects();
   }, []);
 
   // Get unique technologies for filters
@@ -87,6 +93,34 @@ const Projects: React.FC = () => {
         }}
         isSuccess={isSuccess}
       />
+    );
+  }
+
+  // Add error state rendering
+  if (error) {
+    return (
+      <div className="projects">
+        <motion.div
+          className="projects__error"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Terminal size={32} className="error-icon" />
+          <h3>Error Loading Projects</h3>
+          <p>{error}</p>
+          <button
+            className="btn btn--primary"
+            onClick={() => {
+              setIsLoading(true);
+              setError(null);
+              void fetchProjects();
+            }}
+          >
+            Try Again
+          </button>
+        </motion.div>
+      </div>
     );
   }
 
