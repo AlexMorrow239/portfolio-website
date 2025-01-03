@@ -1,15 +1,20 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy package files and TypeScript configs
+# Copy package files and configs first
 COPY package*.json ./
 COPY tsconfig*.json ./
+COPY nest-cli.json ./
+COPY webpack.config.js ./
 
-# Install dependencies
+# Install all dependencies (including dev dependencies)
 RUN npm ci
 
-# Copy source code
-COPY src/ ./src/
+# Copy the entire source code
+COPY . .
+
+# Remove postinstall script temporarily to avoid recursive builds
+RUN npm pkg delete scripts.postinstall
 
 # Build the application
 RUN npm run build
