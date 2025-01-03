@@ -7,7 +7,7 @@ RUN npm run build:prod
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf.template 
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
 HEALTHCHECK --interval=30s --timeout=3s \

@@ -1,3 +1,5 @@
 #!/bin/sh
-envsubst '${RAILWAY_BACKEND_URL}' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf
+envsubst < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+
+# Start nginx
 exec "$@"
