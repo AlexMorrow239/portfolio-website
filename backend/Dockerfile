@@ -1,14 +1,15 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copy package files
+# Copy package files and TypeScript config
 COPY package*.json ./
+COPY tsconfig*.json ./
 
-# Generate a fresh package-lock.json
+# Install dependencies
 RUN npm install
 
-# Copy source code and config files
-COPY . .
+# Copy source code
+COPY src/ ./src/
 
 # Build the application
 RUN npm run build
@@ -17,9 +18,8 @@ RUN npm run build
 FROM node:20-alpine
 WORKDIR /app
 
-# Copy package files and lock file
+# Copy package files
 COPY package*.json ./
-COPY --from=builder /app/package-lock.json ./
 
 # Install production dependencies
 RUN npm ci --only=production
