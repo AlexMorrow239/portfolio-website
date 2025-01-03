@@ -4,11 +4,9 @@ buildCommand = "npm ci && npm run build:prod"
 
 [deploy]
 startCommand = "nginx -g 'daemon off;'"
-restartPolicyType = "on_failure"
 healthcheckPath = "/health"
-healthcheckTimeout = 30
-healthcheckInterval = 15
-restartCount = 3
+healthcheckTimeout = 15
+restartCount = 2
 
 [service]
 internal_port = 80
