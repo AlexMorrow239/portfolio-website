@@ -1,8 +1,14 @@
+import { AuthUtils } from '@/utils/auth';
 import { APP_CONFIG } from '../config';
 
-export interface LoginCredentials {
+interface LoginCredentials {
   username: string;
   password: string;
+}
+
+interface LoginResponse {
+  access_token: string;
+  message?: string;
 }
 
 export const AuthService = {
@@ -16,12 +22,14 @@ export const AuthService = {
         body: JSON.stringify(credentials),
       });
 
-      const data = await response.json();
+      const data = (await response.json()) as LoginResponse;
 
       if (!response.ok) {
-        throw new Error(data.message || 'Login failed');
+        throw new Error(data.message ?? 'Login failed');
       }
 
+      // Store the token
+      localStorage.setItem('adminToken', data.access_token);
       return data;
     } catch (error) {
       console.error('Login error:', error);
@@ -30,10 +38,11 @@ export const AuthService = {
   },
 
   logout() {
-    localStorage.removeItem('adminToken');
+    AuthUtils.clearToken();
   },
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('adminToken');
+    const token = AuthUtils.getStoredToken();
+    return AuthUtils.isTokenValid(token);
   },
 };

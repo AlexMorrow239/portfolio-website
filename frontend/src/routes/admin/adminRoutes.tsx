@@ -1,9 +1,10 @@
 import { Navigate } from 'react-router-dom';
-import { AdminRouteObject } from './types';
+import { type AdminRouteObject } from './types';
 import AdminLayoutWrapper from '@/pages/Admin/AdminLayoutWrapper';
 import AdminProjects from '@/pages/Admin/Projects/AdminProjects';
 import ProjectForm from '@/pages/Admin/Projects/ProjectForm';
 import { Login } from '@/pages/Admin/Login/Login';
+import { AuthGuard } from '@components/auth/AuthGuard';
 
 export const adminRoutes: AdminRouteObject[] = [
   {
@@ -17,7 +18,11 @@ export const adminRoutes: AdminRouteObject[] = [
   },
   {
     path: '/admin',
-    element: <AdminLayoutWrapper />,
+    element: (
+      <AuthGuard>
+        <AdminLayoutWrapper />
+      </AuthGuard>
+    ),
     title: 'Admin Dashboard',
     requiresAuth: true,
     permissions: ['admin'],

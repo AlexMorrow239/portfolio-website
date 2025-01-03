@@ -1,32 +1,44 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LogIn } from 'lucide-react';
-import { AuthService } from '../../../services/auth.service';
-import { LoginFormData } from '@/types/auth';
+import { AuthService } from '@/services/auth.service';
+import { type LoginFormData } from '@/types/auth';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const location = useLocation();
+  const [formData, setFormData] = useState<LoginFormData>({
+    username: '',
+    password: '',
+  });
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  useEffect(() => {
+    if (AuthService.isAuthenticated()) {
+      navigate('/admin/projects', { replace: true });
+    }
+  }, [navigate]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
-
-    const formData: LoginFormData = {
-      username,
-      password,
-    };
-
     setLoading(true);
     setError('');
 
     try {
-      const response = await AuthService.login(formData);
-      localStorage.setItem('adminToken', response.access_token);
-      navigate('/admin/projects');
+      await AuthService.login(formData);
+
+      const from = (location.state as any)?.from || '/admin/projects';
+      navigate(from, { replace: true });
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Login failed');
     } finally {
@@ -52,8 +64,9 @@ export const Login: React.FC = () => {
             <input
               type="text"
               id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
               required
             />
           </div>
@@ -62,8 +75,9 @@ export const Login: React.FC = () => {
             <input
               type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               required
             />
           </div>

@@ -37,12 +37,14 @@ $color-green-600: #059669;
   --color-border: #{$color-gray-200};
   --color-background-alt: #{$color-gray-50};
   --color-error: #{$color-red-600};
+  --color-error-light: rgba(var(--color-error-rgb), 0.1);
   --color-success: #{$color-green-600};
 
   // Colors - RGB
   --color-background-rgb: 255, 255, 255;
   --color-primary-rgb: 37, 99, 235;
   --color-secondary-rgb: 79, 70, 229;
+  --color-error-rgb: 220, 38, 38;
   --shadow-rgb: 0, 0, 0;
 
   // Brand Colors

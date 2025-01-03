@@ -2,13 +2,9 @@
 
 // Layout
 .admin-layout {
-  display: grid;
-  grid-template-columns: 250px 1fr;
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-
-  @include respond-to('sm') {
-    grid-template-columns: 1fr;
-  }
 }
 
 // Navigation
@@ -17,6 +13,9 @@
   border-right: 1px solid var(--color-border);
   padding: var(--spacing-lg);
   z-index: 1000;
+  height: 100vh;
+  position: sticky;
+  top: 0;
 
   @include respond-to('sm') {
     position: fixed;
@@ -43,9 +42,23 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    height: calc(100% - 80px); // Adjust based on your header height
+    display: flex;
+    flex-direction: column;
+
+    // Add this for the bottom menu items
+    &-bottom {
+      margin-top: auto;
+      border-top: 1px solid var(--color-border);
+      padding-top: var(--spacing-md);
+    }
 
     li {
       margin-bottom: var(--spacing-sm);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
     }
 
     a,
@@ -60,6 +73,10 @@
       transition: all 0.2s ease;
       width: 100%;
       text-align: left;
+      background: none;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
 
       &:hover {
         background-color: var(--color-background-alt);
@@ -76,15 +93,53 @@
       }
     }
   }
+
+  // Add styles for the logout button
+  &__logout {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    color: var(--color-error);
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1rem;
+
+    &:hover {
+      background-color: var(--color-error-light);
+      color: var(--color-error);
+      transform: translateX(4px);
+    }
+
+    svg {
+      transition: transform 0.2s ease;
+    }
+
+    &:hover svg {
+      transform: translateX(2px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-error);
+      outline-offset: 2px;
+    }
+  }
 }
 
 // Main Content
 .admin-content {
-  padding: var(--spacing-xl);
-  overflow-x: hidden;
+  flex: 1;
+  padding: calc(80px + var(--spacing-xl)) var(--spacing-xl) var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
 
   @include respond-to('sm') {
-    padding: var(--spacing-md);
+    padding: calc(80px + var(--spacing-md)) var(--spacing-md) var(--spacing-md);
   }
 }
 

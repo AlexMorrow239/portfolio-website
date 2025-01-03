@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 
 type Theme = 'light' | 'dark';
 
-export const useTheme = () => {
+interface UseThemeReturn {
+  isDarkMode: boolean;
+  toggleTheme: () => void;
+}
+
+export const useTheme = (): UseThemeReturn => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
     const savedTheme = localStorage.getItem('theme');
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -15,7 +20,7 @@ export const useTheme = () => {
     localStorage.setItem('theme', theme);
   }, [isDarkMode]);
 
-  const toggleTheme = () => {
+  const toggleTheme = (): void => {
     setIsDarkMode((prev) => !prev);
   };
 

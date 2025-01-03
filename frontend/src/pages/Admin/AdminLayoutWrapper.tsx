@@ -1,22 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AdminLayout from './AdminLayout';
+import { AuthService } from '@/services/auth.service';
 
-const useAuth = () => {
-  const token = localStorage.getItem('adminToken');
-  return !!token;
-};
+const AdminLayoutWrapper: React.FC = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = AuthService.isAuthenticated();
 
-const AdminLayoutWrapper = () => {
-  const isAuthenticated = useAuth();
-  return (
-    <AdminLayout
-      isAuthenticated={isAuthenticated}
-      onLogout={() => {
-        localStorage.removeItem('adminToken');
-        window.location.href = '/admin/login';
-      }}
-    />
-  );
+  useEffect(() => {
+    // Check authentication status on mount and redirect if not authenticated
+    if (!isAuthenticated) {
+      navigate('/admin/login', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
+  return <AdminLayout isAuthenticated={isAuthenticated} />;
 };
 
 export default AdminLayoutWrapper;
