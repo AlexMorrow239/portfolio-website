@@ -11,41 +11,63 @@ import { json } from 'express';
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
+
+  // Log all environment variables at startup
+  logger.debug('==== All Environment Variables ====');
+  Object.keys(process.env).forEach((key) => {
+    const isSensitive =
+      key.includes('SECRET') || key.includes('PASSWORD') || key.includes('URI');
+    logger.debug(`${key}: ${isSensitive ? '[HIDDEN]' : process.env[key]}`);
+  });
+  logger.debug('==== End Environment Variables ====');
+
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     logger: ['error', 'warn', 'log', 'debug', 'verbose'],
   });
+
   const configService = app.get(ConfigService);
 
-  // Add debugging logs for environment
-  logger.debug('==== Environment Variables Debug ====');
-  logger.debug(`NODE_ENV: ${process.env.NODE_ENV}`);
-  logger.debug(`JWT_SECRET: ${process.env.JWT_SECRET ? 'Set' : 'Not Set'}`);
-  logger.debug(
-    `ADMIN_USERNAME: ${process.env.ADMIN_USERNAME ? 'Set' : 'Not Set'}`,
-  );
-  logger.debug(
-    `ADMIN_PASSWORD: ${process.env.ADMIN_PASSWORD ? 'Set' : 'Not Set'}`,
-  );
-  logger.debug(`MONGODB_URI: ${process.env.MONGODB_URI ? 'Set' : 'Not Set'}`);
-  logger.debug('==== End Environment Variables ====');
-  logger.debug('==== ConfigService Values Debug ====');
-  logger.debug(
-    `JWT_SECRET from ConfigService: ${configService.get('JWT_SECRET') ? 'Set' : 'Not Set'}`,
-  );
-  logger.debug(
-    `ADMIN_USERNAME from ConfigService: ${configService.get('ADMIN_USERNAME') ? 'Set' : 'Not Set'}`,
-  );
-  logger.debug(
-    `ADMIN_PASSWORD from ConfigService: ${configService.get('ADMIN_PASSWORD') ? 'Set' : 'Not Set'}`,
-  );
+  // Add debugging logs for critical environment variables
+  logger.debug('==== Critical Environment Variables ====');
+  const criticalVars = {
+    NODE_ENV: process.env.NODE_ENV,
+    JWT_SECRET: process.env.JWT_SECRET ? '[SET]' : '[NOT SET]',
+    MONGODB_URI: process.env.MONGODB_URI ? '[SET]' : '[NOT SET]',
+    ADMIN_USERNAME: process.env.ADMIN_USERNAME ? '[SET]' : '[NOT SET]',
+    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD ? '[SET]' : '[NOT SET]',
+    FRONTEND_URL: process.env.FRONTEND_URL || '[NOT SET]',
+    PORT: process.env.PORT || '3000',
+  };
+  Object.entries(criticalVars).forEach(([key, value]) => {
+    logger.debug(`${key}: ${value}`);
+  });
+  logger.debug('==== End Critical Variables ====');
+
+  // Add debugging logs for ConfigService
+  logger.debug('==== ConfigService Values ====');
+  const configVars = {
+    JWT_SECRET: configService.get('JWT_SECRET') ? '[SET]' : '[NOT SET]',
+    MONGODB_URI: configService.get('MONGODB_URI') ? '[SET]' : '[NOT SET]',
+    ADMIN_USERNAME: configService.get('ADMIN_USERNAME') ? '[SET]' : '[NOT SET]',
+    ADMIN_PASSWORD: configService.get('ADMIN_PASSWORD') ? '[SET]' : '[NOT SET]',
+  };
+  Object.entries(configVars).forEach(([key, value]) => {
+    logger.debug(`${key} from ConfigService: ${value}`);
+  });
   logger.debug('==== End ConfigService Values ====');
 
   // Validate required environment variables
-  const requiredEnvVars = ['JWT_SECRET', 'ADMIN_USERNAME', 'ADMIN_PASSWORD'];
-  for (const envVar of requiredEnvVars) {
-    if (!process.env[envVar]) {
-      throw new Error(`Missing required environment variable: ${envVar}`);
-    }
+  const requiredEnvVars = [
+    'JWT_SECRET',
+    'ADMIN_USERNAME',
+    'ADMIN_PASSWORD',
+    'MONGODB_URI',
+  ];
+  const missingVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
+  if (missingVars.length > 0) {
+    const errorMessage = `Missing required environment variables: ${missingVars.join(', ')}`;
+    logger.error(errorMessage);
+    throw new Error(errorMessage);
   }
 
   // Production security middleware
@@ -78,13 +100,16 @@ async function bootstrap() {
     'http://localhost:5173', // Local development
     'http://localhost:4173', // Vite preview
     'http://localhost', // Local docker
-    configService.get('FRONTEND_URL'), // Production URL (from env)
-  ].filter(Boolean); // Remove any undefined values
+    configService.get('FRONTEND_URL'), // Production URL
+  ].filter(Boolean);
+
+  logger.debug('==== CORS Configuration ====');
+  logger.debug(`Allowed Origins: ${allowedOrigins.join(', ')}`);
+  logger.debug('==== End CORS Configuration ====');
 
   // Enable CORS with configurable origin
   app.enableCors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) {
         callback(null, true);
         return;
@@ -103,7 +128,7 @@ async function bootstrap() {
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
-    maxAge: 3600, // 1 hour
+    maxAge: 3600,
   });
 
   app.useGlobalPipes(new ValidationPipe());
@@ -121,25 +146,14 @@ async function bootstrap() {
     });
   }
 
-  // Log all registered routes in development
-  if (process.env.NODE_ENV !== 'production') {
-    const server = app.getHttpServer();
-    const router = (server as any)._events.request._router;
-
-    logger.log(`Environment: ${process.env.NODE_ENV}`);
-    logger.log('Mapped routes:');
-    router.stack.forEach((route) => {
-      if (route.route) {
-        logger.log(
-          `${route.route.stack[0].method.toUpperCase()} ${route.route.path}`,
-        );
-      }
-    });
-  }
-
   const port = process.env.PORT || 3000;
   await app.listen(port);
   logger.log(`Application is running on: ${await app.getUrl()}`);
+  logger.log(`Environment: ${process.env.NODE_ENV}`);
 }
 
-bootstrap();
+bootstrap().catch((error) => {
+  const logger = new Logger('Bootstrap');
+  logger.error('Failed to start application:', error);
+  process.exit(1);
+});
