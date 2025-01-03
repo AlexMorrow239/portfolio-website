@@ -56,13 +56,13 @@ const TechArsenal = () => {
           </div>
           <ul className="tech-arsenal__list">
             <motion.li whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
-              Node.js & Express
+              Nest.js (Express + Node.js Wrapper)
             </motion.li>
             <motion.li whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
               Python & FastAPI
             </motion.li>
             <motion.li whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
-              Go
+              Postman & Swagger (Backend Testing Tools)
             </motion.li>
           </ul>
         </motion.div>

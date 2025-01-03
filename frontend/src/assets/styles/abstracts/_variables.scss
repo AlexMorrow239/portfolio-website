@@ -39,6 +39,12 @@ $color-green-600: #059669;
   --color-error: #{$color-red-600};
   --color-success: #{$color-green-600};
 
+  // Colors - RGB
+  --color-background-rgb: 255, 255, 255;
+  --color-primary-rgb: 37, 99, 235;
+  --color-secondary-rgb: 79, 70, 229;
+  --shadow-rgb: 0, 0, 0;
+
   // Brand Colors
   --github-color: #6e40c9;
   --github-gradient: linear-gradient(135deg, #6e40c9 0%, #8957e5 100%);
@@ -107,6 +113,11 @@ $color-green-600: #059669;
   --color-secondary: #{$color-indigo-500};
   --color-secondary-dark: #{$color-indigo-600};
   --color-secondary-light: #{color.adjust($color-indigo-500, $lightness: 10%)};
+  // Colors - RGB
+  --shadow-rgb: 0, 0, 0;
+  --color-background-rgb: 18, 18, 18; // Dark mode
+  --color-primary-rgb: 37, 99, 235;
+  --color-primary-dark: #1e40af;
 
   // Brand Colors - Lighter versions for dark mode
   --github-color: #a371f7;

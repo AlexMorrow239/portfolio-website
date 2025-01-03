@@ -1,5 +1,3 @@
-// src/assets/styles/abstracts/_mixins.scss
-
 @mixin respond-to($breakpoint) {
   @if $breakpoint == "sm" {
     @media (min-width: 640px) {
@@ -30,4 +28,35 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+@mixin timeline-node {
+  content: '';
+  position: absolute;
+  left: calc(var(--spacing-md) * -1);
+  width: 0.5rem; // Smaller node size
+  height: 0.5rem; // Smaller node size
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 2px solid var(--color-background); // Thinner border
+  box-shadow: 0 0 0 2px var(--color-primary-transparent);
+  transition: all 0.2s ease;
+  transform: translateX(-50%); // Center the node on the line
+  
+  @include respond-to('sm') {
+    left: calc(var(--spacing-xl) * -1);
+  }
+}
+
+// Timeline connector mixin
+@mixin timeline-connector {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px; // Thinner line
+  background: var(--color-primary);
+  opacity: 0.2;
+  transform: translateX(-50%); // Center the line with the nodes
 }
