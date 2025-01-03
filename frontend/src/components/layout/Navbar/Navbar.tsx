@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Sun, Moon } from "lucide-react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub, faLinkedin } from "@fortawesome/free-brands-svg-icons";
-import { useTheme } from "@hooks/useTheme";
-import "./Navbar.scss";
+import React, { useState, useEffect } from 'react';
+import { NavLink } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Sun, Moon } from 'lucide-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { useTheme } from '@hooks/useTheme';
+import './Navbar.scss';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -14,46 +14,42 @@ const Navbar: React.FC = () => {
   const { isDarkMode, toggleTheme } = useTheme();
 
   const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/projects", label: "Projects" },
-    { path: "/about", label: "About" },
-    { path: "/contact", label: "Contact" },
+    { path: '/', label: 'Home' },
+    { path: '/projects', label: 'Projects' },
+    { path: '/about', label: 'About' },
+    { path: '/contact', label: 'Contact' },
   ];
 
   const socialLinks = [
     {
       url: import.meta.env.VITE_GITHUB_URL,
       icon: <FontAwesomeIcon icon={faGithub} size="lg" />,
-      label: "GitHub",
+      label: 'GitHub',
     },
     {
       url: import.meta.env.VITE_LINKEDIN_URL,
       icon: <FontAwesomeIcon icon={faLinkedin} size="lg" />,
-      label: "LinkedIn",
+      label: 'LinkedIn',
     },
   ];
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
-      const scrollHeight =
-        document.documentElement.scrollHeight - window.innerHeight;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (scrollPosition / scrollHeight) * 100;
 
       setScrolled(scrollPosition > 50);
       setScrollProgress(progress);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
-      <motion.div
-        className="navbar__progress"
-        style={{ scaleX: scrollProgress / 100 }}
-      />
+    <nav className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}>
+      <motion.div className="navbar__progress" style={{ scaleX: scrollProgress / 100 }} />
 
       <div className="navbar__container">
         {/* Logo */}
@@ -67,9 +63,7 @@ const Navbar: React.FC = () => {
             <NavLink
               key={item.path}
               to={item.path}
-              className={({ isActive }) =>
-                `navbar__link ${isActive ? "navbar__link--active" : ""}`
-              }
+              className={({ isActive }) => `navbar__link ${isActive ? 'navbar__link--active' : ''}`}
             >
               {item.label}
             </NavLink>
@@ -93,16 +87,8 @@ const Navbar: React.FC = () => {
             ))}
           </div>
 
-          <button
-            className="navbar__theme-toggle"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-          >
-            {isDarkMode ? (
-              <Sun size={20} data-icon="sun" />
-            ) : (
-              <Moon size={20} data-icon="moon" />
-            )}
+          <button className="navbar__theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
+            {isDarkMode ? <Sun size={20} data-icon="sun" /> : <Moon size={20} data-icon="moon" />}
           </button>
 
           {/* Mobile Toggle - Now only shows on mobile */}
@@ -120,9 +106,9 @@ const Navbar: React.FC = () => {
           {isOpen && (
             <motion.div
               className="navbar__mobile"
-              initial={{ opacity: 0, x: "100%" }}
+              initial={{ opacity: 0, x: '100%' }}
               animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: "100%" }}
+              exit={{ opacity: 0, x: '100%' }}
               transition={{ duration: 0.3 }}
             >
               <div className="navbar__mobile-links">
@@ -131,9 +117,7 @@ const Navbar: React.FC = () => {
                     key={item.path}
                     to={item.path}
                     className={({ isActive }) =>
-                      `navbar__mobile-link ${
-                        isActive ? "navbar__mobile-link--active" : ""
-                      }`
+                      `navbar__mobile-link ${isActive ? 'navbar__mobile-link--active' : ''}`
                     }
                     onClick={() => setIsOpen(false)}
                   >

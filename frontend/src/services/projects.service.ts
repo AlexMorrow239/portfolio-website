@@ -1,5 +1,5 @@
-import { Project } from "../types/project";
-import { APP_CONFIG } from "../config";
+import { Project } from '../types/project';
+import { APP_CONFIG } from '../config';
 
 export const ProjectsService = {
   async getAllProjects(): Promise<Project[]> {
@@ -8,12 +8,12 @@ export const ProjectsService = {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || "Failed to fetch projects");
+        throw new Error(data.error?.message || 'Failed to fetch projects');
       }
 
       return data;
     } catch (error) {
-      console.error("Failed to fetch projects:", error);
+      console.error('Failed to fetch projects:', error);
       return [];
     }
   },
@@ -22,18 +22,18 @@ export const ProjectsService = {
     try {
       const response = await fetch(APP_CONFIG.endpoints.projects.admin, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
         },
       });
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || "Failed to fetch projects");
+        throw new Error(data.error?.message || 'Failed to fetch projects');
       }
 
       return data;
     } catch (error) {
-      console.error("Failed to fetch projects:", error);
+      console.error('Failed to fetch projects:', error);
       return [];
     }
   },
@@ -44,12 +44,12 @@ export const ProjectsService = {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || "Failed to fetch project");
+        throw new Error(data.error?.message || 'Failed to fetch project');
       }
 
       return data;
     } catch (error) {
-      console.error("Failed to fetch project:", error);
+      console.error('Failed to fetch project:', error);
       return null;
     }
   },

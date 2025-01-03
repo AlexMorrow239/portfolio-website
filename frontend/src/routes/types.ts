@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import { RouteObject } from 'react-router-dom';
 
 // Base route type extending React Router's RouteObject
 export type AppRouteObject = RouteObject & {

@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import { LogIn } from "lucide-react";
-import { AuthService } from "../../../services/auth.service";
-import { LoginFormData } from "@/types/auth";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { LogIn } from 'lucide-react';
+import { AuthService } from '../../../services/auth.service';
+import { LoginFormData } from '@/types/auth';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -21,14 +21,14 @@ export const Login: React.FC = () => {
     };
 
     setLoading(true);
-    setError("");
+    setError('');
 
     try {
       const response = await AuthService.login(formData);
-      localStorage.setItem("adminToken", response.access_token);
-      navigate("/admin/projects");
+      localStorage.setItem('adminToken', response.access_token);
+      navigate('/admin/projects');
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Login failed");
+      setError(error instanceof Error ? error.message : 'Login failed');
     } finally {
       setLoading(false);
     }
@@ -67,12 +67,8 @@ export const Login: React.FC = () => {
               required
             />
           </div>
-          <button
-            type="submit"
-            className="button button--primary button--block"
-            disabled={loading}
-          >
-            {loading ? "Logging in..." : "Login"}
+          <button type="submit" className="button button--primary button--block" disabled={loading}>
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
       </motion.div>

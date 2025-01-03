@@ -1,15 +1,15 @@
-@use "../../assets/styles/abstracts/index" as *;
+@use '../../assets/styles/abstracts/index' as *;
 
 .about {
   max-width: 7xl;
   margin: 0 auto;
   padding: var(--spacing-md) var(--spacing-sm);
 
-  @include respond-to("sm") {
+  @include respond-to('sm') {
     padding: var(--spacing-xl) var(--spacing-lg);
   }
 
-  @include respond-to("lg") {
+  @include respond-to('lg') {
     padding: var(--spacing-xl) var(--spacing-xl);
   }
 
@@ -28,14 +28,9 @@
       transform: translateX(-50%);
       width: 60%;
       height: 1px;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        var(--color-border),
-        transparent
-      );
+      background: linear-gradient(90deg, transparent, var(--color-border), transparent);
 
-      @include respond-to("sm") {
+      @include respond-to('sm') {
         width: 40%;
       }
     }
@@ -64,7 +59,7 @@
       padding-bottom: 0;
     }
 
-    @include respond-to("sm") {
+    @include respond-to('sm') {
       margin-bottom: var(--spacing-xxxl);
       padding: var(--spacing-xxl) 0;
     }
@@ -77,7 +72,7 @@
     gap: var(--spacing-xs);
     margin-bottom: var(--spacing-lg);
 
-    @include respond-to("sm") {
+    @include respond-to('sm') {
       gap: var(--spacing-sm);
       margin-bottom: var(--spacing-xl);
     }
@@ -87,7 +82,7 @@
       line-height: 1;
       margin: 0;
 
-      @include respond-to("sm") {
+      @include respond-to('sm') {
         font-size: 2rem;
       }
     }
@@ -100,7 +95,7 @@
       position: relative;
       top: 1px; // Fine-tune vertical alignment
 
-      @include respond-to("sm") {
+      @include respond-to('sm') {
         width: 2rem;
         height: 2rem;
       }
@@ -112,17 +107,13 @@
       font-size: 1.75rem;
       font-weight: bold;
       margin-bottom: var(--spacing-md);
-      background: linear-gradient(
-        45deg,
-        var(--color-primary),
-        var(--color-secondary)
-      );
+      background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
       padding: 0 var(--spacing-sm);
 
-      @include respond-to("sm") {
+      @include respond-to('sm') {
         font-size: 2.5rem;
         margin-bottom: var(--spacing-lg);
         padding: 0;
@@ -136,7 +127,7 @@
       max-width: 65ch;
       margin: 0 auto;
 
-      @include respond-to("sm") {
+      @include respond-to('sm') {
         font-size: 1.25rem;
         padding: 0;
       }

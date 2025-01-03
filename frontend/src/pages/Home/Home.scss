@@ -1,5 +1,5 @@
-@use "../../assets/styles/abstracts/index" as *;
-@use "../../assets/styles/components/index" as *;
+@use '../../assets/styles/abstracts/index' as *;
+@use '../../assets/styles/components/index' as *;
 
 .home {
   min-height: 100vh;
@@ -65,11 +65,11 @@
     line-height: 1.1;
     margin-bottom: var(--spacing-lg);
 
-    @include respond-to("sm") {
+    @include respond-to('sm') {
       font-size: 3rem;
     }
 
-    @include respond-to("md") {
+    @include respond-to('md') {
       font-size: 4rem;
     }
 
@@ -92,14 +92,14 @@
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    opacity: 0; 
+    opacity: 0;
     animation: fadeIn 0.5s ease-in 0.3s forwards;
 
-    @include respond-to("sm") {
+    @include respond-to('sm') {
       font-size: 1.125rem;
     }
 
-    @include respond-to("md") {
+    @include respond-to('md') {
       font-size: 1.25rem;
     }
   }
@@ -111,7 +111,7 @@
     gap: var(--spacing-md);
     margin-bottom: var(--spacing-xl);
 
-    @include respond-to("sm") {
+    @include respond-to('sm') {
       flex-direction: row;
       justify-content: center;
     }
@@ -140,7 +140,7 @@
 .skills {
   background: var(--color-background-alt);
   position: relative;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -148,11 +148,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-      135deg,
-      var(--overlay-primary) 0%,
-      transparent 100%
-    );
+    background: linear-gradient(135deg, var(--overlay-primary) 0%, transparent 100%);
     pointer-events: none;
   }
 
@@ -202,11 +198,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-      135deg,
-      var(--overlay-primary) 0%,
-      transparent 100%
-    );
+    background: linear-gradient(135deg, var(--overlay-primary) 0%, transparent 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -245,7 +237,7 @@
     margin-bottom: var(--spacing-sm);
     color: var(--color-text);
     position: relative;
-    
+
     &::after {
       content: '';
       display: block;
@@ -320,11 +312,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(
-      135deg,
-      var(--overlay-primary) 0%,
-      transparent 100%
-    );
+    background: linear-gradient(135deg, var(--overlay-primary) 0%, transparent 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
   }
@@ -383,13 +371,13 @@
     font-size: 0.875rem;
     position: relative;
     padding-left: var(--spacing-md);
-    padding-bottom: var(--spacing-xs); 
-    
+    padding-bottom: var(--spacing-xs);
+
     &::before {
       content: '';
       position: absolute;
       left: 0;
-      top: 0.7em; 
+      top: 0.7em;
       width: 9px;
       height: 2px;
       background: var(--color-primary);
@@ -406,10 +394,10 @@
   .metric-card {
     flex-direction: column;
     text-align: center;
-    
+
     &__description {
       padding-left: 0;
-      
+
       &::before {
         display: none;
       }
@@ -420,15 +408,10 @@
 .section-divider {
   position: relative;
   height: 2px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--color-primary) 50%,
-    transparent 100%
-  );
+  background: linear-gradient(to right, transparent 0%, var(--color-primary) 50%, transparent 100%);
   margin: var(--spacing-xl) 0;
   opacity: 0.3;
-  
+
   &::before {
     content: '';
     position: absolute;

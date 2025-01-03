@@ -1,8 +1,8 @@
-import React from "react";
-import AdminLayout from "./AdminLayout";
+import React from 'react';
+import AdminLayout from './AdminLayout';
 
 const useAuth = () => {
-  const token = localStorage.getItem("adminToken");
+  const token = localStorage.getItem('adminToken');
   return !!token;
 };
 
@@ -12,8 +12,8 @@ const AdminLayoutWrapper = () => {
     <AdminLayout
       isAuthenticated={isAuthenticated}
       onLogout={() => {
-        localStorage.removeItem("adminToken");
-        window.location.href = "/admin/login";
+        localStorage.removeItem('adminToken');
+        window.location.href = '/admin/login';
       }}
     />
   );

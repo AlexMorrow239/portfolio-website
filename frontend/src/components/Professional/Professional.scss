@@ -1,14 +1,14 @@
-@use "../../assets/styles/abstracts/index" as *;
+@use '../../assets/styles/abstracts/index' as *;
 
 .professional {
   &__timeline {
     position: relative;
     padding-left: var(--spacing-md);
-    
+
     @include respond-to('sm') {
       padding-left: var(--spacing-xl);
     }
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -26,16 +26,16 @@
     position: relative;
     margin-bottom: var(--spacing-lg);
     padding: var(--spacing-sm);
-    
+
     @include respond-to('sm') {
       margin-bottom: var(--spacing-xl);
       padding: var(--spacing-md);
     }
-    
+
     &:last-child {
       margin-bottom: 0;
     }
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -49,19 +49,19 @@
       transition: all 0.2s ease;
       transform: translateX(-50%);
       top: 0.75rem;
-      
+
       @include respond-to('sm') {
         left: calc(var(--spacing-xl) * -1);
       }
     }
-    
+
     @include respond-to('sm') {
       &:hover {
         transform: translateX(var(--spacing-sm));
-        
+
         &::before {
           transform: translateX(-50%) scale(1.2);
-          box-shadow: 
+          box-shadow:
             0 0 0 2px var(--color-primary-transparent),
             0 2px 4px rgba(0, 0, 0, 0.1);
         }
@@ -77,7 +77,7 @@
       font-size: 1.25rem;
       color: var(--color-primary);
       margin: 0;
-      
+
       @include respond-to('sm') {
         font-size: 1.5rem;
       }
@@ -89,10 +89,10 @@
     padding: var(--spacing-xs);
     border-radius: var(--border-radius);
     transition: all 0.3s ease;
-    
+
     &:hover {
       background: var(--color-background-alt);
-      
+
       .icon {
         color: var(--color-primary);
       }
@@ -108,7 +108,7 @@
 
   &__position {
     margin-left: var(--spacing-sm);
-    
+
     @include respond-to('sm') {
       margin-left: var(--spacing-md);
     }
@@ -120,20 +120,20 @@
     padding: var(--spacing-md);
     border: 1px solid var(--color-border);
     transition: all 0.3s ease;
-    
+
     @include respond-to('sm') {
       padding: var(--spacing-lg);
     }
-    
+
     @supports (backdrop-filter: blur(8px)) {
       backdrop-filter: blur(8px);
       background: color-mix(in srgb, var(--color-background-alt) 80%, transparent);
     }
-    
+
     @include respond-to('sm') {
       &:hover {
         border-color: var(--color-primary);
-        box-shadow: 
+        box-shadow:
           0 8px 24px rgba(0, 0, 0, 0.1),
           0 0 0 1px var(--color-primary-transparent);
         transform: translateY(-2px);
@@ -144,7 +144,7 @@
       font-size: 1.1rem;
       margin: 0 0 var(--spacing-xs);
       color: var(--color-text);
-      
+
       @include respond-to('sm') {
         font-size: 1.25rem;
       }
@@ -155,7 +155,7 @@
       color: var(--color-text-light);
       line-height: 1.6;
       font-size: 0.95rem;
-      
+
       @include respond-to('sm') {
         font-size: 1rem;
         line-height: 1.7;

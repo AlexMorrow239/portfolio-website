@@ -1,4 +1,4 @@
-@use "../../../assets/styles/abstracts/index" as *;
+@use '../../../assets/styles/abstracts/index' as *;
 
 .navbar {
   position: fixed;
@@ -53,7 +53,7 @@
   &__nav {
     display: none;
 
-    @include respond-to("md") {
+    @include respond-to('md') {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -76,7 +76,7 @@
       color: var(--color-primary);
 
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         bottom: 0;
         left: 0;
@@ -88,7 +88,7 @@
     }
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       bottom: 0;
       left: 0;
@@ -117,7 +117,7 @@
     gap: var(--spacing-lg);
     z-index: 999;
 
-    @include respond-to("md") {
+    @include respond-to('md') {
       display: none;
     }
   }
@@ -172,7 +172,7 @@
         }
 
         // GitHub brand styling
-        &[aria-label="GitHub"]:hover {
+        &[aria-label='GitHub']:hover {
           color: #333; // GitHub's brand color
           background-color: rgba(51, 51, 51, 0.1);
           transform: translateY(-3px);
@@ -183,7 +183,7 @@
         }
 
         // LinkedIn brand styling
-        &[aria-label="LinkedIn"]:hover {
+        &[aria-label='LinkedIn']:hover {
           color: #0077b5; // LinkedIn's brand color
           background-color: rgba(0, 119, 181, 0.1);
           transform: translateY(-3px);
@@ -220,7 +220,7 @@
     color: var(--color-text);
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       border-radius: 50%;
@@ -235,7 +235,7 @@
     }
 
     // Sun icon styling
-    &:has(svg[data-icon="sun"]) {
+    &:has(svg[data-icon='sun']) {
       &::before {
         background: var(--sun-gradient);
       }
@@ -255,7 +255,7 @@
     }
 
     // Moon icon styling
-    &:has(svg[data-icon="moon"]) {
+    &:has(svg[data-icon='moon']) {
       &::before {
         background: var(--moon-gradient);
       }
@@ -296,7 +296,7 @@
     color: var(--color-text);
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       border-radius: 50%;
@@ -333,7 +333,7 @@
     }
 
     // Special animation for the close icon
-    &[aria-expanded="true"] {
+    &[aria-expanded='true'] {
       svg {
         transform: rotate(90deg);
       }
@@ -343,13 +343,13 @@
       }
     }
 
-    @include respond-to("md") {
+    @include respond-to('md') {
       display: none;
     }
   }
 
   &__mobile-toggle {
-    @include respond-to("md") {
+    @include respond-to('md') {
       display: none;
     }
 
@@ -357,7 +357,7 @@
       transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    &[data-open="true"] svg {
+    &[data-open='true'] svg {
       transform: rotate(90deg);
     }
   }
@@ -385,7 +385,7 @@
     isolation: isolate;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       opacity: 0;
@@ -398,7 +398,7 @@
     }
 
     // GitHub brand styling
-    &[aria-label="GitHub"] {
+    &[aria-label='GitHub'] {
       &::before {
         border-radius: 50%;
         background: var(--github-gradient);
@@ -420,7 +420,7 @@
     }
 
     // LinkedIn brand styling
-    &[aria-label="LinkedIn"] {
+    &[aria-label='LinkedIn'] {
       &::before {
         border-radius: 8px;
         background: var(--linkedin-gradient);
@@ -457,7 +457,7 @@
       isolation: isolate;
 
       &::before {
-        content: "";
+        content: '';
         position: absolute;
         inset: 0;
         opacity: 0;
@@ -469,7 +469,7 @@
         transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
-      &[aria-label="GitHub"] {
+      &[aria-label='GitHub'] {
         &::before {
           border-radius: 50%;
           background: var(--github-gradient);
@@ -490,7 +490,7 @@
         }
       }
 
-      &[aria-label="LinkedIn"] {
+      &[aria-label='LinkedIn'] {
         &::before {
           border-radius: 8px;
           background: var(--linkedin-gradient);

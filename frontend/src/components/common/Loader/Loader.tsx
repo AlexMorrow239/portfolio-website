@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { ReactTyped } from "react-typed";
-import { Terminal, CheckCircle2 } from "lucide-react";
-import "./Loader.scss";
+import React, { useState, useEffect } from 'react';
+import { ReactTyped } from 'react-typed';
+import { Terminal, CheckCircle2 } from 'lucide-react';
+import './Loader.scss';
 
 interface LoaderProps {
   messages?: string[];
@@ -12,8 +12,8 @@ interface LoaderProps {
 }
 
 const Loader: React.FC<LoaderProps> = ({
-  messages = ["Initializing...", "Loading data...", "Almost there..."],
-  completionMessage = "Loading complete!",
+  messages = ['Initializing...', 'Loading data...', 'Almost there...'],
+  completionMessage = 'Loading complete!',
   duration = 3000,
   onComplete,
   isSuccess = false,

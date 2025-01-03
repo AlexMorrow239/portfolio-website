@@ -1,5 +1,5 @@
 // src/components/layout/Container/Container.tsx
-import React from "react";
+import React from 'react';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -7,17 +7,9 @@ interface ContainerProps {
   fluid?: boolean;
 }
 
-const Container: React.FC<ContainerProps> = ({
-  children,
-  className = "",
-  fluid = false,
-}) => {
+const Container: React.FC<ContainerProps> = ({ children, className = '', fluid = false }) => {
   return (
-    <div
-      className={`container ${
-        fluid ? "container--fluid" : ""
-      } ${className}`.trim()}
-    >
+    <div className={`container ${fluid ? 'container--fluid' : ''} ${className}`.trim()}>
       {children}
     </div>
   );

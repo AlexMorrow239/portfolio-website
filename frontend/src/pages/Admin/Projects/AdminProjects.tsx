@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import { Plus, Edit2, Trash2, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router-dom";
-import { Project } from "@/types/project";
-import { ProjectsService } from "@/services/projects.service";
-import { APP_CONFIG } from "@/config";
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { Plus, Edit2, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Project } from '@/types/project';
+import { ProjectsService } from '@/services/projects.service';
+import { APP_CONFIG } from '@/config';
 
 const AdminProjects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -17,7 +17,8 @@ const AdminProjects: React.FC = () => {
       const data = await ProjectsService.getAllProjectsAdmin();
       setProjects(data);
     } catch (err) {
-      setError("Failed to fetch projects");
+      console.error('Error fetching projects: ', err);
+      setError('Failed to fetch projects');
     } finally {
       setLoading(false);
     }
@@ -34,51 +35,49 @@ const AdminProjects: React.FC = () => {
       };
 
       const response = await fetch(APP_CONFIG.endpoints.projects.byId(id), {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
-          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(projectData),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update project visibility");
+        throw new Error('Failed to update project visibility');
       }
 
       // Update local state to reflect the change
       setProjects(
         projects.map((project) =>
-          project._id === id
-            ? { ...project, visible: !project.visible }
-            : project
-        )
+          project._id === id ? { ...project, visible: !project.visible } : project,
+        ),
       );
     } catch (err) {
-      console.error("Toggle visibility error:", err);
-      setError("Failed to update project visibility");
+      console.error('Toggle visibility error:', err);
+      setError('Failed to update project visibility');
     }
   };
 
   const deleteProject = async (id: string) => {
-    if (!window.confirm("Are you sure you want to delete this project?")) {
+    if (!window.confirm('Are you sure you want to delete this project?')) {
       return;
     }
 
     try {
       const response = await fetch(APP_CONFIG.endpoints.projects.byId(id), {
-        method: "DELETE",
+        method: 'DELETE',
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("adminToken")}`,
+          Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
         },
       });
 
       if (!response.ok) {
-        throw new Error("Failed to delete project");
+        throw new Error('Failed to delete project');
       }
 
       // Show success message
-      setSuccessMessage("Project deleted successfully");
+      setSuccessMessage('Project deleted successfully');
 
       // Refresh the projects list
       await fetchProjects();
@@ -86,7 +85,8 @@ const AdminProjects: React.FC = () => {
       // Clear message after 3 seconds
       setTimeout(() => setSuccessMessage(null), 3000);
     } catch (err) {
-      setError("Failed to delete project");
+      console.error('Error deleting project: ', err);
+      setError('Failed to delete project');
     }
   };
 
@@ -109,9 +109,7 @@ const AdminProjects: React.FC = () => {
       </div>
 
       {error && <div className="alert alert--error">{error}</div>}
-      {successMessage && (
-        <div className="alert alert--success">{successMessage}</div>
-      )}
+      {successMessage && <div className="alert alert--success">{successMessage}</div>}
 
       <div className="projects-grid">
         {projects.map((project) => (
@@ -127,10 +125,8 @@ const AdminProjects: React.FC = () => {
               <div className="project-card__actions">
                 <button
                   onClick={() => toggleVisibility(project._id, project.visible)}
-                  className={`button button--icon ${
-                    project.visible ? "button--active" : ""
-                  }`}
-                  title={project.visible ? "Hide project" : "Show project"}
+                  className={`button button--icon ${project.visible ? 'button--active' : ''}`}
+                  title={project.visible ? 'Hide project' : 'Show project'}
                 >
                   {project.visible ? <Eye size={18} /> : <EyeOff size={18} />}
                 </button>
@@ -159,9 +155,7 @@ const AdminProjects: React.FC = () => {
                   </span>
                 ))}
               </div>
-              {project.featured && (
-                <span className="badge badge--featured">Featured</span>
-              )}
+              {project.featured && <span className="badge badge--featured">Featured</span>}
             </div>
           </motion.div>
         ))}

@@ -1,4 +1,4 @@
-@use "../../assets/styles/abstracts/index" as *;
+@use '../../assets/styles/abstracts/index' as *;
 
 .contact {
   padding: var(--spacing-xl) 0;
@@ -20,11 +20,7 @@
   &__title {
     font-size: 2.5rem;
     margin-bottom: var(--spacing-md);
-    background: linear-gradient(
-      45deg,
-      var(--color-primary),
-      var(--color-secondary)
-    );
+    background: linear-gradient(45deg, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -157,13 +153,13 @@
 }
 
 // Responsive adjustments
-@include respond-to("md") {
+@include respond-to('md') {
   .contact-form {
     padding: var(--spacing-xl) var(--spacing-xl);
   }
 }
 
-@include respond-to("sm") {
+@include respond-to('sm') {
   .contact {
     &__title {
       font-size: 2rem;

@@ -1,4 +1,4 @@
-@use "../../../assets/styles/abstracts/index" as *;
+@use '../../../assets/styles/abstracts/index' as *;
 
 .footer {
   padding: var(--spacing-xl) 0;
@@ -11,7 +11,7 @@
     align-items: center;
     gap: var(--spacing-md);
 
-    @include respond-to("md") {
+    @include respond-to('md') {
       flex-direction: row;
       justify-content: space-between;
     }
@@ -35,7 +35,7 @@
     isolation: isolate;
 
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       inset: 0;
       opacity: 0;

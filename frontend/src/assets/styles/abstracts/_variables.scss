@@ -1,4 +1,4 @@
-@use "sass:color";
+@use 'sass:color';
 
 // Base color palette
 $color-blue-400: #60a5fa;
@@ -68,18 +68,19 @@ $color-green-600: #059669;
   --overlay-primary: #{rgba($color-blue-600, 0.1)};
   --overlay-success: #{rgba($color-green-500, 0.1)};
   --overlay-error: #{rgba($color-red-600, 0.1)};
-// Typography
-/* Primary font stack */
---font-primary: var(--mono-font), var(--mono-fallback);  // Changed to use mono font as primary
---primary-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  // Typography
+  /* Primary font stack */
+  --font-primary: var(--mono-font), var(--mono-fallback); // Changed to use mono font as primary
+  --primary-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    Arial, 'Noto Sans', sans-serif;
 
-/* Monospace font stack */
---mono-font: 'JetBrains Mono';
---mono-fallback: 'Fira Code', monospace;
+  /* Monospace font stack */
+  --mono-font: 'JetBrains Mono';
+  --mono-fallback: 'Fira Code', monospace;
 
-/* Heading font stack - using mono font for consistency */
---heading-font: var(--mono-font);
---heading-fallback: var(--mono-fallback);
+  /* Heading font stack - using mono font for consistency */
+  --heading-font: var(--mono-font);
+  --heading-fallback: var(--mono-fallback);
   --font-size-base: 16px;
   --line-height-base: 1.5;
 
@@ -89,7 +90,7 @@ $color-green-600: #059669;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
-  --spacing-xxxl: 8rem; 
+  --spacing-xxxl: 8rem;
 
   // Breakpoints
   --breakpoint-sm: 640px;
@@ -128,15 +129,19 @@ $color-green-600: #059669;
   // Theme toggle colors - Dark Mode
   --sun-gradient: linear-gradient(135deg, #fbbf24 0%, #fcd34d 100%);
   --moon-color: #{color.adjust($color-indigo-500, $lightness: 15%)};
-  --moon-gradient: linear-gradient(135deg, 
-    #{color.adjust($color-indigo-500, $lightness: 15%)} 0%, 
-    #{color.adjust($color-indigo-500, $lightness: 25%)} 100%);
+  --moon-gradient: linear-gradient(
+    135deg,
+    #{color.adjust($color-indigo-500, $lightness: 15%)} 0%,
+    #{color.adjust($color-indigo-500, $lightness: 25%)} 100%
+  );
 
   // Menu toggle colors - Dark Mode
   --menu-color: #{$color-blue-500};
-  --menu-gradient: linear-gradient(135deg, 
-    #{$color-blue-500} 0%, 
-    #{color.adjust($color-blue-500, $lightness: 10%)} 100%);
+  --menu-gradient: linear-gradient(
+    135deg,
+    #{$color-blue-500} 0%,
+    #{color.adjust($color-blue-500, $lightness: 10%)} 100%
+  );
 
   // Adjust shadow and overlay colors for dark mode
   --shadow-primary: #{rgba($color-blue-500, 0.2)};

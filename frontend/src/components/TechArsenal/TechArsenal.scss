@@ -1,12 +1,12 @@
-@use "../../assets/styles/abstracts/index" as *;
+@use '../../assets/styles/abstracts/index' as *;
 
 .tech-arsenal {
   &__grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-lg);
-    
-    @include respond-to("md") {
+
+    @include respond-to('md') {
       grid-template-columns: repeat(2, 1fr);
       gap: var(--spacing-xl);
     }

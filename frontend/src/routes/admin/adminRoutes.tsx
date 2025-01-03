@@ -1,26 +1,26 @@
-import { Navigate } from "react-router-dom";
-import { AdminRouteObject } from "./types";
-import AdminLayoutWrapper from "@/pages/Admin/AdminLayoutWrapper";
-import AdminProjects from "@/pages/Admin/Projects/AdminProjects";
-import ProjectForm from "@/pages/Admin/Projects/ProjectForm";
-import { Login } from "@/pages/Admin/Login/Login";
+import { Navigate } from 'react-router-dom';
+import { AdminRouteObject } from './types';
+import AdminLayoutWrapper from '@/pages/Admin/AdminLayoutWrapper';
+import AdminProjects from '@/pages/Admin/Projects/AdminProjects';
+import ProjectForm from '@/pages/Admin/Projects/ProjectForm';
+import { Login } from '@/pages/Admin/Login/Login';
 
 export const adminRoutes: AdminRouteObject[] = [
   {
-    path: "/admin/login",
+    path: '/admin/login',
     element: <Login />,
-    title: "Admin Login",
+    title: 'Admin Login',
     requiresAuth: true,
     meta: {
       hideInMenu: true,
     },
   },
   {
-    path: "/admin",
+    path: '/admin',
     element: <AdminLayoutWrapper />,
-    title: "Admin Dashboard",
+    title: 'Admin Dashboard',
     requiresAuth: true,
-    permissions: ["admin"],
+    permissions: ['admin'],
     children: [
       {
         index: true,
@@ -28,38 +28,38 @@ export const adminRoutes: AdminRouteObject[] = [
         requiresAuth: true,
       },
       {
-        path: "projects",
+        path: 'projects',
         requiresAuth: true,
-        permissions: ["admin", "editor"],
+        permissions: ['admin', 'editor'],
         children: [
           {
             index: true,
             element: <AdminProjects />,
-            title: "Projects",
+            title: 'Projects',
             requiresAuth: true,
             meta: {
-              breadcrumb: "Projects",
-              icon: "project", // if you're using icons
+              breadcrumb: 'Projects',
+              icon: 'project', // if you're using icons
             },
           },
           {
-            path: "new",
+            path: 'new',
             element: <ProjectForm mode="create" />,
-            title: "New Project",
+            title: 'New Project',
             requiresAuth: true,
-            permissions: ["admin", "editor"],
+            permissions: ['admin', 'editor'],
             meta: {
-              breadcrumb: "New Project",
+              breadcrumb: 'New Project',
             },
           },
           {
-            path: "edit/:id",
+            path: 'edit/:id',
             element: <ProjectForm mode="edit" />,
-            title: "Edit Project",
+            title: 'Edit Project',
             requiresAuth: true,
-            permissions: ["admin", "editor"],
+            permissions: ['admin', 'editor'],
             meta: {
-              breadcrumb: "Edit Project",
+              breadcrumb: 'Edit Project',
             },
           },
         ],

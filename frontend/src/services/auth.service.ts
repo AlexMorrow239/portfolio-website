@@ -1,4 +1,4 @@
-import { APP_CONFIG } from "../config";
+import { APP_CONFIG } from '../config';
 
 export interface LoginCredentials {
   username: string;
@@ -9,9 +9,9 @@ export const AuthService = {
   async login(credentials: LoginCredentials) {
     try {
       const response = await fetch(APP_CONFIG.endpoints.auth.login, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
       });
@@ -19,21 +19,21 @@ export const AuthService = {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Login failed");
+        throw new Error(data.message || 'Login failed');
       }
 
       return data;
     } catch (error) {
-      console.error("Login error:", error);
+      console.error('Login error:', error);
       throw error;
     }
   },
 
   logout() {
-    localStorage.removeItem("adminToken");
+    localStorage.removeItem('adminToken');
   },
 
   isAuthenticated(): boolean {
-    return !!localStorage.getItem("adminToken");
+    return !!localStorage.getItem('adminToken');
   },
 };
