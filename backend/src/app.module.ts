@@ -1,4 +1,4 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
@@ -19,52 +19,17 @@ import { ContactModule } from './contact/contact.module';
         '.env.local',
         '.env',
       ],
-      load: [
-        () => {
-          const logger = new Logger('ConfigModule');
-          logger.debug('==== Config Module Initialization ====');
-          logger.debug(
-            `Loading env files for NODE_ENV: ${process.env.NODE_ENV}`,
-          );
-          logger.debug(`Attempted env files:`);
-          [
-            `.env.${process.env.NODE_ENV}.local`,
-            `.env.${process.env.NODE_ENV}`,
-            '.env.local',
-            '.env',
-          ].forEach((file) => logger.debug(`- ${file}`));
-
-          // Log all environment variables (be careful with sensitive data)
-          logger.debug('Environment variables loaded:');
-          Object.keys(process.env).forEach((key) => {
-            logger.debug(
-              `${key}: ${key.includes('SECRET') || key.includes('PASSWORD') ? '[HIDDEN]' : 'Set'}`,
-            );
-          });
-
-          logger.debug('==== End Config Module Init ====');
-          return {};
-        },
-      ],
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
-        const logger = new Logger('MongooseModule');
         const uri = configService.get<string>('MONGODB_URI');
-
         if (!uri) {
           throw new Error('MONGODB_URI is required for database connection');
         }
-
-        logger.debug(`MongoDB URI is set`);
-        logger.debug(`SSL Mode: ${process.env.NODE_ENV === 'production'}`);
-
         return {
           uri,
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
           retryWrites: true,
           w: 'majority',
           ssl: process.env.NODE_ENV === 'production',

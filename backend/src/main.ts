@@ -12,6 +12,7 @@ import { json } from 'express';
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
+  // Validate required environment variables
   const requiredEnvVars = [
     'JWT_SECRET',
     'MONGODB_URI',
@@ -20,67 +21,26 @@ async function bootstrap() {
   ];
 
   const missingVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
-
   if (missingVars.length > 0) {
     logger.error(
       `Missing required environment variables: ${missingVars.join(', ')}`,
     );
-    logger.error(
-      'Please check your .env file and ensure all required variables are set',
-    );
     process.exit(1);
   }
 
-  // Log all environment variables at startup
-  logger.debug('==== All Environment Variables ====');
-  Object.keys(process.env).forEach((key) => {
-    const isSensitive =
-      key.includes('SECRET') || key.includes('PASSWORD') || key.includes('URI');
-    logger.debug(`${key}: ${isSensitive ? '[HIDDEN]' : process.env[key]}`);
-  });
-  logger.debug('==== End Environment Variables ====');
-
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger: ['error', 'warn', 'log', 'debug', 'verbose'],
+    logger:
+      process.env.NODE_ENV === 'production'
+        ? ['error', 'warn', 'log']
+        : ['error', 'warn', 'log', 'debug', 'verbose'],
   });
 
   const configService = app.get(ConfigService);
-
-  // Add debugging logs for critical environment variables
-  logger.debug('==== Critical Environment Variables ====');
-  const criticalVars = {
-    NODE_ENV: process.env.NODE_ENV,
-    JWT_SECRET: process.env.JWT_SECRET ? '[SET]' : '[NOT SET]',
-    MONGODB_URI: process.env.MONGODB_URI ? '[SET]' : '[NOT SET]',
-    ADMIN_USERNAME: process.env.ADMIN_USERNAME ? '[SET]' : '[NOT SET]',
-    ADMIN_PASSWORD: process.env.ADMIN_PASSWORD ? '[SET]' : '[NOT SET]',
-    FRONTEND_URL: process.env.FRONTEND_URL || '[NOT SET]',
-    PORT: process.env.PORT || '3000',
-  };
-  Object.entries(criticalVars).forEach(([key, value]) => {
-    logger.debug(`${key}: ${value}`);
-  });
-  logger.debug('==== End Critical Variables ====');
-
-  // Add debugging logs for ConfigService
-  logger.debug('==== ConfigService Values ====');
-  const configVars = {
-    JWT_SECRET: configService.get('JWT_SECRET') ? '[SET]' : '[NOT SET]',
-    MONGODB_URI: configService.get('MONGODB_URI') ? '[SET]' : '[NOT SET]',
-    ADMIN_USERNAME: configService.get('ADMIN_USERNAME') ? '[SET]' : '[NOT SET]',
-    ADMIN_PASSWORD: configService.get('ADMIN_PASSWORD') ? '[SET]' : '[NOT SET]',
-  };
-  Object.entries(configVars).forEach(([key, value]) => {
-    logger.debug(`${key} from ConfigService: ${value}`);
-  });
-  logger.debug('==== End ConfigService Values ====');
 
   // Production security middleware
   app.use(helmet());
   app.use(compression());
   app.use(json());
-
-  // Set global prefix for all routes
   app.setGlobalPrefix('api');
 
   // Swagger setup only in development
@@ -97,38 +57,27 @@ async function bootstrap() {
 
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/docs', app, document);
-    logger.log(`Swagger documentation available at: /api/docs`);
   }
 
   // CORS Configuration
   const allowedOrigins = [
-    'http://localhost:5173', // Local development
-    'http://localhost:4173', // Vite preview
-    'http://localhost', // Local docker
-    configService.get('FRONTEND_URL'), // Production URL
+    'http://localhost:5173',
+    'http://localhost:4173',
+    'http://localhost',
+    configService.get('FRONTEND_URL'),
   ].filter(Boolean);
 
-  logger.debug('==== CORS Configuration ====');
-  logger.debug(`Allowed Origins: ${allowedOrigins.join(', ')}`);
-  logger.debug('==== End CORS Configuration ====');
-
-  // Enable CORS with configurable origin
   app.enableCors({
     origin: (origin, callback) => {
-      if (!origin) {
-        callback(null, true);
-        return;
-      }
-
       if (
+        !origin ||
         allowedOrigins.indexOf(origin) !== -1 ||
         process.env.NODE_ENV !== 'production'
       ) {
         callback(null, true);
-      } else {
-        logger.warn(`Blocked request from unauthorized origin: ${origin}`);
-        callback(new Error('Not allowed by CORS'));
+        return;
       }
+      callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
@@ -139,22 +88,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // Production-ready logging
-  if (process.env.NODE_ENV === 'production') {
-    app.use((req, res, next) => {
-      res.on('finish', () => {
-        logger.log(
-          `[${new Date().toISOString()}] ${req.method} ${req.path} - ${res.statusCode}`,
-        );
-      });
-      next();
-    });
-  }
-
   const port = process.env.PORT || 3000;
   await app.listen(port);
-  logger.log(`Application is running on: ${await app.getUrl()}`);
-  logger.log(`Environment: ${process.env.NODE_ENV}`);
+  logger.log(`Application running on port ${port} (${process.env.NODE_ENV})`);
 }
 
 bootstrap().catch((error) => {
