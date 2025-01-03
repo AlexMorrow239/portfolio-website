@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Container } from '../Container/Container';
+import Container from '../Container/Container';
 
 interface SectionProps {
   children: ReactNode;

@@ -144,9 +144,9 @@ const Home: React.FC = () => {
             </motion.h1>
 
             <motion.p className="hero__subtitle" variants={itemVariants}>
-              Passionate about crafting robust, scalable systems and exploring the endless
-              possibilities of backend technology. Every project is an opportunity to innovate and
-              excel.
+              Welcome to my portfolio! My name is Alex, and I am passionate about crafting robust,
+              scalable systems and exploring the endless possibilities of backend technology. Every
+              project is an opportunity to innovate and excel.
             </motion.p>
 
             <motion.div className="hero__cta" variants={itemVariants}>

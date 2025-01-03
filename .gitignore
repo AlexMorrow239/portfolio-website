@@ -1,0 +1,16 @@
+# Production
+dist/
+build/
+.railway/
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules/
