@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Project } from './schemas/project.schema';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { CloudStorageService } from 'src/media/cloud-storage.service';
+import { CloudStorageService } from '../media/cloud-storage.service';
 import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Injectable()
