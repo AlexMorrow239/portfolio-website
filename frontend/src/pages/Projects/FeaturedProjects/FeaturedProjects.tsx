@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { Project } from '@/types/project';
+import { type Project } from '@/types/project';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -12,7 +12,9 @@ interface FeaturedProjectsProps {
 }
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
-  if (projects.length === 0) return null;
+  if (projects.length === 0) {
+    return null;
+  }
 
   return (
     <section className="featured-projects">
