@@ -5,6 +5,7 @@ import { Menu, X, Sun, Moon } from 'lucide-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { useTheme } from '@hooks/useTheme';
+import { SOCIAL_LINKS } from '@/config';
 import './Navbar.scss';
 
 const Navbar: React.FC = () => {
@@ -22,12 +23,12 @@ const Navbar: React.FC = () => {
 
   const socialLinks = [
     {
-      url: import.meta.env.VITE_GITHUB_URL,
+      url: SOCIAL_LINKS.github,
       icon: <FontAwesomeIcon icon={faGithub} size="lg" />,
       label: 'GitHub',
     },
     {
-      url: import.meta.env.VITE_LINKEDIN_URL,
+      url: SOCIAL_LINKS.linkedin,
       icon: <FontAwesomeIcon icon={faLinkedin} size="lg" />,
       label: 'LinkedIn',
     },

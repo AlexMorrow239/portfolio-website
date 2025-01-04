@@ -2,6 +2,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { SOCIAL_LINKS } from '@/config';
 import Container from '../Container/Container';
 import './Footer.scss';
 
@@ -14,7 +15,7 @@ const Footer: React.FC = () => {
         <div className="footer__content">
           <div className="footer__social">
             <a
-              href={import.meta.env.VITE_GITHUB_URL}
+              href={SOCIAL_LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="footer__social-link"
@@ -22,7 +23,7 @@ const Footer: React.FC = () => {
               <FontAwesomeIcon icon={faGithub} />
             </a>
             <a
-              href={import.meta.env.VITE_LINKEDIN_URL}
+              href={SOCIAL_LINKS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="footer__social-link"

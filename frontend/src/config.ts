@@ -2,7 +2,12 @@
 export const API_BASE_URL =
   import.meta.env.VITE_API_URL || 'https://backend-production-4d7b.up.railway.app/api';
 
-// Other configuration constants
+// Social Links
+export const SOCIAL_LINKS = {
+  github: 'https://github.com/yourusername',
+  linkedin: 'https://linkedin.com/in/yourusername',
+};
+
 export const APP_CONFIG = {
   // Contact form settings
   contact: {
