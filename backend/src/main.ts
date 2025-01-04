@@ -29,7 +29,8 @@ async function bootstrap() {
     'http://localhost:4173', // Vite preview
     'http://127.0.0.1:5173', // Alternative local
     'http://localhost:3000', // Local API
-    'https://frontend-production-284b.up.railway.app', // Production frontend
+    'https://frontend-production-284b.up.railway.app', // Production frontend domains
+    'https://alex-morrow.com',
     configService.get('FRONTEND_URL'), // From env
   ].filter(Boolean); // Remove any undefined/null values
 
