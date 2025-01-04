@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import { Project } from '@/types/project';
@@ -7,31 +7,49 @@ import './Projects.scss';
 import Loader from '@/components/common/Loader/Loader';
 import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
 import ProjectList from './ProjectsList/ProjectList';
+import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const loaderTimeoutRef = useRef<NodeJS.Timeout>();
 
   const fetchProjects = async () => {
     try {
       setIsLoading(true);
       setError(null);
+
+      // Start a timer to show loader if fetch takes longer than 300ms
+      loaderTimeoutRef.current = setTimeout(() => {
+        setShowLoader(true);
+      }, 300);
+
       const fetchedProjects = await ProjectsService.getAllProjects();
       setProjects(fetchedProjects);
-      setIsSuccess(true);
+
+      // Ensure loader plays for at least one full cycle if it started
+      if (showLoader) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      }
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Failed to fetch projects';
       console.error('Failed to fetch projects:', error);
       setError(errorMessage);
-      setIsSuccess(false);
+    } finally {
+      clearTimeout(loaderTimeoutRef.current);
+      setIsLoading(false);
+      setShowLoader(false);
     }
   };
 
   useEffect(() => {
     void fetchProjects();
+    return () => {
+      clearTimeout(loaderTimeoutRef.current);
+    };
   }, []);
 
   const allTechnologies = useMemo(() => {
@@ -55,18 +73,27 @@ const Projects: React.FC = () => {
     return filteredProjects.filter((project) => !project.featured);
   }, [filteredProjects]);
 
-  if (isLoading) {
+  if (showLoader) {
     return (
       <Loader
         messages={['Fetching projects...', 'Loading project details...', 'Preparing showcase...']}
         completionMessage="Projects loaded successfully!"
-        duration={3000} // Increased duration to ensure full cycle completion
-        onComplete={() => {
-          setIsLoading(false);
-          setIsSuccess(false);
-        }}
-        isSuccess={isSuccess}
+        duration={3000}
+        onComplete={() => setShowLoader(false)}
+        isSuccess={true}
       />
+    );
+  }
+
+  // Show loading skeleton or spinner for quick loads
+  if (isLoading && !showLoader) {
+    return (
+      <div className="projects">
+        <div className="projects__loading">
+          {/* Add a simple loading spinner or skeleton here */}
+          Loading...
+        </div>
+      </div>
     );
   }
 
@@ -110,29 +137,11 @@ const Projects: React.FC = () => {
         <p>A collection of my recent work and technical explorations</p>
       </motion.div>
 
-      {/* Filters Section */}
-      <motion.div
-        className="projects__filters"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-      >
-        <button
-          className={`projects__filter ${!selectedTech ? 'active' : ''}`}
-          onClick={() => setSelectedTech(null)}
-        >
-          All Projects
-        </button>
-        {allTechnologies.map((tech) => (
-          <button
-            key={tech}
-            className={`projects__filter ${selectedTech === tech ? 'active' : ''}`}
-            onClick={() => setSelectedTech(tech)}
-          >
-            {tech}
-          </button>
-        ))}
-      </motion.div>
+      <ProjectsFilters
+        technologies={allTechnologies}
+        selectedTech={selectedTech}
+        onTechSelect={setSelectedTech}
+      />
 
       {/* Featured Projects Section */}
       <AnimatePresence mode="wait">
