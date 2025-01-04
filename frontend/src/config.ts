@@ -4,8 +4,8 @@ export const API_BASE_URL =
 
 // Social Links
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/yourusername',
-  linkedin: 'https://linkedin.com/in/yourusername',
+  github: 'https://github.com/AlexMorrow239',
+  linkedin: 'https://www.linkedin.com/in/alex-morrow-umiami/',
 };
 
 export const APP_CONFIG = {
