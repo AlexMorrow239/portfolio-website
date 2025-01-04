@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Terminal } from 'lucide-react';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { Terminal } from 'lucide-react';
 import { Project } from '@/types/project';
 import { ProjectsService } from '@/services/projects.service';
 import './Projects.scss';
 import Loader from '@/components/common/Loader/Loader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
+import ProjectList from './ProjectsList/ProjectList';
 
 const Projects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -36,7 +36,6 @@ const Projects: React.FC = () => {
     void fetchProjects();
   }, []);
 
-  // Get unique technologies for filters
   const allTechnologies = useMemo(() => {
     const techSet = new Set<string>();
     projects.forEach((project) => {
@@ -45,41 +44,18 @@ const Projects: React.FC = () => {
     return Array.from(techSet);
   }, [projects]);
 
-  // Filter projects based on selected technology
   const filteredProjects = useMemo(() => {
     if (!selectedTech) return projects;
     return projects.filter((project) => project.technologies.includes(selectedTech));
   }, [selectedTech, projects]);
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
+  const featuredProjects = useMemo(() => {
+    return filteredProjects.filter((project) => project.featured);
+  }, [filteredProjects]);
 
-  const cardVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-        ease: 'easeOut',
-      },
-    },
-    exit: {
-      opacity: 0,
-      y: -20,
-      transition: {
-        duration: 0.3,
-      },
-    },
-  };
+  const nonFeaturedProjects = useMemo(() => {
+    return filteredProjects.filter((project) => !project.featured);
+  }, [filteredProjects]);
 
   if (isLoading) {
     return (
@@ -96,7 +72,6 @@ const Projects: React.FC = () => {
     );
   }
 
-  // Add error state rendering
   if (error) {
     return (
       <div className="projects">
@@ -133,7 +108,7 @@ const Projects: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1>Featured Projects</h1>
+        <h1>Project Portfolio</h1>
         <p>A collection of my recent work and technical explorations</p>
       </motion.div>
 
@@ -145,7 +120,7 @@ const Projects: React.FC = () => {
         transition={{ delay: 0.3 }}
       >
         <button
-          className={`btn btn--secondary ${!selectedTech ? 'active' : ''}`}
+          className={`projects__filter ${!selectedTech ? 'active' : ''}`}
           onClick={() => setSelectedTech(null)}
         >
           All Projects
@@ -153,7 +128,7 @@ const Projects: React.FC = () => {
         {allTechnologies.map((tech) => (
           <button
             key={tech}
-            className={`btn btn--secondary ${selectedTech === tech ? 'active' : ''}`}
+            className={`projects__filter ${selectedTech === tech ? 'active' : ''}`}
             onClick={() => setSelectedTech(tech)}
           >
             {tech}
@@ -161,80 +136,46 @@ const Projects: React.FC = () => {
         ))}
       </motion.div>
 
-      {/* Projects Grid */}
-      <motion.div
-        className="projects__grid"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <AnimatePresence mode="wait">
-          {filteredProjects.map((project) => (
-            <motion.div
-              key={project._id}
-              className="project-card"
-              variants={cardVariants}
-              layout
-              whileHover={{ y: -8 }}
-            >
-              {project.imageUrl && (
-                <div className="project-card__image">
-                  <img src={project.imageUrl} alt={project.title} loading="lazy" />
-                </div>
-              )}
+      {/* Featured Projects Section */}
+      <AnimatePresence mode="wait">
+        {featuredProjects.length > 0 && (
+          <motion.div
+            className="projects__featured"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5 }}
+          >
+            <FeaturedProjects projects={featuredProjects} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-              <div className="project-card__content">
-                <h3 className="project-card__title">{project.title}</h3>
-                <p className="project-card__description">{project.description}</p>
-
-                <div className="project-card__tags">
-                  {project.technologies.map((tech) => (
-                    <motion.span
-                      key={tech}
-                      className="project-card__tag"
-                      whileHover={{ y: -2, scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
-                </div>
-
-                <div className="project-card__links">
-                  {project.links?.github && (
-                    <a
-                      href={project.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn--secondary"
-                    >
-                      <FontAwesomeIcon icon={faGithub} size="sm" />
-                      GitHub
-                    </a>
-                  )}
-                  {project.links?.live && (
-                    <a
-                      href={project.links.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn btn--primary"
-                    >
-                      <ExternalLink size={16} />
-                      Live Demo
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </motion.div>
+      {/* Project List Section */}
+      <AnimatePresence mode="wait">
+        {nonFeaturedProjects.length > 0 && (
+          <motion.div
+            className="projects__list"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <ProjectList projects={nonFeaturedProjects} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Empty State */}
       {filteredProjects.length === 0 && (
-        <motion.div className="projects__empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+        <motion.div
+          className="projects__empty"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+        >
           <Terminal size={32} />
-          <h3>No projects found</h3>
+          <h3>No Projects Found</h3>
           <p>No projects match the selected filter. Try selecting a different technology.</p>
         </motion.div>
       )}
