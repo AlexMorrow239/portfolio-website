@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #0A0C10; }
+      .letter { fill: #4B73FF; }
+    }
+    @media (prefers-color-scheme: light) {
+      .background { fill: #FFFFFF; }
+      .letter { fill: #4B73FF; }
+    }
+  </style>
+  <rect class="background" width="32" height="32" rx="4"/>
+  <path class="letter" d="M16.9062 23H15.0938L11.4688 13.1875V23H9.65625V10.8125H11.4688L15.0938 20.625L18.7188 10.8125H20.5312V23H18.7188V13.1875L16.9062 23Z" fill="#4B73FF"/>
+</svg>
+
