@@ -44,13 +44,7 @@ export default tseslint.config(
         'error',
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
-      '@typescript-eslint/await-thenable': [
-        'error',
-        {
-          ignoreVoid: true,
-          ignoreNonThenable: true,
-        },
-      ],
+      '@typescript-eslint/await-thenable': 'error',
 
       // React specific rules
       'react-hooks/rules-of-hooks': 'error',
