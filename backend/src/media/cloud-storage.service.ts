@@ -13,12 +13,30 @@ export class CloudStorageService {
   private allowedMimeTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
   constructor(private configService: ConfigService) {
-    this.storage = new Storage({
-      keyFilename: this.configService.get<string>('GOOGLE_CLOUD_KEY_FILE'),
-    });
-    this.bucket =
-      this.configService.get<string>('GOOGLE_CLOUD_BUCKET') ||
-      'personal-media-uploads';
+    const credentialsJson = this.configService.get<string>(
+      'GOOGLE_CLOUD_CREDENTIALS',
+    );
+    const keyFilename = this.configService.get<string>('GOOGLE_CLOUD_KEY_FILE');
+
+    try {
+      if (credentialsJson) {
+        // Parse credentials from environment variable
+        const credentials = JSON.parse(credentialsJson);
+        this.storage = new Storage({ credentials });
+      } else if (keyFilename) {
+        // Fallback to keyfile if no credentials in env
+        this.storage = new Storage({ keyFilename });
+      } else {
+        throw new Error('No Google Cloud credentials provided');
+      }
+
+      this.bucket =
+        this.configService.get<string>('GOOGLE_CLOUD_BUCKET') ||
+        'personal-media-uploads';
+    } catch (error) {
+      console.error('Failed to initialize Google Cloud Storage:', error);
+      throw new Error('Failed to initialize storage service');
+    }
   }
 
   async uploadImage(file: Express.Multer.File): Promise<string> {
