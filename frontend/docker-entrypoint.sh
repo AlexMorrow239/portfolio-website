@@ -1,24 +1,28 @@
 #!/bin/sh
 set -e
+set -x  # Enable debug mode for all commands
 
 echo "Starting docker-entrypoint.sh..."
 
-# Debug: Print environment variables (excluding sensitive data)
-echo "Checking RAILWAY_BACKEND_URL..."
-if [ -n "$RAILWAY_BACKEND_URL" ]; then
-    echo "RAILWAY_BACKEND_URL is set"
+# Debug Environment Variable
+if [ -z "$RAILWAY_BACKEND_URL" ]; then
+    echo "RAILWAY_BACKEND_URL not set, using default value"
+    export RAILWAY_BACKEND_URL="http://localhost:3000"
 else
-    echo "Warning: RAILWAY_BACKEND_URL is not set"
+    echo "RAILWAY_BACKEND_URL is set to $RAILWAY_BACKEND_URL"
 fi
 
-# Replace environment variables in nginx config
-echo "Generating nginx config from template..."
+# Substitute variables
+echo "Generating nginx config..."
 envsubst '$RAILWAY_BACKEND_URL' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
-# Verify nginx config
-echo "Verifying nginx configuration..."
+# Display generated config
+echo "Generated nginx.conf:"
+cat /etc/nginx/nginx.conf
+
+# Verify config
 nginx -t
 
 # Start nginx
-echo "Starting nginx..."
+echo "Starting Nginx..."
 exec "$@"

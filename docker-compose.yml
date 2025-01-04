@@ -30,11 +30,24 @@ services:
     environment:
       - VITE_API_URL=http://localhost:3000/api
     ports:
-      - "5173:80"
+      - "80:80"
     volumes:
       - ./frontend:/app
       - /app/node_modules
     command: npm run dev
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:80/health",
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
 
 networks:
   default:
