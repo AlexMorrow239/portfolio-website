@@ -27,8 +27,6 @@ const Projects: React.FC = () => {
       console.error('Failed to fetch projects:', error);
       setError(errorMessage);
       setIsSuccess(false);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -62,7 +60,7 @@ const Projects: React.FC = () => {
       <Loader
         messages={['Fetching projects...', 'Loading project details...', 'Preparing showcase...']}
         completionMessage="Projects loaded successfully!"
-        duration={2000}
+        duration={3000} // Increased duration to ensure full cycle completion
         onComplete={() => {
           setIsLoading(false);
           setIsSuccess(false);

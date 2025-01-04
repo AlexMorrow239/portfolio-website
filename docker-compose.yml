@@ -4,9 +4,10 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      target: builder # Use the builder stage for development
     environment:
       - NODE_ENV=development
-      - MONGODB_URI=${MONGODB_URI}
+      - MONGODB_URI=mongodb://mongodb:27017/portfolio
       - JWT_SECRET=${JWT_SECRET}
       - EMAIL_USER=${EMAIL_USER}
       - EMAIL_APP_PASSWORD=${EMAIL_APP_PASSWORD}
@@ -15,27 +16,16 @@ services:
       - GOOGLE_CLOUD_BUCKET=${GOOGLE_CLOUD_BUCKET}
       - ADMIN_USERNAME=${ADMIN_USERNAME}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
-      - GOOGLE_CLOUD_CREDENTIALS=${GOOGLE_CLOUD_CREDENTIALS}
     ports:
       - "3000:3000"
+      - "9229:9229" # Debug port
     volumes:
       - ./backend:/app
       - /app/node_modules
     command: npm run start:dev
-
-  frontend:
-    container_name: portfolio-website-frontend-dev
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    environment:
-      - VITE_API_URL=http://localhost:3000/api
-    ports:
-      - "80:80"
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
-    command: npm run dev
+    depends_on:
+      mongodb:
+        condition: service_healthy
     healthcheck:
       test:
         [
@@ -44,11 +34,58 @@ services:
           "--quiet",
           "--tries=1",
           "--spider",
-          "http://localhost:80/health",
+          "http://localhost:3000/api/health",
         ]
-      interval: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    container_name: portfolio-website-frontend-dev
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: builder # Use builder stage for development
+    environment:
+      - VITE_API_URL=http://localhost:3000/api
+    ports:
+      - "5173:5173" # Vite's default dev port
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: npm run dev -- --host
+    depends_on:
+      - backend
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--quiet",
+          "--tries=1",
+          "--spider",
+          "http://localhost:5173",
+        ]
+      interval: 10s
       timeout: 3s
       retries: 3
+
+  mongodb:
+    image: mongo:latest
+    container_name: portfolio-mongodb-dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+
+volumes:
+  mongodb_data:
 
 networks:
   default:

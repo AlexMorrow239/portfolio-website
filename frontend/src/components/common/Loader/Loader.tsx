@@ -20,37 +20,43 @@ const Loader: React.FC<LoaderProps> = ({
 }) => {
   const [showCursor, setShowCursor] = useState(true);
   const [loadingComplete, setLoadingComplete] = useState(false);
-  const [animationPlayed, setAnimationPlayed] = useState(false);
+  const [cycleCompleted, setCycleCompleted] = useState(false);
 
-  // Calculate typing speeds to fit within duration
-  const safetyMargin = 0.7; // Reduce total time to ensure completion
+  // Calculate typing speeds
+  const safetyMargin = 0.7;
   const adjustedDuration = duration * safetyMargin;
-  const cyclesPerMessage = 2; // One cycle = type + backspace
+  const cyclesPerMessage = 2;
   const totalCycles = messages.length * cyclesPerMessage;
   const timePerCycle = adjustedDuration / totalCycles;
   const avgMessageLength = Math.max(...messages.map((msg) => msg.length));
   const typeSpeed = Math.floor(timePerCycle / avgMessageLength);
   const backSpeed = typeSpeed;
 
+  // Track when the first full cycle completes
+  const handleTypingComplete = () => {
+    setCycleCompleted(true);
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowCursor(false);
-      setLoadingComplete(true);
-      setAnimationPlayed(true);
+      if (cycleCompleted) {
+        setShowCursor(false);
+        setLoadingComplete(true);
+      }
     }, duration);
 
     return () => clearTimeout(timer);
-  }, [duration]);
+  }, [duration, cycleCompleted]);
 
   useEffect(() => {
-    if (loadingComplete && animationPlayed && isSuccess) {
+    if (loadingComplete && cycleCompleted && isSuccess) {
       const successTimer = setTimeout(() => {
         onComplete?.();
       }, 500);
 
       return () => clearTimeout(successTimer);
     }
-  }, [loadingComplete, animationPlayed, isSuccess, onComplete]);
+  }, [loadingComplete, cycleCompleted, isSuccess, onComplete]);
 
   return (
     <div className="terminal-loader">
@@ -65,6 +71,7 @@ const Loader: React.FC<LoaderProps> = ({
           backSpeed={backSpeed}
           loop={!loadingComplete}
           showCursor={showCursor}
+          onComplete={handleTypingComplete}
         />
         {loadingComplete && isSuccess && (
           <div className="loading-complete">
