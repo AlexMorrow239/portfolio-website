@@ -1,111 +1,102 @@
+import { NestFactory } from '@nestjs/core';
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as compression from 'compression';
-import helmet from 'helmet';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
-import { json } from 'express';
 
 async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
   const logger = new Logger('Bootstrap');
 
-  // Validate required environment variables
-  const requiredEnvVars = [
-    'JWT_SECRET',
-    'MONGODB_URI',
-    'ADMIN_USERNAME',
-    'ADMIN_PASSWORD',
-  ];
-
-  const missingVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
-  if (missingVars.length > 0) {
-    logger.error(
-      `Missing required environment variables: ${missingVars.join(', ')}`,
-    );
-    process.exit(1);
-  }
-
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    logger:
-      process.env.NODE_ENV === 'production'
-        ? ['error', 'warn', 'log']
-        : ['error', 'warn', 'log', 'debug', 'verbose'],
-  });
-
-  const configService = app.get(ConfigService);
-
-  // Production security middleware
-  app.use(helmet());
-  app.use(compression());
-  app.use(json());
+  // Global prefix for all routes
   app.setGlobalPrefix('api');
 
-  // Swagger setup only in development
-  if (process.env.NODE_ENV !== 'production') {
-    const config = new DocumentBuilder()
-      .setTitle('Portfolio API')
-      .setDescription('Backend API for my portfolio website')
-      .setVersion('1.0')
-      .addBearerAuth()
-      .addTag('projects')
-      .addTag('auth')
-      .addServer('')
-      .build();
-
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('api/docs', app, document);
-  }
+  // Swagger Configuration
+  const config = new DocumentBuilder()
+    .setTitle('Portfolio API')
+    .setDescription('The Portfolio API description')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api/docs', app, document);
 
   // CORS Configuration
   const allowedOrigins = [
     'http://localhost:5173', // Vite default
     'http://localhost:4173', // Vite preview
-    'http://127.0.0.1:5173',
-    'http://localhost:3000', // In case of same-origin
-    'https://frontend-production-284b.up.railway.app',
-    configService.get('FRONTEND_URL'),
-  ].filter(Boolean);
+    'http://127.0.0.1:5173', // Alternative local
+    'http://localhost:3000', // Local API
+    'https://frontend-production-284b.up.railway.app', // Production frontend
+    configService.get('FRONTEND_URL'), // From env
+  ].filter(Boolean); // Remove any undefined/null values
+
+  logger.log(`Allowed Origins: ${allowedOrigins.join(', ')}`);
 
   app.enableCors({
     origin: (origin, callback) => {
+      logger.log(`Incoming request from origin: ${origin}`);
+
       // Allow requests with no origin (like mobile apps or curl requests)
       if (!origin) {
+        logger.log('No origin provided, allowing request');
         callback(null, true);
         return;
       }
 
+      // Allow all origins in development
       if (process.env.NODE_ENV === 'development') {
+        logger.log('Development mode: allowing all origins');
         callback(null, true);
         return;
       }
 
-      if (allowedOrigins.indexOf(origin) !== -1) {
+      // Check if origin is in allowed list
+      if (allowedOrigins.includes(origin)) {
+        logger.log(`Origin ${origin} is allowed`);
         callback(null, true);
         return;
       }
 
+      // Log unauthorized attempts
+      logger.warn(`Blocked request from unauthorized origin: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    allowedHeaders: [
+      'Content-Type',
+      'Authorization',
+      'Accept',
+      'Origin',
+      'X-Requested-With',
+    ],
     exposedHeaders: ['Content-Range', 'X-Content-Range'],
     maxAge: 3600,
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  // Global pipes and filters
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      whitelist: true,
+      forbidNonWhitelisted: true,
+    }),
+  );
   app.useGlobalFilters(new HttpExceptionFilter());
 
+  // Start the server
   const port = process.env.PORT || 3000;
   await app.listen(port);
   logger.log(`Application running on port ${port} (${process.env.NODE_ENV})`);
+  logger.log(
+    `Swagger documentation available at: http://localhost:${port}/api/docs`,
+  );
 }
 
 bootstrap().catch((error) => {
-  const logger = new Logger('Bootstrap');
-  logger.error('Failed to start application:', error);
+  console.error('Failed to start application:', error);
   process.exit(1);
 });
