@@ -2,12 +2,6 @@
 builder = "nixpacks"
 buildCommand = "npm ci && npm run build:prod"
 
-[deploy]
-startCommand = "nginx -g 'daemon off;'"
-healthcheckPath = "/health"
-healthcheckTimeout = 15
-restartCount = 2
-
 [service]
 internal_port = 80
 port = 80
