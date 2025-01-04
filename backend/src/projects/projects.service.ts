@@ -67,8 +67,11 @@ export class ProjectsService {
         throw new NotFoundException('Project not found');
       }
 
-      // If a new image is uploaded, upload it and update the URL
+      // If a new image is uploaded, delete the old one and upload the new one
       if (file) {
+        if (project.imageUrl) {
+          await this.cloudStorageService.deleteImage(project.imageUrl);
+        }
         const imageUrl = await this.cloudStorageService.uploadImage(file);
         updateProjectDto.imageUrl = imageUrl;
       }
@@ -99,6 +102,11 @@ export class ProjectsService {
     const project = await this.projectModel.findByIdAndDelete(id).exec();
     if (!project) {
       throw new NotFoundException('Project not found');
+    }
+
+    // Delete the image from cloud storage if it exists
+    if (project.imageUrl) {
+      await this.cloudStorageService.deleteImage(project.imageUrl);
     }
     return project;
   }

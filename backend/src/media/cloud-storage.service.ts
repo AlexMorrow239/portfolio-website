@@ -91,4 +91,31 @@ export class CloudStorageService {
       );
     }
   }
+
+  async deleteImage(imageUrl: string): Promise<void> {
+    try {
+      // Extract filename from the URL
+      const fileName = imageUrl.split(`${this.bucket}/`)[1];
+      if (!fileName) {
+        throw new BadRequestException('Invalid image URL format');
+      }
+
+      const bucket = this.storage.bucket(this.bucket);
+      const file = bucket.file(fileName);
+
+      // Check if file exists before attempting to delete
+      const [exists] = await file.exists();
+      if (!exists) {
+        console.warn(`File ${fileName} does not exist in bucket`);
+        return;
+      }
+
+      await file.delete();
+    } catch (error) {
+      console.error('CloudStorage - Delete error:', error);
+      throw new InternalServerErrorException(
+        'Failed to delete image from storage',
+      );
+    }
+  }
 }
