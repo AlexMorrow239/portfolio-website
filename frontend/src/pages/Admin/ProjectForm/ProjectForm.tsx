@@ -22,6 +22,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
     setSelectedImage,
     imagePreview,
     setImagePreview,
+    setImageRemoved,
     handleSubmit,
   } = useProjectForm(mode, id);
 
@@ -84,6 +85,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
               imagePreview={imagePreview}
               onImageSelect={(file) => {
                 setSelectedImage(file);
+                setImageRemoved(false);
                 const reader = new FileReader();
                 reader.onloadend = () => {
                   setImagePreview(reader.result as string);
@@ -93,6 +95,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
               onImageRemove={() => {
                 setSelectedImage(null);
                 setImagePreview(null);
+                setImageRemoved(true);
               }}
               error={errors.image}
             />

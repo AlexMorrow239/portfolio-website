@@ -159,7 +159,14 @@ export class ProjectsController {
         links: rawBody.links ? JSON.parse(rawBody.links) : undefined,
       };
 
-      return await this.projectsService.update(id, updateProjectDto, file);
+      // Pass the removeImage flag to the service
+      const removeImage = rawBody.removeImage === 'true';
+      return await this.projectsService.update(
+        id,
+        updateProjectDto,
+        file,
+        removeImage,
+      );
     } catch (error) {
       console.error('Error updating project:', error.message);
       throw new BadRequestException('Failed to update project');

@@ -60,6 +60,7 @@ export class ProjectsService {
     id: string,
     updateProjectDto: UpdateProjectDto,
     file?: Express.Multer.File,
+    removeImage?: boolean,
   ): Promise<Project> {
     try {
       const project = await this.projectModel.findById(id);
@@ -67,8 +68,11 @@ export class ProjectsService {
         throw new NotFoundException('Project not found');
       }
 
-      // If a new image is uploaded, delete the old one and upload the new one
-      if (file) {
+      // Handle image updates
+      if (removeImage && project.imageUrl) {
+        await this.cloudStorageService.deleteImage(project.imageUrl);
+        updateProjectDto.imageUrl = null;
+      } else if (file) {
         if (project.imageUrl) {
           await this.cloudStorageService.deleteImage(project.imageUrl);
         }

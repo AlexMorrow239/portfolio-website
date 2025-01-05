@@ -16,6 +16,8 @@ export const useProjectForm = (
   setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
   imagePreview: string | null;
   setImagePreview: React.Dispatch<React.SetStateAction<string | null>>;
+  imageRemoved: boolean;
+  setImageRemoved: React.Dispatch<React.SetStateAction<boolean>>;
   validateForm: () => boolean;
   handleSubmit: (e: React.FormEvent) => Promise<void>;
 } => {
@@ -33,6 +35,7 @@ export const useProjectForm = (
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageRemoved, setImageRemoved] = useState(false);
 
   useEffect(() => {
     if (mode === 'edit' && projectId) {
@@ -131,9 +134,11 @@ export const useProjectForm = (
         }
       });
 
-      // Append image if selected
+      // Handle image state
       if (selectedImage) {
         formDataToSend.append('image', selectedImage);
+      } else if (imageRemoved) {
+        formDataToSend.append('removeImage', 'true');
       }
 
       const endpoint =
@@ -171,6 +176,8 @@ export const useProjectForm = (
     setSelectedImage,
     imagePreview,
     setImagePreview,
+    imageRemoved,
+    setImageRemoved,
     validateForm,
     handleSubmit,
   };
