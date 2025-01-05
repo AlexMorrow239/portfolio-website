@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { ArrowLeft } from 'lucide-react';
 import { type Project } from '@/types/project';
 import { ProjectsService } from '@/services/projects.service';
-import { fadeIn, fadeInUp, staggerContainer, slideInLeft } from '@/animations/variants';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './ProjectDetails.scss';
+import { ProjectLinks } from '@/components/ProjectElements/ProjectLinks/ProjectLinks';
+import { ProjectTags } from '@/components/ProjectElements/ProjectTags/ProjectTags';
 
 const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -103,54 +103,13 @@ const ProjectDetail: React.FC = () => {
 
         <motion.div className="project-detail__header" variants={fadeIn}>
           <h1>{project.title}</h1>
-          <motion.div
-            className="project-detail__links"
-            variants={staggerContainer}
-            transition={staggerTransition(0.1)}
-          >
-            {project.links?.github && (
-              <motion.a
-                href={project.links.github}
-                className="btn btn--secondary project-detail__link"
-                target="_blank"
-                rel="noopener noreferrer"
-                variants={slideInLeft}
-                whileHover={{ x: 10 }}
-                transition={defaultTransition}
-              >
-                <FontAwesomeIcon icon={faGithub} />
-                <span>View Code</span>
-              </motion.a>
-            )}
-            {project.links?.live && (
-              <motion.a
-                href={project.links.github}
-                className="btn btn--secondary project-detail__link"
-                target="_blank"
-                rel="noopener noreferrer"
-                variants={slideInLeft}
-                whileHover={{ x: 10 }}
-                transition={defaultTransition}
-              >
-                <ExternalLink />
-                <span>Live Demo</span>
-              </motion.a>
-            )}
-            {project.links?.documentation && (
-              <motion.a
-                href={project.links.github}
-                className="btn btn--secondary project-detail__link"
-                target="_blank"
-                rel="noopener noreferrer"
-                variants={slideInLeft}
-                whileHover={{ x: 10 }}
-                transition={defaultTransition}
-              >
-                <ExternalLink />
-                <span>Documentation</span>
-              </motion.a>
-            )}
-          </motion.div>
+          {project.links && (
+            <ProjectLinks
+              links={project.links}
+              variant="detailed"
+              className="project-detail__links"
+            />
+          )}
         </motion.div>
 
         <motion.div className="project-detail__description" variants={fadeIn}>
@@ -165,51 +124,27 @@ const ProjectDetail: React.FC = () => {
         >
           <motion.div className="project-detail__section" variants={fadeIn}>
             <h2>Technologies</h2>
-            <motion.div
+            <ProjectTags
+              tags={project.technologies}
+              variant="detailed"
               className="project-detail__tags"
-              variants={staggerContainer}
-              transition={staggerTransition(0.05)}
-            >
-              {project.technologies.map((tech) => (
-                <motion.span
-                  key={tech}
-                  className="btn btn--ghost btn--sm project-detail__tag project-detail__tag--tech"
-                  variants={fadeIn}
-                  whileHover={{ scale: 1.05 }}
-                  transition={defaultTransition}
-                >
-                  {tech}
-                </motion.span>
-              ))}
-            </motion.div>
+            />
           </motion.div>
 
           {project.skills && project.skills.length > 0 && (
             <motion.div className="project-detail__section" variants={fadeIn}>
               <h2>Skills Applied</h2>
-              <motion.div
+              <ProjectTags
+                tags={project.skills}
+                variant="detailed"
                 className="project-detail__tags"
-                variants={staggerContainer}
-                transition={staggerTransition(0.05)}
-              >
-                {project.skills.map((skill) => (
-                  <motion.span
-                    key={skill}
-                    className="btn btn--ghost btn--sm project-detail__tag project-detail__tag--skill"
-                    variants={fadeIn}
-                    whileHover={{ scale: 1.05 }}
-                    transition={defaultTransition}
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </motion.div>
+              />
             </motion.div>
           )}
         </motion.div>
 
         {project.metrics && Object.keys(project.metrics).length > 0 && (
-          <motion.div className="project-detail__section" variants={fadeIn}>
+          <motion.div className="project-detail__metrics-section" variants={fadeIn}>
             <h2>Key Metrics</h2>
             <motion.div
               className="project-detail__metrics"

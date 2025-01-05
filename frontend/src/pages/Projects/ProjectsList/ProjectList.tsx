@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './ProjectsList.scss';
+import { ProjectLinks } from '@/components/ProjectElements/ProjectLinks/ProjectLinks';
+import { ProjectTags } from '@/components/ProjectElements/ProjectTags/ProjectTags';
 
 interface ProjectListProps {
   projects: Project[];
@@ -44,33 +46,8 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
               </motion.header>
 
               <motion.footer className="project-list-card__footer" variants={fadeIn}>
-                <motion.div
-                  className="project-list-card__tags"
-                  variants={staggerContainer}
-                  transition={staggerTransition(0.05)}
-                >
-                  {project.technologies.slice(0, 3).map((tech) => (
-                    <motion.span
-                      key={tech}
-                      className="project-list-card__tag"
-                      variants={fadeIn}
-                      whileHover={{ scale: 1.05 }}
-                      transition={defaultTransition}
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
-                  {project.technologies.length > 3 && (
-                    <motion.span
-                      className="project-list-card__tag project-list-card__tag--more"
-                      variants={fadeIn}
-                      whileHover={{ scale: 1.05 }}
-                      transition={defaultTransition}
-                    >
-                      +{project.technologies.length - 3}
-                    </motion.span>
-                  )}
-                </motion.div>
+                <ProjectTags tags={project.technologies} variant="minimal" limit={3} />
+                {project.links && <ProjectLinks links={project.links} variant="minimal" />}
               </motion.footer>
             </Link>
           </motion.article>

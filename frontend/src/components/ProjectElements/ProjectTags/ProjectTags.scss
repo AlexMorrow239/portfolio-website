@@ -1,0 +1,77 @@
+@use '../../../assets/styles/abstracts/index' as *;
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+
+  // Featured variant (used in featured projects)
+  &--featured {
+    .project-tag {
+      background: var(--overlay-primary);
+      color: var(--color-primary);
+      padding: 0.25rem 0.75rem;
+      font-size: 0.875rem;
+      border-radius: var(--border-radius);
+      font-family: var(--mono-font);
+
+      &:hover {
+        background: var(--overlay-primary-hover);
+      }
+    }
+  }
+
+  // Minimal variant (used in other projects)
+  &--minimal {
+    gap: var(--spacing-xs);
+
+    .project-tag {
+      color: var(--color-text-light);
+      font-size: 0.75rem;
+      font-family: var(--mono-font);
+      padding: 0.125rem 0.5rem;
+      background: var(--overlay-secondary);
+      border-radius: var(--border-radius-sm);
+
+      &--more {
+        background: var(--overlay-tertiary);
+        color: var(--color-text-lighter);
+      }
+    }
+  }
+
+  // Detailed variant (used in project details)
+  &--detailed {
+    gap: var(--spacing-md);
+    margin: var(--spacing-md) 0;
+
+    .project-tag {
+      background: var(--overlay-primary);
+      color: var(--color-primary);
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border-radius: var(--border-radius);
+      font-family: var(--mono-font);
+      border: 1px solid var(--color-border);
+
+      &:hover {
+        border-color: var(--color-primary);
+        background: var(--overlay-primary-hover);
+      }
+    }
+  }
+}
+
+// Responsive adjustments
+@include respond-down('sm') {
+  .project-tags {
+    &--detailed {
+      gap: var(--spacing-sm);
+
+      .project-tag {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+      }
+    }
+  }
+}

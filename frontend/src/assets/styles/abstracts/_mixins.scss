@@ -22,6 +22,26 @@
   }
 }
 
+@mixin respond-down($breakpoint) {
+  @if $breakpoint == 'sm' {
+    @media (max-width: 639px) {
+      @content;
+    }
+  } @else if $breakpoint == 'md' {
+    @media (max-width: 767px) {
+      @content;
+    }
+  } @else if $breakpoint == 'lg' {
+    @media (max-width: 1023px) {
+      @content;
+    }
+  } @else if $breakpoint == 'xl' {
+    @media (max-width: 1279px) {
+      @content;
+    }
+  }
+}
+
 @mixin container($max-width: var(--breakpoint-xl)) {
   width: 100%;
   margin-right: auto;

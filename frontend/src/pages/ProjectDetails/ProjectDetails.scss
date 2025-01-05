@@ -7,6 +7,8 @@
 
   &__back-button {
     margin-bottom: var(--spacing-xl);
+    @include button-base;
+    @include button-variant('ghost');
 
     &:hover {
       transform: translateX(-4px);
@@ -14,11 +16,9 @@
   }
 
   &__content {
+    @include card-base(0, 16px);
     background: var(--color-background);
-    border-radius: 16px;
     overflow: hidden;
-    border: 1px solid var(--color-border);
-    box-shadow: 0 4px 6px var(--shadow-sm);
   }
 
   &__hero {
@@ -28,9 +28,7 @@
     position: relative;
     background-color: var(--color-background);
     border-bottom: 1px solid var(--color-border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flexCenter;
     padding: var(--spacing-lg);
 
     img {
@@ -47,7 +45,7 @@
       }
     }
 
-    @include respond-to('max-sm') {
+    @include respond-down('sm') {
       height: 250px;
     }
   }
@@ -59,27 +57,7 @@
     h1 {
       font-size: clamp(2rem, 5vw, 2.5rem);
       margin-bottom: var(--spacing-md);
-      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-  }
-
-  &__links {
-    display: flex;
-    gap: var(--spacing-md);
-    flex-wrap: wrap;
-  }
-
-  &__link {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-
-    svg {
-      width: 1.25rem;
-      height: 1.25rem;
+      @include gradient-text;
     }
   }
 
@@ -119,26 +97,11 @@
     }
   }
 
-  &__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-sm);
-  }
-
-  &__tag {
-    &--tech {
-      color: var(--color-primary);
-    }
-
-    &--skill {
-      color: var(--color-secondary);
-    }
-  }
-
   &__metrics {
     display: grid;
     gap: var(--spacing-md);
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: var(--spacing-xl);
   }
 
   &__metric {
@@ -146,6 +109,11 @@
     background: var(--color-background-alt);
     border-radius: 12px;
     text-align: center;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
 
     h3 {
       font-size: 0.9rem;
@@ -165,9 +133,7 @@
   // Loading state
   &__loading {
     min-height: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flexCenter;
 
     .loader {
       width: 48px;
@@ -217,14 +183,6 @@
       background: rgba(var(--color-background-rgb), 0.2);
     }
 
-    &__link {
-      background: rgba(var(--color-background-rgb), 0.2);
-
-      &:hover {
-        background: var(--color-primary);
-      }
-    }
-
     &__hero {
       img {
         filter: brightness(0.85);
@@ -248,7 +206,7 @@
 }
 
 // Responsive adjustments
-@include respond-to('max-sm') {
+@include respond-down('sm') {
   .project-detail {
     padding: var(--spacing-lg) var(--spacing-sm);
 
@@ -273,23 +231,9 @@
       gap: var(--spacing-lg);
     }
 
-    &__links {
-      flex-direction: column;
-      gap: var(--spacing-sm);
-    }
-
-    &__link {
-      width: 100%;
-      justify-content: center;
-    }
-
     &__metrics {
       grid-template-columns: 1fr;
-    }
-
-    &__tag {
-      font-size: 0.8rem;
-      padding: 0.4rem 0.8rem;
+      padding: var(--spacing-lg) var(--spacing-md);
     }
   }
 }
@@ -298,8 +242,7 @@
 @media (prefers-reduced-motion: reduce) {
   .project-detail {
     &__back-button,
-    &__link,
-    &__tag {
+    &__metric {
       transition: none;
 
       &:hover {
