@@ -1,3 +1,5 @@
+@use '../abstracts/index' as *;
+
 .app-layout {
   min-height: 100vh;
   display: flex;
@@ -12,16 +14,10 @@
   padding-right: 0;
 }
 
-// Container styles
 .container {
-  width: 100%;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: var(--spacing-md);
-  padding-left: var(--spacing-md);
-  max-width: var(--breakpoint-xl);
+  @include container;
 
   &--fluid {
-    max-width: none;
+    @include container(none);
   }
 }

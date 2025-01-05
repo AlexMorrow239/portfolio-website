@@ -1,3 +1,7 @@
+// ==========================================================================
+// Layout Mixins
+// ==========================================================================
+
 @mixin respond-to($breakpoint) {
   @if $breakpoint == 'sm' {
     @media (min-width: 640px) {
@@ -18,6 +22,27 @@
   }
 }
 
+@mixin container($max-width: var(--breakpoint-xl)) {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: var(--spacing-md);
+  padding-left: var(--spacing-md);
+  max-width: $max-width;
+}
+
+@mixin grid-layout($min-width: 300px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($min-width, 1fr));
+  gap: var(--spacing-lg);
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+// ==========================================================================
+// Flexbox Mixins
+// ==========================================================================
+
 @mixin flexCenter {
   display: flex;
   align-items: center;
@@ -30,51 +55,22 @@
   justify-content: space-between;
 }
 
-@mixin card-base {
-  background: var(--color-background);
-  border-radius: 16px;
-  border: 1px solid var(--color-border);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
+// ==========================================================================
+// Typography Mixins
+// ==========================================================================
 
-@mixin card-hover {
-  transform: translateY(-4px);
-  border-color: var(--color-primary);
-  box-shadow: 0 4px 12px var(--shadow-md);
-}
-
-@mixin timeline-node {
-  content: '';
-  position: absolute;
-  left: calc(var(--spacing-md) * -1);
-  width: 0.5rem; // Smaller node size
-  height: 0.5rem; // Smaller node size
-  border-radius: 50%;
-  background: var(--color-primary);
-  border: 2px solid var(--color-background); // Thinner border
-  box-shadow: 0 0 0 2px var(--color-primary-transparent);
-  transition: all 0.2s ease;
-  transform: translateX(-50%); // Center the node on the line
+@mixin responsive-font($min-size, $max-size) {
+  font-size: $min-size;
 
   @include respond-to('sm') {
-    left: calc(var(--spacing-xl) * -1);
+    font-size: calc($min-size + 0.5rem);
+  }
+
+  @include respond-to('md') {
+    font-size: $max-size;
   }
 }
 
-// Timeline connector mixin
-@mixin timeline-connector {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 1px; // Thinner line
-  background: var(--color-primary);
-  opacity: 0.2;
-  transform: translateX(-50%); // Center the line with the nodes
-}
-
-// Text gradient mixin
 @mixin gradient-text(
   $direction: 135deg,
   $start-color: var(--color-primary),
@@ -84,17 +80,117 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  // Improve rendering on webkit browsers
   -webkit-box-decoration-break: clone;
 
-  // Fallback for browsers that don't support background-clip: text
   @supports not (background-clip: text) {
     background: none;
     color: $start-color;
   }
 }
 
-// Background gradient mixin
+// ==========================================================================
+// Component Mixins
+// ==========================================================================
+
+@mixin card-base($padding: var(--spacing-lg), $radius: var(--border-radius-lg)) {
+  background: var(--color-background);
+  border-radius: $radius;
+  padding: $padding;
+  border: 1px solid var(--color-border);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--overlay-primary) 0%, transparent 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px var(--shadow-primary);
+    border-color: var(--color-primary);
+
+    &::before {
+      opacity: 0.1;
+    }
+  }
+}
+
+@mixin icon-base($size: 48px, $radius: 12px) {
+  color: var(--color-primary);
+  transition: all 0.3s ease;
+  background: var(--overlay-primary);
+  width: $size;
+  height: $size;
+  border-radius: $radius;
+  @include flexCenter;
+}
+
+@mixin button-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-weight: 500;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-variant($variant: 'primary') {
+  @if $variant == 'primary' {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary-dark);
+
+    &:hover:not(:disabled) {
+      background: var(--color-primary-dark);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--shadow-primary);
+    }
+  } @else if $variant == 'secondary' {
+    background: var(--color-background-alt);
+    color: var(--color-text);
+    border-color: var(--color-border);
+
+    &:hover:not(:disabled) {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+  } @else if $variant == 'ghost' {
+    background: transparent;
+    color: var(--color-text);
+    padding: 0.4rem 0.8rem;
+
+    &:hover:not(:disabled) {
+      background: var(--color-background-alt);
+      color: var(--color-primary);
+      border-color: var(--color-border);
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+}
+
+// ==========================================================================
+// Background & Overlay Mixins
+// ==========================================================================
+
 @mixin gradient-bg(
   $direction: 135deg,
   $start-color: var(--color-primary),
@@ -103,7 +199,6 @@
   background: linear-gradient($direction, $start-color, $end-color);
 }
 
-// Hover gradient animation mixin
 @mixin gradient-hover(
   $direction: 135deg,
   $start-color: var(--color-primary),
@@ -116,5 +211,100 @@
 
   &:hover {
     background-position: right center;
+  }
+}
+
+@mixin section-overlay {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--overlay-primary) 0%, transparent 100%);
+    pointer-events: none;
+  }
+}
+
+@mixin striped-overlay {
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--overlay-primary),
+      var(--overlay-primary) 2px,
+      transparent 2px,
+      transparent 20px
+    );
+    opacity: 0.1;
+    pointer-events: none;
+  }
+}
+
+// ==========================================================================
+// Timeline Mixins
+// ==========================================================================
+
+@mixin timeline-node {
+  content: '';
+  position: absolute;
+  left: calc(var(--spacing-md) * -1);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  border: 2px solid var(--color-background);
+  box-shadow: 0 0 0 2px var(--color-primary-transparent);
+  transition: all 0.2s ease;
+  transform: translateX(-50%);
+
+  @include respond-to('sm') {
+    left: calc(var(--spacing-xl) * -1);
+  }
+}
+
+@mixin timeline-connector {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-primary);
+  opacity: 0.2;
+  transform: translateX(-50%);
+}
+
+// ==========================================================================
+// Animation Mixins
+// ==========================================================================
+
+@mixin fade-in($delay: 0s, $duration: 0.5s) {
+  animation: fadeIn $duration ease-in forwards;
+  animation-delay: $delay;
+}
+
+@mixin section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+
+  @include respond-to('md') {
+    font-size: 2.5rem;
+  }
+
+  @include respond-to('lg') {
+    font-size: 3rem;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--color-primary);
+    margin: var(--spacing-sm) auto 0;
+    border-radius: var(--border-radius-sm);
   }
 }
