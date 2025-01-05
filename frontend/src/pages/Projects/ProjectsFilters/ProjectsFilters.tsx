@@ -21,7 +21,7 @@ const ProjectsFilters: React.FC<ProjectsFiltersProps> = ({
     tech.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const handleTechSelect = (tech: string | null) => {
+  const handleTechSelect = (tech: string | null): void => {
     onTechSelect(tech);
     setIsDropdownOpen(false);
   };

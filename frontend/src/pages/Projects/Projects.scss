@@ -13,12 +13,7 @@
     h1 {
       font-size: clamp(2rem, 5vw, 3rem);
       margin-bottom: var(--spacing-md);
-      background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      position: relative;
-      font-weight: 700;
+      @include gradient-text;
 
       &::after {
         content: '';
@@ -45,6 +40,9 @@
   // Featured Projects Section
   &__featured {
     margin-bottom: var(--spacing-xl);
+    &-badge {
+      @include gradient-bg(90deg, var(--color-primary), var(--color-secondary));
+    }
   }
 
   // Project List Section
@@ -52,14 +50,17 @@
     margin-top: var(--spacing-xl);
   }
 
-  // Error State
-  &__error {
+  &__error,
+  &__empty {
+    @include card-base;
     text-align: center;
     padding: var(--spacing-xl);
     max-width: 600px;
     margin: 0 auto;
-    background: var(--color-background);
-    border-radius: 16px;
+  }
+
+  // Error State
+  &__error {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 
     .error-icon {
@@ -85,8 +86,6 @@
 
   // Empty State
   &__empty {
-    text-align: center;
-    padding: var(--spacing-xl);
     color: var(--color-text-light);
 
     svg {
@@ -129,6 +128,13 @@
       min-height: 400px;
       color: var(--color-text-light);
     }
+  }
+
+  &__cta-button {
+    @include gradient-hover;
+    color: var(--color-background);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
   }
 }
 
