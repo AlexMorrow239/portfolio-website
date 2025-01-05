@@ -7,7 +7,7 @@ import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
 import ProjectList from './ProjectsList/ProjectList';
 import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
 import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
+import { defaultTransition, pageTransition, staggerTransition } from '@/animations/transitions';
 import './Projects.scss';
 import { ErrorState } from '@/components/common/ErrorState/ErrorState';
 
@@ -30,12 +30,27 @@ const Projects: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Loader
-        messages={['Fetching projects...', 'Loading project details...', 'Preparing showcase...']}
-        completionMessage="Projects loaded successfully!"
-        duration={3000}
-        isSuccess={true}
-      />
+      <AnimatePresence mode="wait">
+        <motion.div
+          key="loader"
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
+          exit="hidden"
+          transition={pageTransition}
+        >
+          <Loader
+            messages={[
+              'Fetching projects...',
+              'Loading project details...',
+              'Preparing showcase...',
+            ]}
+            completionMessage="Projects loaded successfully!"
+            duration={3000}
+            isSuccess={true}
+          />
+        </motion.div>
+      </AnimatePresence>
     );
   }
 
