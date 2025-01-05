@@ -2,19 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Terminal } from 'lucide-react';
-import { skills, metrics } from './Constants';
+import { skills, metrics, circles } from './Constants';
 import './Home.scss';
 import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
 
 const Home: React.FC = () => {
-  // Background circle positions for the hero section
-  const circles = [
-    { x: '10%', y: '20%', size: 80, delay: 0 },
-    { x: '85%', y: '15%', size: 120, delay: 0.2 },
-    { x: '70%', y: '60%', size: 100, delay: 0.4 },
-    { x: '20%', y: '75%', size: 140, delay: 0.6 },
-  ];
-
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -72,7 +64,9 @@ const Home: React.FC = () => {
 
             <motion.h1 className="hero__title" variants={itemVariants}>
               Building the Future
+              <br />
               <span className="hero__title-highlight">One Line of Code</span>
+              <br />
               at a Time
             </motion.h1>
 
