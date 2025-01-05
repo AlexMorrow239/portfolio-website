@@ -1,58 +1,42 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import { useProjects } from '@/hooks/useProject';
 import Loader from '@/components/common/Loader/Loader';
-import LoadingState from '@/components/common/LoadingState/LoadingState';
-import { ErrorState } from '@/components/common/ErrorState/ErrorState';
 import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
 import ProjectList from './ProjectsList/ProjectList';
 import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
 import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './Projects.scss';
+import { ErrorState } from '@/components/common/ErrorState/ErrorState';
 
 const Projects: React.FC = () => {
-  const { projects, isLoading, showLoader, setShowLoader, error, fetchProjects } = useProjects();
+  const { projects, isLoading, error, fetchProjects } = useProjects();
   const [selectedTech, setSelectedTech] = useState<string | null>(null);
 
-  // Memoized computations
-  const { allTechnologies, filteredProjects, featuredProjects, nonFeaturedProjects } =
-    useMemo(() => {
-      // Get unique technologies
-      const techSet = new Set<string>();
-      projects.forEach((project) => {
-        project.technologies.forEach((tech) => techSet.add(tech));
-      });
+  // Filter projects based on selected technology
+  const filteredProjects = !selectedTech
+    ? projects
+    : projects.filter((project) => project.technologies.includes(selectedTech));
 
-      // Filter projects based on selected technology
-      const filtered = !selectedTech
-        ? projects
-        : projects.filter((project) => project.technologies.includes(selectedTech));
+  const featuredProjects = filteredProjects.filter((project) => project.featured);
+  const nonFeaturedProjects = filteredProjects.filter((project) => !project.featured);
 
-      return {
-        allTechnologies: Array.from(techSet).sort(),
-        filteredProjects: filtered,
-        featuredProjects: filtered.filter((project) => project.featured),
-        nonFeaturedProjects: filtered.filter((project) => !project.featured),
-      };
-    }, [projects, selectedTech]);
+  // Get unique technologies
+  const allTechnologies = Array.from(
+    new Set(projects.flatMap((project) => project.technologies)),
+  ).sort();
 
-  // Render states
-  if (showLoader) {
+  if (isLoading) {
     return (
       <Loader
         messages={['Fetching projects...', 'Loading project details...', 'Preparing showcase...']}
         completionMessage="Projects loaded successfully!"
         duration={3000}
-        onComplete={() => setShowLoader(false)}
         isSuccess={true}
       />
     );
-  }
-
-  if (isLoading && !showLoader) {
-    return <LoadingState />;
   }
 
   if (error) {
