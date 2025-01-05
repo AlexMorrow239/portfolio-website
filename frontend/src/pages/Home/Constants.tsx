@@ -57,11 +57,11 @@ export const skills: Skill[] = [
   },
 ];
 
-export const featuredMetrics: Metric[] = [
+export const metrics: Metric[] = [
   {
     icon: <Cpu size={24} />,
     label: 'Systems Built',
-    value: '10+',
+    value: '5+',
     description: 'Including distributed backends and data pipelines',
   },
   {

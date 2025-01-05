@@ -1,17 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import {
-  Database,
-  Server,
-  Lock,
-  GitBranch,
-  Terminal,
-  Workflow,
-  Boxes,
-  Code,
-  Cpu,
-} from 'lucide-react';
+import { Terminal } from 'lucide-react';
+import { skills, metrics } from './Constants';
 import './Home.scss';
 import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
 
@@ -40,65 +31,6 @@ const Home: React.FC = () => {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0 },
   };
-
-  const skills = [
-    {
-      icon: <Server size={24} />,
-      title: 'Backend Engineering',
-      description:
-        'Architecting robust server systems and APIs that prioritize performance, scalability, and clean code architecture',
-    },
-    {
-      icon: <Database size={24} />,
-      title: 'Database Systems',
-      description:
-        'Designing efficient database schemas and implementing optimized query patterns using MongoDB, PostgreSQL, and modern ORMs',
-    },
-    {
-      icon: <Workflow size={24} />,
-      title: 'System Architecture',
-      description:
-        'Building scalable distributed systems with a focus on microservices, API design, and efficient data processing pipelines',
-    },
-    {
-      icon: <Lock size={24} />,
-      title: 'Security & Authentication',
-      description: 'Implementing robust security measures and OAuth2/JWT authentication systems',
-    },
-    {
-      icon: <Terminal size={24} />,
-      title: 'Tech Explorer',
-      description:
-        'Constantly discovering and implementing cutting-edge tools and frameworks to enhance development efficiency',
-    },
-    {
-      icon: <Code size={24} />,
-      title: 'Algorithm Enthusiast',
-      description:
-        'Deep passion for computational problem-solving, from optimizing complex algorithms to implementing efficient data structures',
-    },
-  ];
-
-  const featuredMetrics = [
-    {
-      icon: <Cpu size={24} />,
-      label: 'Systems Built',
-      value: '10+',
-      description: 'Including distributed backends and data pipelines',
-    },
-    {
-      icon: <GitBranch size={24} />,
-      label: 'Technologies',
-      value: '15+',
-      description: 'From Node.js to advanced cloud services',
-    },
-    {
-      icon: <Boxes size={24} />,
-      label: 'Code Quality',
-      value: 'A+',
-      description: 'Emphasis on clean, maintainable architecture',
-    },
-  ];
 
   return (
     <div className="home">
@@ -210,7 +142,7 @@ const Home: React.FC = () => {
       <section className="metrics">
         <div className="container">
           <div className="metrics__grid">
-            {featuredMetrics.map((metric, index) => (
+            {metrics.map((metric, index) => (
               <motion.div
                 key={index}
                 className="metric-card"
