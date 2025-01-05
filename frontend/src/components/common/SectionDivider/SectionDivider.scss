@@ -1,0 +1,136 @@
+@use '../../../assets/styles/abstracts/index' as *;
+
+.section-divider {
+  position: relative;
+  margin: var(--spacing-xxxl) 0;
+  padding: var(--spacing-xl) 0;
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Base divider line
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 1px;
+    background: var(--color-border);
+  }
+
+  // Common styles for centered content
+  &__content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    background: var(--color-background);
+    padding: 0 var(--spacing-sm);
+    font-family: var(--mono-font), var(--mono-fallback);
+    color: var(--color-text-light);
+  }
+
+  // Code variant
+  &--code {
+    .section-divider__content {
+      &::before {
+        content: '//';
+        margin-right: var(--spacing-xs);
+      }
+    }
+  }
+
+  // Terminal variant
+  &--terminal {
+    .section-divider__content {
+      &::before {
+        content: '$_';
+        color: var(--color-primary);
+        margin-right: var(--spacing-xs);
+      }
+    }
+  }
+
+  // Database variant
+  &--database {
+    &::after {
+      background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+    }
+
+    .section-divider__content {
+      &::before {
+        content: '[ ]';
+        letter-spacing: 0.25rem;
+      }
+    }
+  }
+
+  // Binary variant
+  &--binary {
+    .section-divider__content {
+      font-size: 0.75rem;
+      letter-spacing: 0.25rem;
+
+      &::before {
+        content: '01';
+      }
+    }
+  }
+
+  // Minimal variant
+  &--minimal {
+    &::after {
+      width: 40px;
+      background: var(--color-primary);
+      margin: 0 auto;
+
+      @include respond-to('sm') {
+        width: 60px;
+      }
+    }
+
+    .section-divider__content {
+      display: none;
+    }
+  }
+
+  // Icon styles
+  &__icon {
+    width: 16px;
+    height: 16px;
+    color: var(--color-primary);
+  }
+
+  // Spacing variants
+  &--sm {
+    margin: var(--spacing-xl) 0;
+    padding: var(--spacing-lg) 0;
+  }
+
+  &--md {
+    margin: var(--spacing-xxl) 0;
+    padding: var(--spacing-xl) 0;
+  }
+
+  &--lg {
+    margin: calc(var(--spacing-xxl) + var(--spacing-xl)) 0;
+    padding: var(--spacing-xxl) 0;
+  }
+
+  &--xl {
+    margin: var(--spacing-xxxl) 0;
+    padding: calc(var(--spacing-xxl) + var(--spacing-md)) 0;
+  }
+
+  // Dark mode adjustments
+  [data-theme='dark'] & {
+    .section-divider__content {
+      background-color: var(--color-background);
+    }
+  }
+}

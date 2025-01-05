@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal } from 'lucide-react';
-import { Project } from '@/types/project';
+import { type Project } from '@/types/project';
 import { ProjectsService } from '@/services/projects.service';
 import './Projects.scss';
 import Loader from '@/components/common/Loader/Loader';
@@ -15,14 +15,13 @@ const Projects: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const loaderTimeoutRef = useRef<NodeJS.Timeout>();
+  const loaderTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const fetchProjects = async () => {
+  const fetchProjects = React.useCallback(async (): Promise<void> => {
     try {
       setIsLoading(true);
       setError(null);
 
-      // Start a timer to show loader if fetch takes longer than 300ms
       loaderTimeoutRef.current = setTimeout(() => {
         setShowLoader(true);
       }, 300);
@@ -30,7 +29,6 @@ const Projects: React.FC = () => {
       const fetchedProjects = await ProjectsService.getAllProjects();
       setProjects(fetchedProjects);
 
-      // Ensure loader plays for at least one full cycle if it started
       if (showLoader) {
         await new Promise((resolve) => setTimeout(resolve, 3000));
       }
@@ -39,18 +37,22 @@ const Projects: React.FC = () => {
       console.error('Failed to fetch projects:', error);
       setError(errorMessage);
     } finally {
-      clearTimeout(loaderTimeoutRef.current);
+      if (loaderTimeoutRef.current !== null) {
+        clearTimeout(loaderTimeoutRef.current);
+      }
       setIsLoading(false);
       setShowLoader(false);
     }
-  };
+  }, [showLoader]);
 
   useEffect(() => {
     void fetchProjects();
     return () => {
-      clearTimeout(loaderTimeoutRef.current);
+      if (loaderTimeoutRef.current !== null) {
+        clearTimeout(loaderTimeoutRef.current);
+      }
     };
-  }, []);
+  }, [fetchProjects]);
 
   const allTechnologies = useMemo(() => {
     const techSet = new Set<string>();
@@ -61,17 +63,21 @@ const Projects: React.FC = () => {
   }, [projects]);
 
   const filteredProjects = useMemo(() => {
-    if (!selectedTech) return projects;
+    if (!selectedTech) {
+      return projects;
+    }
     return projects.filter((project) => project.technologies.includes(selectedTech));
   }, [selectedTech, projects]);
 
-  const featuredProjects = useMemo(() => {
-    return filteredProjects.filter((project) => project.featured);
-  }, [filteredProjects]);
+  const featuredProjects = useMemo(
+    () => filteredProjects.filter((project) => project.featured),
+    [filteredProjects],
+  );
 
-  const nonFeaturedProjects = useMemo(() => {
-    return filteredProjects.filter((project) => !project.featured);
-  }, [filteredProjects]);
+  const nonFeaturedProjects = useMemo(
+    () => filteredProjects.filter((project) => !project.featured),
+    [filteredProjects],
+  );
 
   if (showLoader) {
     return (

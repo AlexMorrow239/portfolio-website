@@ -17,38 +17,7 @@
     position: relative;
     margin-bottom: var(--spacing-xxl);
     padding: var(--spacing-xl) 0;
-    scroll-margin-top: 2rem;
-
-    // Fancy section divider
-    &:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      bottom: calc(var(--spacing-xl) * -1);
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--color-border), transparent);
-
-      @include respond-to('sm') {
-        width: 40%;
-      }
-    }
-
-    // Decorative dots
-    &:not(:last-child)::before {
-      content: '•••';
-      position: absolute;
-      bottom: calc(var(--spacing-xl) * -1.25);
-      left: 50%;
-      transform: translateX(-50%);
-      color: var(--color-border);
-      letter-spacing: 0.5rem;
-      font-size: 0.75rem;
-      background: var(--color-background);
-      padding: 0 var(--spacing-sm);
-      z-index: 1;
-    }
+    scroll-margin-top: 4rem;
 
     &:first-child {
       padding-top: 0;

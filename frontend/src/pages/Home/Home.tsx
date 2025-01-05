@@ -13,6 +13,7 @@ import {
   Cpu,
 } from 'lucide-react';
 import './Home.scss';
+import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
 
 const Home: React.FC = () => {
   // Background circle positions for the hero section
@@ -175,7 +176,7 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
       </section>
-
+      <SectionDivider variant="minimal" spacing="md" />
       {/* Skills Section */}
       <section className="skills">
         <div className="container">
@@ -203,7 +204,7 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      <div className="section-divider"></div>
+      <SectionDivider variant="code" spacing="md" />
 
       {/* Metrics Section */}
       <section className="metrics">
