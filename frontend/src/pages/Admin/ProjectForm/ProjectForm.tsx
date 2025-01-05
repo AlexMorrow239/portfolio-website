@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Save, Link as LinkIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useProjectForm } from '@/hooks/useProjectForm';
-import ImageUpload from '@/components/common/ImageUpload/ImageUpload';
-import TagInput from '@/components/common/TagInput/TagInput';
+import ImageUpload from '@/pages/Admin/ProjectForm/ImageUpload/ImageUpload';
+import TagInput from '@/pages/Admin/ProjectForm/TagInput/TagInput';
 import './ProjectForm.scss';
 
 interface ProjectFormProps {
@@ -29,7 +29,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
     <div className="project-form">
       <div className="project-form__header">
         <button
-          onClick={() => navigate('/admin/projects')}
+          onClick={() => {
+            void navigate('/admin/projects');
+          }}
           className="btn btn--icon btn--secondary"
           title="Back to projects"
         >
@@ -42,7 +44,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
         <div className="loading-spinner">Loading...</div>
       ) : (
         <motion.form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            void handleSubmit(e);
+          }}
           className="project-form__content"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -126,7 +130,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
                 <input
                   type="url"
                   id="githubLink"
-                  value={formData.links.github || ''}
+                  value={formData.links.github ?? ''}
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
@@ -147,7 +151,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
                 <input
                   type="url"
                   id="liveLink"
-                  value={formData.links.live || ''}
+                  value={formData.links.live ?? ''}
                   onChange={(e) =>
                     setFormData((prev) => ({
                       ...prev,
@@ -185,7 +189,9 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
           <div className="form-actions">
             <button
               type="button"
-              onClick={() => navigate('/admin/projects')}
+              onClick={() => {
+                void navigate('/admin/projects');
+              }}
               className="btn btn--secondary"
             >
               Cancel

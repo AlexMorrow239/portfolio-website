@@ -2,10 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import './About.scss';
-import TechArsenal from '@/components/TechArsenal/TechArsenal';
-import Education from '@/components/Education/Education';
-import Professional from '@/components/Professional/Professional';
-import Interests from '@/components/Interests/Interests';
+import TechArsenal from '@/pages/About/TechArsenal/TechArsenal';
+import Education from '@/pages/About/Education/Education';
+import Professional from '@/pages/About/Professional/Professional';
+import Interests from '@/pages/About/Interests/Interests';
 import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
 
 const About: React.FC = () => (
