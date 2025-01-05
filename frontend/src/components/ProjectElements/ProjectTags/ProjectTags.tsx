@@ -27,8 +27,15 @@ export const ProjectTags: FC<ProjectTagsProps> = ({
           key={tag}
           className="project-tag"
           variants={fadeIn}
-          whileHover={{ scale: 1.05 }}
-          transition={defaultTransition}
+          initial={{ scale: 1 }}
+          whileHover={{
+            scale: 1.05,
+            transition: {
+              type: 'spring',
+              stiffness: 400,
+              damping: 10,
+            },
+          }}
         >
           {tag}
         </motion.span>

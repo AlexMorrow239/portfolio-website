@@ -6,12 +6,15 @@
 
   // Base link styles
   .project-link {
+    position: relative;
+    pointer-events: auto;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
     color: var(--color-text-light);
     transition: all 0.3s ease;
     cursor: pointer;
+    will-change: transform;
 
     svg {
       color: inherit;
@@ -57,6 +60,7 @@
       background: var(--overlay-primary);
       border-radius: var(--border-radius);
       font-weight: 500;
+      z-index: 1;
 
       &--github {
         background: rgba(var(--github-color-rgb), 0.1);
@@ -139,7 +143,7 @@
   }
 }
 
-// Dark mode adjustments (if needed)
+// Dark mode adjustments
 [data-theme='dark'] {
   .project-links {
     &--detailed {
@@ -162,6 +166,15 @@
           background: rgba(var(--color-demo-rgb), 0.1);
         }
       }
+    }
+  }
+}
+
+// Reduced motion preferences
+@media (prefers-reduced-motion: reduce) {
+  .project-links {
+    .project-link {
+      transition: none;
     }
   }
 }
