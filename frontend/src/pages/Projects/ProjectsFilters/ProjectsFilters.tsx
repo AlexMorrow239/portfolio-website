@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Filter, ChevronDown } from 'lucide-react';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './ProjectFilters.scss';
 
 interface ProjectsFiltersProps {
@@ -27,23 +29,35 @@ const ProjectsFilters: React.FC<ProjectsFiltersProps> = ({
   };
 
   return (
-    <div className="projects-filters">
+    <motion.div className="projects-filters" variants={fadeInUp} transition={defaultTransition}>
       {/* Header with clear filter option */}
-      <div className="projects-filters__header">
+      <motion.div className="projects-filters__header" variants={fadeIn}>
         <h3>Filter by Technology</h3>
         {selectedTech && (
-          <button className="projects-filters__clear" onClick={() => handleTechSelect(null)}>
+          <motion.button
+            className="projects-filters__clear"
+            onClick={() => handleTechSelect(null)}
+            whileHover={{ x: -5 }}
+            transition={defaultTransition}
+          >
             Clear filter
             <X className="projects-filters__clear-icon" size={14} />
-          </button>
+          </motion.button>
         )}
-      </div>
+      </motion.div>
 
-      <div className="projects-filters__container">
+      <motion.div
+        className="projects-filters__container"
+        variants={staggerContainer}
+        transition={staggerTransition(0.1)}
+      >
         {/* Mobile Filter Button */}
-        <button
+        <motion.button
           className="projects-filters__mobile-button"
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+          variants={fadeIn}
+          whileHover={{ scale: 1.02 }}
+          transition={defaultTransition}
         >
           <Filter size={16} />
           <span>Filter Projects</span>
@@ -51,67 +65,89 @@ const ProjectsFilters: React.FC<ProjectsFiltersProps> = ({
             size={16}
             className={`projects-filters__icon ${isDropdownOpen ? 'projects-filters__icon--open' : ''}`}
           />
-        </button>
+        </motion.button>
 
         {/* Desktop Filter Pills */}
-        <div className="projects-filters__pills">
-          <button
+        <motion.div
+          className="projects-filters__pills"
+          variants={staggerContainer}
+          transition={staggerTransition(0.05)}
+        >
+          <motion.button
+            variants={fadeIn}
             className={`projects-filters__pill ${!selectedTech ? 'projects-filters__pill--active' : ''}`}
             onClick={() => handleTechSelect(null)}
+            whileHover={{ scale: 1.05 }}
+            transition={defaultTransition}
           >
             All Projects
-          </button>
+          </motion.button>
           {technologies.map((tech) => (
-            <button
+            <motion.button
               key={tech}
+              variants={fadeIn}
               className={`projects-filters__pill ${selectedTech === tech ? 'projects-filters__pill--active' : ''}`}
               onClick={() => handleTechSelect(tech)}
+              whileHover={{ scale: 1.05 }}
+              transition={defaultTransition}
             >
               {tech}
-            </button>
+            </motion.button>
           ))}
-        </div>
+        </motion.div>
 
         {/* Mobile Dropdown */}
         <AnimatePresence>
           {isDropdownOpen && (
             <motion.div
               className="projects-filters__dropdown"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
+              variants={fadeInUp}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              transition={defaultTransition}
             >
-              <input
+              <motion.input
                 type="text"
                 className="projects-filters__search"
                 placeholder="Search technologies..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
+                variants={fadeIn}
               />
 
-              <div className="projects-filters__options">
-                <button
+              <motion.div
+                className="projects-filters__options"
+                variants={staggerContainer}
+                transition={staggerTransition(0.05)}
+              >
+                <motion.button
+                  variants={fadeIn}
                   className={`projects-filters__option ${!selectedTech ? 'projects-filters__option--active' : ''}`}
                   onClick={() => handleTechSelect(null)}
+                  whileHover={{ x: 5 }}
+                  transition={defaultTransition}
                 >
                   All Projects
-                </button>
+                </motion.button>
                 {filteredTechnologies.map((tech) => (
-                  <button
+                  <motion.button
                     key={tech}
+                    variants={fadeIn}
                     className={`projects-filters__option ${selectedTech === tech ? 'projects-filters__option--active' : ''}`}
                     onClick={() => handleTechSelect(tech)}
+                    whileHover={{ x: 5 }}
+                    transition={defaultTransition}
                   >
                     {tech}
-                  </button>
+                  </motion.button>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

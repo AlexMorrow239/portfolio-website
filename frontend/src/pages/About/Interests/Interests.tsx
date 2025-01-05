@@ -1,28 +1,33 @@
 import { motion } from 'framer-motion';
 import { Dumbbell, Activity, Mountain, TreePine } from 'lucide-react';
 import './Interests.scss';
+import { fadeInUp, fadeIn, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 
 const Interests: React.FC = () => (
   <motion.section
     className="about__section interests"
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
+    variants={fadeInUp}
+    transition={defaultTransition}
   >
     <div className="about__section-header">
       <TreePine className="icon" />
       <h2>Beyond the Code</h2>
     </div>
 
-    <div className="interests__grid">
+    <motion.div
+      className="interests__grid"
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      transition={staggerTransition(0.1)}
+    >
       {/* Fitness Journey */}
       <motion.div
         className="interests__card"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
+        variants={fadeIn}
+        transition={defaultTransition}
         whileHover={{ y: -5 }}
       >
         <div className="about__inline-icon">
@@ -40,10 +45,8 @@ const Interests: React.FC = () => (
       {/* The Great Outdoors */}
       <motion.div
         className="interests__card"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
+        variants={fadeIn}
+        transition={defaultTransition}
         whileHover={{ y: -5 }}
       >
         <div className="about__inline-icon">
@@ -61,10 +64,8 @@ const Interests: React.FC = () => (
       {/* Tech Meets Fitness */}
       <motion.div
         className="interests__card"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
+        variants={fadeIn}
+        transition={defaultTransition}
         whileHover={{ y: -5 }}
       >
         <div className="about__inline-icon">
@@ -78,7 +79,7 @@ const Interests: React.FC = () => (
           patterns I might find?
         </p>
       </motion.div>
-    </div>
+    </motion.div>
   </motion.section>
 );
 

@@ -1,9 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ProjectFormData, ProjectFormErrors, Project } from '@/types/project';
+import { type ProjectFormData, type ProjectFormErrors, type Project } from '@/types/project';
 import { APP_CONFIG } from '@/config';
 
-export const useProjectForm = (mode: 'create' | 'edit', projectId?: string) => {
+export const useProjectForm = (
+  mode: 'create' | 'edit',
+  projectId?: string,
+): {
+  formData: ProjectFormData;
+  setFormData: React.Dispatch<React.SetStateAction<ProjectFormData>>;
+  errors: ProjectFormErrors;
+  setErrors: React.Dispatch<React.SetStateAction<ProjectFormErrors>>;
+  loading: boolean;
+  selectedImage: File | null;
+  setSelectedImage: React.Dispatch<React.SetStateAction<File | null>>;
+  imagePreview: string | null;
+  setImagePreview: React.Dispatch<React.SetStateAction<string | null>>;
+  validateForm: () => boolean;
+  handleSubmit: (e: React.FormEvent) => Promise<void>;
+} => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ProjectFormData>({
     title: '',
@@ -21,11 +36,11 @@ export const useProjectForm = (mode: 'create' | 'edit', projectId?: string) => {
 
   useEffect(() => {
     if (mode === 'edit' && projectId) {
-      fetchProject(projectId);
+      void fetchProject(projectId);
     }
   }, [mode, projectId]);
 
-  const fetchProject = async (id: string) => {
+  const fetchProject = async (id: string): Promise<void> => {
     try {
       setLoading(true);
       const response = await fetch(APP_CONFIG.endpoints.projects.byId(id), {
@@ -33,7 +48,13 @@ export const useProjectForm = (mode: 'create' | 'edit', projectId?: string) => {
           Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
         },
       });
-      const project: Project = await response.json();
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch project data');
+      }
+
+      const projectData: unknown = await response.json();
+      const project: Project = projectData as Project;
 
       setFormData({
         title: project.title,
@@ -90,7 +111,7 @@ export const useProjectForm = (mode: 'create' | 'edit', projectId?: string) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent): Promise<void> => {
     e.preventDefault();
 
     if (!validateForm()) {
@@ -132,7 +153,7 @@ export const useProjectForm = (mode: 'create' | 'edit', projectId?: string) => {
         throw new Error('Failed to save project');
       }
 
-      navigate('/admin/projects');
+      void navigate('/admin/projects');
     } catch (error) {
       console.error('Error saving project:', error);
     } finally {
@@ -144,11 +165,13 @@ export const useProjectForm = (mode: 'create' | 'edit', projectId?: string) => {
     formData,
     setFormData,
     errors,
+    setErrors,
     loading,
     selectedImage,
     setSelectedImage,
     imagePreview,
     setImagePreview,
+    validateForm,
     handleSubmit,
   };
 };

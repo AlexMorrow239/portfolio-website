@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import './About.scss';
@@ -7,13 +6,21 @@ import Education from '@/pages/About/Education/Education';
 import Professional from '@/pages/About/Professional/Professional';
 import Interests from '@/pages/About/Interests/Interests';
 import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
+// Add these imports
+import { fadeInUp, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 
 const About: React.FC = () => (
-  <div className="about">
+  <motion.div
+    className="about"
+    variants={staggerContainer}
+    initial="hidden"
+    animate="visible"
+    transition={staggerTransition()}
+  >
     <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      variants={fadeInUp}
+      transition={defaultTransition}
       className="about__section about__intro"
     >
       <Terminal className="about__section-icon" />
@@ -26,7 +33,6 @@ const About: React.FC = () => (
     </motion.section>
 
     <SectionDivider variant="binary" spacing="sm" />
-
     <Education />
     <SectionDivider variant="terminal" spacing="sm" />
     <TechArsenal />
@@ -34,7 +40,7 @@ const About: React.FC = () => (
     <Professional />
     <SectionDivider variant="database" spacing="sm" />
     <Interests />
-  </div>
+  </motion.div>
 );
 
 export default About;

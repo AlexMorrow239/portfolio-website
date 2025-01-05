@@ -8,6 +8,8 @@ import { ErrorState } from '@/components/common/ErrorState/ErrorState';
 import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
 import ProjectList from './ProjectsList/ProjectList';
 import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './Projects.scss';
 
 const Projects: React.FC = () => {
@@ -62,34 +64,38 @@ const Projects: React.FC = () => {
   }
 
   return (
-    <div className="projects">
+    <motion.div
+      className="projects"
+      variants={staggerContainer}
+      initial="hidden"
+      animate="visible"
+      transition={staggerTransition(0.2)}
+    >
       {/* Header Section */}
-      <motion.div
-        className="projects__header"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      <motion.div className="projects__header" variants={fadeInUp} transition={defaultTransition}>
         <h1>Project Portfolio</h1>
         <p>A collection of my recent work and technical explorations</p>
       </motion.div>
 
       {/* Filters */}
-      <ProjectsFilters
-        technologies={allTechnologies}
-        selectedTech={selectedTech}
-        onTechSelect={setSelectedTech}
-      />
+      <motion.div variants={fadeIn}>
+        <ProjectsFilters
+          technologies={allTechnologies}
+          selectedTech={selectedTech}
+          onTechSelect={setSelectedTech}
+        />
+      </motion.div>
 
       {/* Content Sections */}
       <AnimatePresence mode="wait">
         {featuredProjects.length > 0 && (
           <motion.div
             className="projects__featured"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeInUp}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            transition={defaultTransition}
           >
             <FeaturedProjects projects={featuredProjects} />
           </motion.div>
@@ -98,10 +104,11 @@ const Projects: React.FC = () => {
         {nonFeaturedProjects.length > 0 && (
           <motion.div
             className="projects__list"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            variants={fadeInUp}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            transition={{ ...defaultTransition, delay: 0.2 }}
           >
             <ProjectList projects={nonFeaturedProjects} />
           </motion.div>
@@ -111,9 +118,10 @@ const Projects: React.FC = () => {
         {filteredProjects.length === 0 && (
           <motion.div
             className="projects__empty"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5 }}
+            variants={fadeIn}
+            initial="hidden"
+            animate="visible"
+            transition={defaultTransition}
           >
             <Terminal size={32} />
             <h3>No Projects Found</h3>
@@ -121,7 +129,7 @@ const Projects: React.FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </motion.div>
   );
 };
 

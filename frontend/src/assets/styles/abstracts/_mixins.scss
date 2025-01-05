@@ -88,6 +88,31 @@
   }
 }
 
+@mixin section-title {
+  font-size: 2rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+
+  @include respond-to('md') {
+    font-size: 2.5rem;
+  }
+
+  @include respond-to('lg') {
+    font-size: 3rem;
+  }
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: var(--color-primary);
+    margin: var(--spacing-sm) auto 0;
+    border-radius: var(--border-radius-sm);
+  }
+}
+
 // ==========================================================================
 // Component Mixins
 // ==========================================================================
@@ -273,38 +298,4 @@
   background: var(--color-primary);
   opacity: 0.2;
   transform: translateX(-50%);
-}
-
-// ==========================================================================
-// Animation Mixins
-// ==========================================================================
-
-@mixin fade-in($delay: 0s, $duration: 0.5s) {
-  animation: fadeIn $duration ease-in forwards;
-  animation-delay: $delay;
-}
-
-@mixin section-title {
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: var(--spacing-xl);
-
-  @include respond-to('md') {
-    font-size: 2.5rem;
-  }
-
-  @include respond-to('lg') {
-    font-size: 3rem;
-  }
-
-  &::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 4px;
-    background: var(--color-primary);
-    margin: var(--spacing-sm) auto 0;
-    border-radius: var(--border-radius-sm);
-  }
 }

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { Terminal, AlertCircle, Send } from 'lucide-react';
-import { APP_CONFIG } from '../../config';
+import { API_BASE_URL } from '@/config';
 import Loader from '@/components/common/Loader/Loader';
+import { fadeInUp, staggerContainer, defaultTransition } from '@/animations';
 import './Contact.scss';
 
 interface ContactFormData {
@@ -14,9 +15,9 @@ interface ContactFormData {
 }
 
 const Contact: React.FC = () => {
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [submitStatus, setSubmitStatus] = React.useState<'idle' | 'success' | 'error'>('idle');
-  const [isSuccess, setIsSuccess] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const {
     register,
@@ -25,12 +26,12 @@ const Contact: React.FC = () => {
     reset,
   } = useForm<ContactFormData>();
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (data: ContactFormData): Promise<void> => {
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch(APP_CONFIG.endpoints.contact, {
+      const response = await fetch(`${API_BASE_URL}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,19 +40,18 @@ const Contact: React.FC = () => {
       });
 
       if (!response.ok) {
-        setIsSubmitting(false);
-        setIsSuccess(false);
         throw new Error('Failed to send message');
       }
 
-      setSubmitStatus('success');
       setIsSuccess(true);
+      setSubmitStatus('success');
       reset();
     } catch (error) {
-      setIsSubmitting(false);
-      setIsSuccess(false);
       console.error('Error sending message:', error);
       setSubmitStatus('error');
+      setIsSuccess(false);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -78,13 +78,15 @@ const Contact: React.FC = () => {
     <div className="contact">
       <motion.section
         className="contact__intro"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+        variants={fadeInUp}
+        initial="hidden"
+        animate="visible"
+        transition={defaultTransition}
       >
         <Terminal className="contact__icon" size={48} />
         <h1 className="contact__title">Let's Discuss Architecture</h1>
         <p className="contact__description">
-          Interested in reaching out to me, or have a project in mind? Lets connect and explore how
+          Interested in reaching out to me, or have a project in mind? Let's connect and explore how
           we can work together.
         </p>
       </motion.section>
@@ -94,19 +96,16 @@ const Contact: React.FC = () => {
           <motion.form
             className="contact-form"
             onSubmit={handleSubmit(onSubmit)}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
+            variants={staggerContainer}
+            initial="hidden"
+            animate="visible"
           >
-            <div className="form-group">
+            <motion.div className="form-group" variants={fadeInUp}>
               <label htmlFor="name">Name</label>
               <input
                 type="text"
                 id="name"
-                {...register('name', {
-                  required: 'Name is required',
-                  minLength: { value: 2, message: 'Name is too short' },
-                })}
+                {...register('name', { required: 'Name is required' })}
                 className={errors.name ? 'error' : ''}
               />
               {errors.name && (
@@ -115,9 +114,9 @@ const Contact: React.FC = () => {
                   {errors.name.message}
                 </span>
               )}
-            </div>
+            </motion.div>
 
-            <div className="form-group">
+            <motion.div className="form-group" variants={fadeInUp}>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
@@ -137,9 +136,9 @@ const Contact: React.FC = () => {
                   {errors.email.message}
                 </span>
               )}
-            </div>
+            </motion.div>
 
-            <div className="form-group">
+            <motion.div className="form-group" variants={fadeInUp}>
               <label htmlFor="subject">Subject</label>
               <input
                 type="text"
@@ -153,16 +152,19 @@ const Contact: React.FC = () => {
                   {errors.subject.message}
                 </span>
               )}
-            </div>
+            </motion.div>
 
-            <div className="form-group">
+            <motion.div className="form-group" variants={fadeInUp}>
               <label htmlFor="message">Message</label>
               <textarea
                 id="message"
                 rows={5}
                 {...register('message', {
                   required: 'Message is required',
-                  minLength: { value: 20, message: 'Message is too short' },
+                  minLength: {
+                    value: 10,
+                    message: 'Message must be at least 10 characters',
+                  },
                 })}
                 className={errors.message ? 'error' : ''}
               />
@@ -172,20 +174,24 @@ const Contact: React.FC = () => {
                   {errors.message.message}
                 </span>
               )}
-            </div>
+            </motion.div>
 
-            <button type="submit" className="btn btn--primary" disabled={isSubmitting}>
-              <>
-                <Send size={20} />
-                Send Message
-              </>
-            </button>
+            <motion.button
+              type="submit"
+              className="btn btn--primary btn--lg"
+              disabled={isSubmitting}
+              variants={fadeInUp}
+            >
+              <Send size={20} />
+              Send Message
+            </motion.button>
 
             {submitStatus === 'success' && (
               <motion.div
                 className="form-status form-status--success"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
               >
                 Message sent successfully!
               </motion.div>
@@ -194,8 +200,9 @@ const Contact: React.FC = () => {
             {submitStatus === 'error' && (
               <motion.div
                 className="form-status form-status--error"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
               >
                 Failed to send message. Please try again.
               </motion.div>

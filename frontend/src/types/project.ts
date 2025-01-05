@@ -46,9 +46,7 @@ export interface Project {
   imageUrl?: string;
   featured: boolean;
   visible: boolean;
-  metrics?: {
-    [key: string]: string;
-  };
+  metrics?: Record<string, string>;
   links: ProjectLinks;
   createdAt: string;
   updatedAt: string;
@@ -57,14 +55,12 @@ export interface Project {
 export interface CreateProjectDto {
   title: string;
   description: string;
-  technologies: Array<{ value: string }>;
-  skills: Array<{ value: string }>;
+  technologies: { value: string }[];
+  skills: { value: string }[];
   imageUrl?: string;
   featured?: boolean;
   visible?: boolean;
-  metrics?: {
-    [key: string]: string;
-  };
+  metrics?: Record<string, string>;
   links?: ProjectLinks;
 }
 

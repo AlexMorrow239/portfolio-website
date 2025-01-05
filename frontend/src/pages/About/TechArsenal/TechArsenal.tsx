@@ -1,33 +1,38 @@
 import { motion } from 'framer-motion';
 import { Code2, Server, Database, Cloud } from 'lucide-react';
+import { fadeInUp, fadeIn, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './TechArsenal.scss';
 
 const TechArsenal: React.FC = () => (
   <motion.section
     className="about__section tech-arsenal"
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
+    variants={fadeInUp}
+    transition={defaultTransition}
   >
-    <div className="about__section-header">
+    <motion.div className="about__section-header" variants={fadeIn} transition={defaultTransition}>
       <Code2 className="icon" />
       <h2>Tech Arsenal</h2>
-    </div>
+    </motion.div>
 
-    <div className="tech-arsenal__grid">
+    <motion.div
+      className="tech-arsenal__grid"
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      transition={staggerTransition(0.1)}
+    >
       {/* Frontend */}
       <motion.div
         className="tech-arsenal__category"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
+        variants={fadeIn}
+        transition={defaultTransition}
       >
-        <div className="about__inline-icon">
+        <motion.div className="about__inline-icon" variants={fadeIn}>
           <Code2 className="icon" />
           <h3>Frontend</h3>
-        </div>
+        </motion.div>
         <ul className="tech-arsenal__list">
           <motion.li whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
             React & Next.js
@@ -44,15 +49,13 @@ const TechArsenal: React.FC = () => (
       {/* Backend */}
       <motion.div
         className="tech-arsenal__category"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
+        variants={fadeIn}
+        transition={defaultTransition}
       >
-        <div className="about__inline-icon">
+        <motion.div className="about__inline-icon" variants={fadeIn}>
           <Server className="icon" />
           <h3>Backend</h3>
-        </div>
+        </motion.div>
         <ul className="tech-arsenal__list">
           <motion.li whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
             Nest.js (Express + Node.js Wrapper)
@@ -69,15 +72,13 @@ const TechArsenal: React.FC = () => (
       {/* Database */}
       <motion.div
         className="tech-arsenal__category"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
+        variants={fadeIn}
+        transition={defaultTransition}
       >
-        <div className="about__inline-icon">
+        <motion.div className="about__inline-icon" variants={fadeIn}>
           <Database className="icon" />
           <h3>Database</h3>
-        </div>
+        </motion.div>
         <ul className="tech-arsenal__list">
           <motion.li whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
             PostgreSQL
@@ -94,15 +95,13 @@ const TechArsenal: React.FC = () => (
       {/* Cloud & DevOps */}
       <motion.div
         className="tech-arsenal__category"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 }}
+        variants={fadeIn}
+        transition={defaultTransition}
       >
-        <div className="about__inline-icon">
+        <motion.div className="about__inline-icon" variants={fadeIn}>
           <Cloud className="icon" />
           <h3>Cloud & DevOps</h3>
-        </div>
+        </motion.div>
         <ul className="tech-arsenal__list">
           <motion.li whileHover={{ x: 10 }} transition={{ type: 'spring', stiffness: 300 }}>
             AWS & GCP
@@ -115,7 +114,7 @@ const TechArsenal: React.FC = () => (
           </motion.li>
         </ul>
       </motion.div>
-    </div>
+    </motion.div>
   </motion.section>
 );
 

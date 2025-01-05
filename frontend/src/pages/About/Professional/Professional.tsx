@@ -1,40 +1,46 @@
 import { motion } from 'framer-motion';
 import { Briefcase, Building2, Calendar, ExternalLink } from 'lucide-react';
+import { fadeInUp, fadeIn, slideInLeft, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './Professional.scss';
 import React from 'react';
 
 const Professional: React.FC = () => (
   <motion.section
     className="about__section professional"
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
+    variants={fadeInUp}
+    transition={defaultTransition}
   >
-    <div className="about__section-header">
+    <motion.div className="about__section-header" variants={fadeIn} transition={defaultTransition}>
       <Briefcase className="icon" />
       <h2>Professional Journey</h2>
-    </div>
+    </motion.div>
 
-    <div className="professional__timeline">
+    <motion.div
+      className="professional__timeline"
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      transition={staggerTransition(0.2)}
+    >
       {/* Bonsai Applied Computations Group */}
       <motion.div
         className="professional__role"
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
+        variants={slideInLeft}
+        transition={defaultTransition}
       >
-        <div className="professional__role-header">
+        <motion.div className="professional__role-header" variants={fadeIn}>
           <div className="about__inline-icon">
             <Building2 className="icon" />
             <h3>Bonsai Applied Computations Group</h3>
           </div>
-        </div>
+        </motion.div>
 
         <div className="professional__position">
           <motion.div
             className="professional__position-card"
+            variants={fadeIn}
             whileHover={{ x: 10 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
@@ -58,12 +64,10 @@ const Professional: React.FC = () => (
       {/* University of Miami */}
       <motion.div
         className="professional__role"
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.3 }}
+        variants={slideInLeft}
+        transition={defaultTransition}
       >
-        <div className="professional__role-header">
+        <motion.div className="professional__role-header" variants={fadeIn}>
           <div className="about__inline-icon">
             <Building2 className="icon" />
             <h3>University of Miami</h3>
@@ -76,11 +80,12 @@ const Professional: React.FC = () => (
           >
             <ExternalLink className="icon" />
           </a>
-        </div>
+        </motion.div>
 
         <div className="professional__position">
           <motion.div
             className="professional__position-card"
+            variants={fadeIn}
             whileHover={{ x: 10 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
@@ -103,21 +108,20 @@ const Professional: React.FC = () => (
       {/* Captain Fanplastic */}
       <motion.div
         className="professional__role"
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.4 }}
+        variants={slideInLeft}
+        transition={defaultTransition}
       >
-        <div className="professional__role-header">
+        <motion.div className="professional__role-header" variants={fadeIn}>
           <div className="about__inline-icon">
             <Building2 className="icon" />
             <h3>Captain Fanplastic</h3>
           </div>
-        </div>
+        </motion.div>
 
         <div className="professional__position">
           <motion.div
             className="professional__position-card"
+            variants={fadeIn}
             whileHover={{ x: 10 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
@@ -140,21 +144,20 @@ const Professional: React.FC = () => (
       {/* Quest for Success */}
       <motion.div
         className="professional__role"
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.5 }}
+        variants={slideInLeft}
+        transition={defaultTransition}
       >
-        <div className="professional__role-header">
+        <motion.div className="professional__role-header" variants={fadeIn}>
           <div className="about__inline-icon">
             <Building2 className="icon" />
             <h3>Quest for Success</h3>
           </div>
-        </div>
+        </motion.div>
 
         <div className="professional__position">
           <motion.div
             className="professional__position-card"
+            variants={fadeIn}
             whileHover={{ x: 10 }}
             transition={{ type: 'spring', stiffness: 300 }}
           >
@@ -172,7 +175,7 @@ const Professional: React.FC = () => (
           </motion.div>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   </motion.section>
 );
 

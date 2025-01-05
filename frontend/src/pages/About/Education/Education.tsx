@@ -1,43 +1,47 @@
 import { motion } from 'framer-motion';
 import { GraduationCap, Building2, Laptop, Brain, Calculator, CheckCircle } from 'lucide-react';
+import { fadeInUp, fadeIn, slideInLeft, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
+
 import './Education.scss';
 
 const Education: React.FC = () => (
   <motion.section
     className="about__section education"
-    initial={{ opacity: 0, y: 20 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.5 }}
+    variants={fadeInUp}
+    transition={defaultTransition}
   >
     {/* Section Header */}
-    <div className="about__section-header">
+    <motion.div className="about__section-header" variants={fadeIn} transition={defaultTransition}>
       <GraduationCap className="icon" />
       <h2>Education</h2>
-    </div>
+    </motion.div>
 
     {/* Timeline Content */}
-    <div className="education__timeline">
-      <motion.div
-        className="education__school"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: 0.2 }}
-      >
+    <motion.div
+      className="education__timeline"
+      variants={staggerContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true }}
+      transition={staggerTransition(0.2)}
+    >
+      <motion.div className="education__school" variants={fadeIn} transition={defaultTransition}>
         {/* University Title */}
-        <div className="about__inline-icon education__school-title">
+        <motion.div
+          className="about__inline-icon education__school-title"
+          variants={fadeIn}
+          transition={defaultTransition}
+        >
           <Building2 className="icon" />
           <h3>University of Miami</h3>
-        </div>
+        </motion.div>
 
         {/* Degrees */}
         <motion.div
           className="education__degree"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
+          variants={slideInLeft}
+          transition={defaultTransition}
           whileHover={{ x: 10 }}
         >
           <Laptop className="icon" />
@@ -51,10 +55,8 @@ const Education: React.FC = () => (
 
         <motion.div
           className="education__degree"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
+          variants={slideInLeft}
+          transition={defaultTransition}
           whileHover={{ x: 10 }}
         >
           <Brain className="icon" />
@@ -67,10 +69,8 @@ const Education: React.FC = () => (
         {/* Minor */}
         <motion.div
           className="about__inline-icon education__minor"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5 }}
+          variants={fadeIn}
+          transition={defaultTransition}
           whileHover={{ scale: 1.05 }}
         >
           <Calculator className="icon" />
@@ -80,16 +80,14 @@ const Education: React.FC = () => (
         {/* Status */}
         <motion.div
           className="about__inline-icon education__status"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.6 }}
+          variants={fadeIn}
+          transition={defaultTransition}
         >
           <CheckCircle className="icon" />
           <span>On track for dual graduation in 2027</span>
         </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   </motion.section>
 );
 

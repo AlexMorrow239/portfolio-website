@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { type Project } from '@/types/project';
-import { ProjectsService } from '@/services/projects.service';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { type Project } from '@/types/project';
+import { ProjectsService } from '@/services/projects.service';
+import { fadeIn, fadeInUp, staggerContainer, slideInLeft } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import './ProjectDetails.scss';
 
 const ProjectDetail: React.FC = () => {
@@ -14,6 +16,7 @@ const ProjectDetail: React.FC = () => {
   const [project, setProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   useEffect(() => {
     const fetchProject = async (): Promise<void> => {
       try {
@@ -48,14 +51,15 @@ const ProjectDetail: React.FC = () => {
       <div className="project-detail__error">
         <h2>Error Loading Project</h2>
         <p>{error ?? 'Project not found'}</p>
-        <button
+        <motion.button
           className="btn btn--primary"
-          onClick={() => {
-            void navigate('/projects');
-          }}
+          onClick={() => void navigate('/projects')}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={defaultTransition}
         >
           Back to Projects
-        </button>
+        </motion.button>
       </div>
     );
   }
@@ -63,117 +67,171 @@ const ProjectDetail: React.FC = () => {
   return (
     <motion.div
       className="project-detail"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
+      variants={staggerContainer}
+      initial="hidden"
+      animate="visible"
       exit={{ opacity: 0 }}
+      transition={staggerTransition(0.2)}
     >
-      <button
+      <motion.button
         className="btn btn--ghost project-detail__back-button"
-        onClick={() => {
-          void navigate('/projects');
-        }}
+        onClick={() => void navigate('/projects')}
+        variants={fadeIn}
+        whileHover={{ x: -10 }}
+        transition={defaultTransition}
       >
         <ArrowLeft size={20} />
         <span>Back to Projects</span>
-      </button>
+      </motion.button>
 
-      <div className="project-detail__content">
+      <motion.div
+        className="project-detail__content"
+        variants={fadeInUp}
+        transition={defaultTransition}
+      >
         {project.imageUrl && (
-          <div className="project-detail__hero">
-            <img src={project.imageUrl} alt={project.title} />
-          </div>
+          <motion.div className="project-detail__hero" variants={fadeIn}>
+            <motion.img
+              src={project.imageUrl}
+              alt={project.title}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={defaultTransition}
+            />
+          </motion.div>
         )}
 
-        <div className="project-detail__header">
+        <motion.div className="project-detail__header" variants={fadeIn}>
           <h1>{project.title}</h1>
-          <div className="project-detail__links">
+          <motion.div
+            className="project-detail__links"
+            variants={staggerContainer}
+            transition={staggerTransition(0.1)}
+          >
             {project.links?.github && (
-              <a
+              <motion.a
                 href={project.links.github}
                 className="btn btn--secondary project-detail__link"
                 target="_blank"
                 rel="noopener noreferrer"
+                variants={slideInLeft}
+                whileHover={{ x: 10 }}
+                transition={defaultTransition}
               >
                 <FontAwesomeIcon icon={faGithub} />
                 <span>View Code</span>
-              </a>
+              </motion.a>
             )}
             {project.links?.live && (
-              <a
-                href={project.links.live}
+              <motion.a
+                href={project.links.github}
                 className="btn btn--secondary project-detail__link"
                 target="_blank"
                 rel="noopener noreferrer"
+                variants={slideInLeft}
+                whileHover={{ x: 10 }}
+                transition={defaultTransition}
               >
                 <ExternalLink />
                 <span>Live Demo</span>
-              </a>
+              </motion.a>
             )}
             {project.links?.documentation && (
-              <a
-                href={project.links.documentation}
+              <motion.a
+                href={project.links.github}
                 className="btn btn--secondary project-detail__link"
                 target="_blank"
                 rel="noopener noreferrer"
+                variants={slideInLeft}
+                whileHover={{ x: 10 }}
+                transition={defaultTransition}
               >
                 <ExternalLink />
                 <span>Documentation</span>
-              </a>
+              </motion.a>
             )}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        <div className="project-detail__description">
+        <motion.div className="project-detail__description" variants={fadeIn}>
           <h2>About this Project</h2>
           <p>{project.description}</p>
-        </div>
+        </motion.div>
 
-        <div className="project-detail__info-grid">
-          <div className="project-detail__section">
+        <motion.div
+          className="project-detail__info-grid"
+          variants={staggerContainer}
+          transition={staggerTransition(0.1)}
+        >
+          <motion.div className="project-detail__section" variants={fadeIn}>
             <h2>Technologies</h2>
-            <div className="project-detail__tags">
+            <motion.div
+              className="project-detail__tags"
+              variants={staggerContainer}
+              transition={staggerTransition(0.05)}
+            >
               {project.technologies.map((tech) => (
-                <span
+                <motion.span
                   key={tech}
                   className="btn btn--ghost btn--sm project-detail__tag project-detail__tag--tech"
+                  variants={fadeIn}
+                  whileHover={{ scale: 1.05 }}
+                  transition={defaultTransition}
                 >
                   {tech}
-                </span>
+                </motion.span>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {project.skills && project.skills.length > 0 && (
-            <div className="project-detail__section">
+            <motion.div className="project-detail__section" variants={fadeIn}>
               <h2>Skills Applied</h2>
-              <div className="project-detail__tags">
+              <motion.div
+                className="project-detail__tags"
+                variants={staggerContainer}
+                transition={staggerTransition(0.05)}
+              >
                 {project.skills.map((skill) => (
-                  <span
+                  <motion.span
                     key={skill}
                     className="btn btn--ghost btn--sm project-detail__tag project-detail__tag--skill"
+                    variants={fadeIn}
+                    whileHover={{ scale: 1.05 }}
+                    transition={defaultTransition}
                   >
                     {skill}
-                  </span>
+                  </motion.span>
                 ))}
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           )}
-        </div>
+        </motion.div>
 
         {project.metrics && Object.keys(project.metrics).length > 0 && (
-          <div className="project-detail__section">
+          <motion.div className="project-detail__section" variants={fadeIn}>
             <h2>Key Metrics</h2>
-            <div className="project-detail__metrics">
+            <motion.div
+              className="project-detail__metrics"
+              variants={staggerContainer}
+              transition={staggerTransition(0.1)}
+            >
               {Object.entries(project.metrics).map(([key, value]) => (
-                <div key={key} className="project-detail__metric">
+                <motion.div
+                  key={key}
+                  className="project-detail__metric"
+                  variants={fadeInUp}
+                  whileHover={{ y: -5 }}
+                  transition={defaultTransition}
+                >
                   <h3>{key}</h3>
                   <p>{value}</p>
-                </div>
+                </motion.div>
               ))}
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         )}
-      </div>
+      </motion.div>
     </motion.div>
   );
 };
