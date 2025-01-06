@@ -1,9 +1,12 @@
+import React from 'react';
+
 import { motion } from 'framer-motion';
 import { Briefcase, Building2, Calendar, ExternalLink } from 'lucide-react';
-import { fadeInUp, fadeIn, slideInLeft, staggerContainer } from '@/animations/variants';
+
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
+import { fadeIn, fadeInUp, slideInLeft, staggerContainer } from '@/animations/variants';
+
 import './Professional.scss';
-import React from 'react';
 
 const Professional: React.FC = () => (
   <motion.section

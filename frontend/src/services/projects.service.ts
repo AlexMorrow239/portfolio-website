@@ -1,5 +1,5 @@
-import { type Project } from '../types/project';
 import { APP_CONFIG } from '../config';
+import { type Project } from '../types/project';
 
 interface ErrorResponse {
   message?: string;

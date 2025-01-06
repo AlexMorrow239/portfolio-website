@@ -1,12 +1,15 @@
 import React from 'react';
+
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { type Project } from '@/types/project';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import './FeaturedProjects.scss';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { ProjectLinks } from '@/components/ProjectElements/ProjectLinks/ProjectLinks';
 import { ProjectTags } from '@/components/ProjectElements/ProjectTags/ProjectTags';
+import { type Project } from '@/types/project';
+
+import './FeaturedProjects.scss';
 
 interface FeaturedProjectsProps {
   projects: Project[];

@@ -1,5 +1,7 @@
-import React, { useState, type KeyboardEvent } from 'react';
+import React, { type KeyboardEvent, useState } from 'react';
+
 import { X } from 'lucide-react';
+
 import './TagInput.scss';
 
 interface TagInputProps {

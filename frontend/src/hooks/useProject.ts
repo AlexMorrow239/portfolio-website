@@ -1,6 +1,7 @@
-import { useState, useCallback, useEffect } from 'react';
-import { type Project } from '@/types/project';
+import { useCallback, useEffect, useState } from 'react';
+
 import { ProjectsService } from '@/services/projects.service';
+import { type Project } from '@/types/project';
 
 export const useProjects = (): {
   projects: Project[];

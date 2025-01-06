@@ -1,20 +1,22 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import {
   Boxes,
   Code,
   Cpu,
   Database,
   GitBranch,
+  Lock,
   Server,
   Terminal,
   Workflow,
-  Lock,
 } from 'lucide-react';
-import { heroVariants, skillsVariants } from './animations';
-import './Home.scss';
+import { Link } from 'react-router-dom';
+
 import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
-import { type Circle, type Skill, type Metric } from '@/types/home';
+import { type Circle, type Metric, type Skill } from '@/types/home';
+
+import './Home.scss';
+import { heroVariants, skillsVariants } from './animations';
 
 // Background circle positions for the hero section\
 const circles: Circle[] = [

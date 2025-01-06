@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useEffect, useState } from 'react';
+
 import { faGithub, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { useTheme } from '@hooks/useTheme';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Menu, Moon, Sun, X } from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+
 import { SOCIAL_LINKS } from '@/config';
+
+import { useTheme } from '@hooks/useTheme';
+
 import './Navbar.scss';
 
 const Navbar: React.FC = () => {

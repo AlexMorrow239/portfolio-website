@@ -1,10 +1,13 @@
 import { Navigate } from 'react-router-dom';
-import { type AdminRouteObject } from './types';
-import ProjectForm from '@/pages/Admin/ProjectForm/ProjectForm';
-import { Login } from '@/pages/Admin/Login/Login';
-import { AuthGuard } from '@components/auth/AuthGuard';
+
 import AdminLayoutWrapper from '@/pages/Admin/AdminLayoutWrapper/AdminLayoutWrapper';
 import AdminProjects from '@/pages/Admin/AdminProjects/AdminProjects';
+import { Login } from '@/pages/Admin/Login/Login';
+import ProjectForm from '@/pages/Admin/ProjectForm/ProjectForm';
+
+import { AuthGuard } from '@components/auth/AuthGuard';
+
+import { type AdminRouteObject } from './types';
 
 export const adminRoutes: AdminRouteObject[] = [
   {

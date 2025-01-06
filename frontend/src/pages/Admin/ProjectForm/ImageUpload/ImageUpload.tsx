@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Image as ImageIcon, X } from 'lucide-react';
+
 import './ImageUpload.scss';
 
 interface ImageUploadProps {

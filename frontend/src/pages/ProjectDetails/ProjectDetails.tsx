@@ -1,14 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+
 import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
-import { type Project } from '@/types/project';
-import { ProjectsService } from '@/services/projects.service';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import './ProjectDetails.scss';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { ProjectLinks } from '@/components/ProjectElements/ProjectLinks/ProjectLinks';
 import { ProjectTags } from '@/components/ProjectElements/ProjectTags/ProjectTags';
+import { ProjectsService } from '@/services/projects.service';
+import { type Project } from '@/types/project';
+
+import './ProjectDetails.scss';
 
 const ProjectDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();

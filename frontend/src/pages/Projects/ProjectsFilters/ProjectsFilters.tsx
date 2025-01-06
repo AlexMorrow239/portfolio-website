@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, Filter, ChevronDown } from 'lucide-react';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+
+import { AnimatePresence, motion } from 'framer-motion';
+import { ChevronDown, Filter, X } from 'lucide-react';
+
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+
 import './ProjectFilters.scss';
 
 interface ProjectsFiltersProps {

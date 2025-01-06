@@ -8,9 +8,9 @@ interface ContainerProps {
 }
 
 const Container: React.FC<ContainerProps> = ({ children, className = '', fluid = false }) => (
-    <div className={`container ${fluid ? 'container--fluid' : ''} ${className}`.trim()}>
-      {children}
-    </div>
-  );
+  <div className={`container ${fluid ? 'container--fluid' : ''} ${className}`.trim()}>
+    {children}
+  </div>
+);
 
 export default Container;

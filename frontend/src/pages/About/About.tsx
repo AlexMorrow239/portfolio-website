@@ -1,14 +1,16 @@
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
-import './About.scss';
-import TechArsenal from '@/pages/About/TechArsenal/TechArsenal';
-import Education from '@/pages/About/Education/Education';
-import Professional from '@/pages/About/Professional/Professional';
-import Interests from '@/pages/About/Interests/Interests';
-import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
+
+import { defaultTransition, staggerTransition } from '@/animations/transitions';
 // Add these imports
 import { fadeInUp, staggerContainer } from '@/animations/variants';
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
+import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
+import Education from '@/pages/About/Education/Education';
+import Interests from '@/pages/About/Interests/Interests';
+import Professional from '@/pages/About/Professional/Professional';
+import TechArsenal from '@/pages/About/TechArsenal/TechArsenal';
+
+import './About.scss';
 
 const About: React.FC = () => (
   <motion.div

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Terminal, Database, Code } from 'lucide-react';
+
+import { Code, Database, Terminal } from 'lucide-react';
+
 import './SectionDivider.scss';
 
 interface SectionDividerProps {

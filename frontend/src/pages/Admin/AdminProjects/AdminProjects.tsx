@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { motion } from 'framer-motion';
-import { Plus, Edit2, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Edit2, Eye, EyeOff, Plus, Trash2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { type Project } from '@/types/project';
-import { ProjectsService } from '@/services/projects.service';
+
 import { APP_CONFIG } from '@/config';
+import { ProjectsService } from '@/services/projects.service';
+import { type Project } from '@/types/project';
 
 const AdminProjects: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);

@@ -1,8 +1,10 @@
+import { type FC } from 'react';
+
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { motion } from 'framer-motion';
 import { ExternalLink, FileText, Play } from 'lucide-react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGithub } from '@fortawesome/free-brands-svg-icons';
-import { type FC } from 'react';
+
 import { fadeIn } from '@/animations';
 import { defaultTransition } from '@/animations/transitions';
 

@@ -1,5 +1,7 @@
-import { motion } from 'framer-motion';
 import { type FC } from 'react';
+
+import { motion } from 'framer-motion';
+
 import { fadeIn } from '@/animations';
 import { defaultTransition } from '@/animations/transitions';
 

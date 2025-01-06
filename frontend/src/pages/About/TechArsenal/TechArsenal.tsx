@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
-import { Code2, Server, Database, Cloud } from 'lucide-react';
-import { fadeInUp, fadeIn, staggerContainer } from '@/animations/variants';
+import { Cloud, Code2, Database, Server } from 'lucide-react';
+
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+
 import './TechArsenal.scss';
 
 const TechArsenal: React.FC = () => (

@@ -1,6 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import { CheckCircle2, Terminal } from 'lucide-react';
 import { ReactTyped } from 'react-typed';
-import { Terminal, CheckCircle2 } from 'lucide-react';
+
 import './Loader.scss';
 
 interface LoaderProps {

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+
+import { AnimatePresence, motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
-import { useProjects } from '@/hooks/useProject';
-import Loader from '@/components/common/Loader/Loader';
-import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
-import ProjectList from './ProjectsList/ProjectList';
-import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+
 import { defaultTransition, pageTransition, staggerTransition } from '@/animations/transitions';
-import './Projects.scss';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { ErrorState } from '@/components/common/ErrorState/ErrorState';
+import Loader from '@/components/common/Loader/Loader';
+import { useProjects } from '@/hooks/useProject';
+
+import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
+import './Projects.scss';
+import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
+import ProjectList from './ProjectsList/ProjectList';
 
 const Projects: React.FC = () => {
   const { projects, isLoading, error, fetchProjects } = useProjects();

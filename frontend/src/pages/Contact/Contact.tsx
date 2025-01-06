@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+
 import { motion } from 'framer-motion';
+import { AlertCircle, Send, Terminal } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { Terminal, AlertCircle, Send } from 'lucide-react';
-import { API_BASE_URL } from '@/config';
+
+import { defaultTransition, fadeInUp, staggerContainer } from '@/animations';
 import Loader from '@/components/common/Loader/Loader';
-import { fadeInUp, staggerContainer, defaultTransition } from '@/animations';
+import { API_BASE_URL } from '@/config';
+
 import './Contact.scss';
 
 interface ContactFormData {

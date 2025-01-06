@@ -18,18 +18,21 @@
   "importOrder": [
     "^react$",
     "^react-dom$",
+    "^@vitejs/(.*)$",
     "^@tanstack/(.*)$",
-    "^@fortawesome/(.*)$",
-    "^lucide-react$",
     "<THIRD_PARTY_MODULES>",
-    "^@/components/(.*)$",
-    "^@/hooks/(.*)$",
-    "^@/utils/(.*)$",
-    "^@/types/(.*)$",
-    "^@/assets/(.*)$",
+    "^@/(.*)$",
+    "^@components/(.*)$",
+    "^@pages/(.*)$",
+    "^@hooks/(.*)$",
+    "^@utils/(.*)$",
+    "^@services/(.*)$",
+    "^@context/(.*)$",
+    "^@types/(.*)$",
+    "^@assets/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true,
-  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"]
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

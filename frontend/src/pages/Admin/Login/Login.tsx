@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+
 import { motion } from 'framer-motion';
 import { LogIn } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+
 import { AuthService } from '@/services/auth.service';
 import { type LoginFormData } from '@/types/auth';
 

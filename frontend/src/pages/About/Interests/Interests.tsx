@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
-import { Dumbbell, Activity, Mountain, TreePine } from 'lucide-react';
-import './Interests.scss';
-import { fadeInUp, fadeIn, staggerContainer } from '@/animations/variants';
+import { Activity, Dumbbell, Mountain, TreePine } from 'lucide-react';
+
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+
+import './Interests.scss';
 
 const Interests: React.FC = () => (
   <motion.section
