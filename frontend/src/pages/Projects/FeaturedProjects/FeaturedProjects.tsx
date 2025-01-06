@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
@@ -47,7 +47,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
             whileHover={{ y: -8 }}
           >
             <Link
-              href={`/projects/${project._id}`}
+              to={`/projects/${project._id}`}
               className="featured-project-card__content-wrapper"
             >
               {project.imageUrl && (
