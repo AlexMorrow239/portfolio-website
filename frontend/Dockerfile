@@ -1,32 +1,53 @@
 # Build stage
 FROM node:20-alpine AS builder
+# Add build argument for environment
+ARG BUILD_ENV=production
+
+# Set working directory
 WORKDIR /app
+
+# Install dependencies first (better layer caching)
 COPY package*.json ./
-RUN npm install
+# Use ci for more reliable builds
+RUN npm ci
+
+# Copy source files
 COPY . .
-RUN npm run build:prod
+
+# Build application
+RUN npm run build
 
 # Production stage
-FROM nginx:alpine
-# Install wget for health checks
-RUN apk add --no-cache wget
+FROM nginx:alpine-slim
+# Use slim version for smaller image
 
-# Copy built assets from builder stage
+# Add curl for healthchecks (smaller than wget)
+RUN apk add --no-cache curl
+
+# Copy only the built assets from builder
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx config and entrypoint script
-COPY nginx.conf /etc/nginx/nginx.conf.template 
+COPY nginx.conf /etc/nginx/nginx.conf.template
 COPY docker-entrypoint.sh /
 
-# Make entrypoint script executable
-RUN chmod +x /docker-entrypoint.sh
+# Configure permissions
+RUN chmod +x /docker-entrypoint.sh && \
+    # Create nginx user if it doesn't exist
+    adduser -D -H -u 101 -s /sbin/nologin nginx || true && \
+    # Set proper permissions
+    chown -R nginx:nginx /usr/share/nginx/html && \
+    chmod -R 755 /usr/share/nginx/html
 
-# Add health check
+# Add healthcheck
 HEALTHCHECK --interval=30s --timeout=3s \
-  CMD wget --quiet --tries=1 --spider http://localhost:80/health || exit 1
+  CMD curl -f http://localhost:80/health || exit 1
 
 # Expose port
 EXPOSE 80
+
+# Switch to non-root user
+USER nginx
 
 # Set entrypoint and command
 ENTRYPOINT ["/docker-entrypoint.sh"]
