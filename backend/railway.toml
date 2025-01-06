@@ -1,10 +1,6 @@
-[build]
-builder = "nixpacks"
-buildCommand = "npm ci --include=dev && NODE_ENV=production npm run build"
-
 [deploy]
 startCommand = "npm run start:prod"
-healthcheckPath = "/api/health"  # Changed to match your API prefix
+healthcheckPath = "/api/health"
 healthcheckTimeout = 100
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
