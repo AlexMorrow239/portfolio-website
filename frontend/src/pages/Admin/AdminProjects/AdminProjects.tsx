@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit2, Trash2, Eye, EyeOff } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Project } from '@/types/project';
+import { type Project } from '@/types/project';
 import { ProjectsService } from '@/services/projects.service';
 import { APP_CONFIG } from '@/config';
 
@@ -12,7 +12,7 @@ const AdminProjects: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (): Promise<void> => {
     try {
       const data = await ProjectsService.getAllProjectsAdmin();
       setProjects(data);
@@ -25,10 +25,10 @@ const AdminProjects: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchProjects();
+    void fetchProjects();
   }, []);
 
-  const toggleVisibility = async (id: string, currentVisibility: boolean) => {
+  const toggleVisibility = async (id: string, currentVisibility: boolean): Promise<void> => {
     try {
       const projectData = {
         visible: !currentVisibility,
@@ -59,7 +59,7 @@ const AdminProjects: React.FC = () => {
     }
   };
 
-  const deleteProject = async (id: string) => {
+  const deleteProject = async (id: string): Promise<void> => {
     if (!window.confirm('Are you sure you want to delete this project?')) {
       return;
     }

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import Container from '../Container/Container';
 
 interface SectionProps {
@@ -8,10 +8,13 @@ interface SectionProps {
   fluid?: boolean;
 }
 
-export const Section = ({ children, id, className = '', fluid = false }: SectionProps) => {
-  return (
-    <section id={id} className={`section ${className}`}>
-      <Container fluid={fluid}>{children}</Container>
-    </section>
-  );
-};
+export const Section = ({
+  children,
+  id,
+  className = '',
+  fluid = false,
+}: SectionProps): JSX.Element => (
+  <section id={id} className={`section ${className}`}>
+    <Container fluid={fluid}>{children}</Container>
+  </section>
+);

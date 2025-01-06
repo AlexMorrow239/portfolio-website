@@ -35,7 +35,7 @@ const Navbar: React.FC = () => {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const scrollPosition = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (scrollPosition / scrollHeight) * 100;

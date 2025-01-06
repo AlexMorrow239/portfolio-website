@@ -4,8 +4,7 @@ import Footer from '@/components/layout/Footer/Footer';
 import Container from '@/components/layout/Container/Container';
 import { Outlet } from 'react-router-dom';
 
-const MainLayout: React.FC = () => {
-  return (
+const MainLayout: React.FC = () => (
     <div className="app-layout">
       <header className="header">
         <Container>
@@ -20,6 +19,5 @@ const MainLayout: React.FC = () => {
       <Footer />
     </div>
   );
-};
 
 export default MainLayout;

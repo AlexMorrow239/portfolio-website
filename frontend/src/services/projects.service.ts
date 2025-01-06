@@ -1,5 +1,12 @@
-import { Project } from '../types/project';
+import { type Project } from '../types/project';
 import { APP_CONFIG } from '../config';
+
+interface ErrorResponse {
+  message?: string;
+  error?: {
+    message?: string;
+  };
+}
 
 export const ProjectsService = {
   async getAllProjects(): Promise<Project[]> {
@@ -7,11 +14,11 @@ export const ProjectsService = {
       const response = await fetch(APP_CONFIG.endpoints.projects.base);
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to fetch projects');
+        const errorData = (await response.json()) as ErrorResponse;
+        throw new Error(errorData.message ?? 'Failed to fetch projects');
       }
 
-      const data = await response.json();
+      const data = (await response.json()) as Project[];
 
       return data;
     } catch (error) {
@@ -27,13 +34,14 @@ export const ProjectsService = {
           Authorization: `Bearer ${localStorage.getItem('adminToken')}`,
         },
       });
-      const data = await response.json();
+      const data = (await response.json()) as ErrorResponse | Project[];
 
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to fetch projects');
+        const errorData = data as ErrorResponse;
+        throw new Error(errorData.error?.message ?? 'Failed to fetch projects');
       }
 
-      return data;
+      return data as Project[];
     } catch (error) {
       console.error('Failed to fetch projects:', error);
       return [];
@@ -43,13 +51,14 @@ export const ProjectsService = {
   async getProjectById(id: string): Promise<Project | null> {
     try {
       const response = await fetch(APP_CONFIG.endpoints.projects.byId(id));
-      const data = await response.json();
+      const data = (await response.json()) as ErrorResponse | Project;
 
       if (!response.ok) {
-        throw new Error(data.error?.message || 'Failed to fetch project');
+        const errorData = data as ErrorResponse;
+        throw new Error(errorData.error?.message ?? 'Failed to fetch project');
       }
 
-      return data;
+      return data as Project;
     } catch (error) {
       console.error('Failed to fetch project:', error);
       return null;

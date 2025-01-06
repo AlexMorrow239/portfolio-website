@@ -11,19 +11,19 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({ children }) => {
   const location = useLocation();
 
   useEffect(() => {
-    const checkAuth = () => {
+    const checkAuth = (): void => {
       const isAuthenticated = AuthService.isAuthenticated();
       const isLoginPage = location.pathname === '/admin/login';
 
       if (!isAuthenticated && !isLoginPage) {
         // Redirect to login if not authenticated and not on login page
-        navigate('/admin/login', {
+        void navigate('/admin/login', {
           replace: true,
           state: { from: location.pathname },
         });
       } else if (isAuthenticated && isLoginPage) {
         // Redirect to admin dashboard if authenticated and on login page
-        navigate('/admin/projects', { replace: true });
+        void navigate('/admin/projects', { replace: true });
       }
     };
 

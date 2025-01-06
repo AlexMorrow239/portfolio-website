@@ -15,10 +15,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   onImageRemove,
   error,
 }) => {
-  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>): void => {
     e.preventDefault();
-    const file = e.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) {
+    const file = e.dataTransfer.files?.[0];
+    if (file?.type.startsWith('image/')) {
       onImageSelect(file);
     }
   };
@@ -45,7 +45,9 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
             accept="image/*"
             onChange={(e) => {
               const file = e.target.files?.[0];
-              if (file) onImageSelect(file);
+              if (file) {
+                onImageSelect(file);
+              }
             }}
           />
         </label>

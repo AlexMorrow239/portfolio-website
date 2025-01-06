@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent } from 'react';
+import React, { useState, type KeyboardEvent } from 'react';
 import { X } from 'lucide-react';
 import './TagInput.scss';
 
@@ -15,9 +15,9 @@ const TagInput: React.FC<TagInputProps> = ({
   placeholder = 'Add tag...',
   error,
 }) => {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState<string>('');
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>): void => {
     if (e.key === 'Enter' && input.trim()) {
       e.preventDefault();
       if (!tags.includes(input.trim())) {
@@ -27,7 +27,7 @@ const TagInput: React.FC<TagInputProps> = ({
     }
   };
 
-  const removeTag = (tagToRemove: string) => {
+  const removeTag = (tagToRemove: string): void => {
     onTagsChange(tags.filter((tag) => tag !== tagToRemove));
   };
 

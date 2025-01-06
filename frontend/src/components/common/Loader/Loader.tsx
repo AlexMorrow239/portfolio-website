@@ -33,7 +33,7 @@ const Loader: React.FC<LoaderProps> = ({
   const backSpeed = typeSpeed;
 
   // Track when the first full cycle completes
-  const handleTypingComplete = () => {
+  const handleTypingComplete: () => void = () => {
     setCycleCompleted(true);
   };
 

@@ -1,6 +1,6 @@
 // API Configuration
 export const API_BASE_URL =
-  import.meta.env.VITE_API_URL || 'https://backend-production-4d7b.up.railway.app/api';
+  (import.meta.env.VITE_API_URL as string) || 'https://backend-production-4d7b.up.railway.app/api';
 
 // Social Links
 export const SOCIAL_LINKS = {

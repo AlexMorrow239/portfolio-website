@@ -7,12 +7,10 @@ interface ContainerProps {
   fluid?: boolean;
 }
 
-const Container: React.FC<ContainerProps> = ({ children, className = '', fluid = false }) => {
-  return (
+const Container: React.FC<ContainerProps> = ({ children, className = '', fluid = false }) => (
     <div className={`container ${fluid ? 'container--fluid' : ''} ${className}`.trim()}>
       {children}
     </div>
   );
-};
 
 export default Container;

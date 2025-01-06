@@ -17,11 +17,11 @@ export const Login: React.FC = () => {
 
   useEffect(() => {
     if (AuthService.isAuthenticated()) {
-      navigate('/admin/projects', { replace: true });
+      void navigate('/admin/projects', { replace: true });
     }
   }, [navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -37,8 +37,8 @@ export const Login: React.FC = () => {
     try {
       await AuthService.login(formData);
 
-      const from = (location.state as any)?.from || '/admin/projects';
-      navigate(from, { replace: true });
+      const from = (location.state as { from?: string })?.from ?? '/admin/projects';
+      void navigate(from, { replace: true });
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Login failed');
     } finally {

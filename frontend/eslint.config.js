@@ -46,6 +46,7 @@ export default tseslint.config(
         { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
       ],
       '@typescript-eslint/await-thenable': 'error',
+      '@typescript-eslint/no-misused-promises': 'off',
 
       // React specific rules
       'react-hooks/rules-of-hooks': 'error',

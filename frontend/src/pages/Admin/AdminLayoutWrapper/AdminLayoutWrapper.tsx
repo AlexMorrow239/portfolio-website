@@ -10,7 +10,7 @@ const AdminLayoutWrapper: React.FC = () => {
   useEffect(() => {
     // Check authentication status on mount and redirect if not authenticated
     if (!isAuthenticated) {
-      navigate('/admin/login', { replace: true });
+      void navigate('/admin/login', { replace: true });
     }
   }, [isAuthenticated, navigate]);
 

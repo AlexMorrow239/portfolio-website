@@ -1,9 +1,9 @@
-import { AppRouteObject } from '../types';
+import { type AppRouteObject } from '../types';
 
 // Admin-specific route types
 export type AdminRouteObject = AppRouteObject & {
   requiresAuth: true; // Always true for admin routes
-  permissions?: Array<'admin' | 'editor' | 'viewer'>;
+  permissions?: ('admin' | 'editor' | 'viewer')[];
   children?: AdminRouteObject[];
 };
 

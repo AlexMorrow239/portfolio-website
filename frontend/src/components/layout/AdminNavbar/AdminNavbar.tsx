@@ -14,7 +14,7 @@ const AdminNavbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = (): void => {
       const scrollPosition = window.scrollY;
       const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (scrollPosition / scrollHeight) * 100;
@@ -27,16 +27,16 @@ const AdminNavbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleLogout = () => {
+  const handleLogout = (): void => {
     AuthService.logout();
-    navigate('/admin/login', { replace: true });
+    void navigate('/admin/login', { replace: true });
   };
 
-  const handleBackToMain = () => {
-    navigate('/');
+  const handleBackToMain = (): void => {
+    void navigate('/');
   };
 
-  const toggleMobileMenu = () => {
+  const toggleMobileMenu = (): void => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
