@@ -13,8 +13,6 @@ RUN npm ci
 
 # Copy source files
 COPY . .
-
-# Build application
 RUN npm run build
 
 # Production stage

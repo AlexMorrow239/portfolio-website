@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import { Link } from 'react-router-dom';
 
 import { defaultTransition, staggerTransition } from '@/animations/transitions';
 import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
@@ -42,7 +42,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
             whileHover={{ y: -8 }}
             transition={defaultTransition}
           >
-            <Link href={`/projects/${project._id}`} className="project-list-card__content">
+            <Link to={`/projects/${project._id}`} className="project-list-card__content">
               <motion.header className="project-list-card__header" variants={fadeIn}>
                 <h3>{project.title}</h3>
                 <p>{project.description}</p>
