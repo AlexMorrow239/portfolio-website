@@ -37,7 +37,10 @@ RUN chmod +x /docker-entrypoint.sh && \
     adduser -D -H -u 101 -s /sbin/nologin nginx || true && \
     # Set proper permissions
     chown -R nginx:nginx /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html
+    chmod -R 755 /usr/share/nginx/html && \
+    # Make nginx.conf writable by nginx user
+    chown -R nginx:nginx /etc/nginx && \
+    chmod -R 755 /etc/nginx
 
 # Add healthcheck
 HEALTHCHECK --interval=30s --timeout=3s \
