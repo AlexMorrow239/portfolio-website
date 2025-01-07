@@ -10,6 +10,7 @@ import './ProjectTags.scss';
 interface ProjectTagsProps {
   tags: string[];
   variant?: 'featured' | 'minimal' | 'detailed';
+  type?: 'technology' | 'skill';
   limit?: number;
   className?: string;
 }
@@ -17,6 +18,7 @@ interface ProjectTagsProps {
 export const ProjectTags: FC<ProjectTagsProps> = ({
   tags,
   variant = 'featured',
+  type = 'technology',
   limit,
   className = '',
 }) => {
@@ -27,7 +29,7 @@ export const ProjectTags: FC<ProjectTagsProps> = ({
       {displayTags.map((tag) => (
         <motion.span
           key={tag}
-          className="project-tag"
+          className={`project-tag project-tag--${type}`}
           variants={fadeIn}
           initial={{ scale: 1 }}
           whileHover={{

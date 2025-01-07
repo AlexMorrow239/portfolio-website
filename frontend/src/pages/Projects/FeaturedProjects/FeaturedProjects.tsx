@@ -80,7 +80,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
                   {project.skills && project.skills.length > 0 && (
                     <motion.div className="featured-project-card__section" variants={fadeIn}>
                       <h4>Skills</h4>
-                      <ProjectTags tags={project.skills} variant="featured" />
+                      <ProjectTags tags={project.skills} variant="featured" type="skill" />
                     </motion.div>
                   )}
 

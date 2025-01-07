@@ -1,45 +1,40 @@
-@use '../../../assets/styles/abstracts/index' as *;
-
 .project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--spacing-sm);
+  gap: var(--spacing-md);
+  pointer-events: none;
 
-  // Featured variant (used in featured projects)
-  &--featured {
-    .project-tag {
-      position: relative;
-      cursor: pointer;
-      pointer-events: auto;
-      background: var(--overlay-primary);
-      color: var(--color-primary);
-      padding: 0.25rem 0.75rem;
-      font-size: 0.875rem;
-      border-radius: var(--border-radius);
-      font-family: var(--mono-font);
-      will-change: transform;
-
-      &:hover {
-        background: var(--overlay-primary-hover);
-      }
-    }
-  }
-
-  // Minimal variant (used in other projects)
   &--minimal {
-    gap: var(--spacing-xs);
+    gap: var(--spacing-sm);
 
     .project-tag {
       position: relative;
       cursor: pointer;
       pointer-events: auto;
-      color: var(--color-text-light);
-      font-size: 0.75rem;
+      font-size: 0.875rem;
       font-family: var(--mono-font);
-      padding: 0.125rem 0.5rem;
-      background: var(--overlay-secondary);
+      padding: 0.25rem 0.75rem;
       border-radius: var(--border-radius-sm);
       will-change: transform;
+      transition: all 0.2s ease;
+
+      &--technology {
+        background: rgba(var(--color-primary-rgb), 0.1);
+        color: var(--color-primary);
+
+        &:hover {
+          background: rgba(var(--color-primary-rgb), 0.2);
+        }
+      }
+
+      &--skill {
+        background: rgba(var(--color-secondary-rgb), 0.1);
+        color: var(--color-secondary);
+
+        &:hover {
+          background: rgba(var(--color-secondary-rgb), 0.2);
+        }
+      }
 
       &--more {
         background: var(--overlay-tertiary);
@@ -48,51 +43,93 @@
     }
   }
 
-  // Detailed variant (used in project details)
-  &--detailed {
-    gap: var(--spacing-md);
-    margin: var(--spacing-md) 0;
-
+  &--featured {
     .project-tag {
       position: relative;
       cursor: pointer;
       pointer-events: auto;
-      background: var(--overlay-primary);
-      color: var(--color-primary);
-      padding: 0.5rem 1rem;
       font-size: 1rem;
-      border-radius: var(--border-radius);
       font-family: var(--mono-font);
-      border: 1px solid var(--color-border);
+      padding: 0.5rem 1rem;
+      border-radius: var(--border-radius-sm);
       will-change: transform;
+      transition: all 0.2s ease;
+
+      &--technology {
+        background: rgba(var(--color-primary-rgb), 0.1);
+        color: var(--color-primary);
+
+        &:hover {
+          background: rgba(var(--color-primary-rgb), 0.15);
+        }
+      }
+
+      &--skill {
+        background: rgba(var(--color-secondary-rgb), 0.1);
+        color: var(--color-secondary);
+
+        &:hover {
+          background: rgba(var(--color-secondary-rgb), 0.15);
+        }
+      }
+
+      &--more {
+        background: var(--overlay-tertiary);
+        color: var(--color-text-lighter);
+      }
 
       &:hover {
-        border-color: var(--color-primary);
-        background: var(--overlay-primary-hover);
+        transform: translateY(-2px);
       }
     }
   }
-}
 
-// Responsive adjustments
-@include respond-down('sm') {
-  .project-tags {
-    &--detailed {
-      gap: var(--spacing-sm);
-
-      .project-tag {
-        padding: 0.375rem 0.75rem;
-        font-size: 0.875rem;
-      }
-    }
-  }
-}
-
-// Reduced motion preferences
-@media (prefers-reduced-motion: reduce) {
-  .project-tags {
+  &--detailed {
     .project-tag {
-      transition: none;
+      position: relative;
+      cursor: pointer;
+      pointer-events: auto;
+      font-size: 0.875rem;
+      font-family: var(--mono-font);
+      padding: 0.375rem 1rem;
+      border-radius: var(--border-radius-sm);
+      border: 1px solid transparent;
+      will-change: transform;
+      transition: all 0.2s ease;
+
+      &--technology {
+        border-color: rgba(var(--color-primary-rgb), 0.2);
+        color: var(--color-primary);
+
+        &:hover {
+          border-color: var(--color-primary);
+          background: rgba(var(--color-primary-rgb), 0.1);
+        }
+      }
+
+      &--skill {
+        border-color: rgba(var(--color-secondary-rgb), 0.2);
+        color: var(--color-secondary);
+
+        &:hover {
+          border-color: var(--color-secondary);
+          background: rgba(var(--color-secondary-rgb), 0.1);
+        }
+      }
+
+      &--more {
+        border-color: var(--color-border);
+        color: var(--color-text-lighter);
+
+        &:hover {
+          border-color: var(--color-text-light);
+          background: var(--overlay-tertiary);
+        }
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+      }
     }
   }
 }

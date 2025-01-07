@@ -140,6 +140,7 @@ const ProjectDetail: React.FC = () => {
               <ProjectTags
                 tags={project.skills}
                 variant="detailed"
+                type="skill"
                 className="project-detail__tags"
               />
             </motion.div>
