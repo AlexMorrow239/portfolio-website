@@ -40,13 +40,18 @@ RUN chmod +x /docker-entrypoint.sh && \
     mkdir -p /var/cache/nginx && \
     mkdir -p /var/run && \
     mkdir -p /var/log/nginx && \
+    # Ensure /var/run has proper permissions
+    touch /var/run/nginx.pid && \
+    # Set ownership for all nginx directories and files
     chown -R nginx:nginx /etc/nginx && \
     chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/run && \
+    chown -R nginx:nginx /var/run/nginx.pid && \
     chown -R nginx:nginx /var/log/nginx && \
     chmod -R 755 /etc/nginx && \
     chmod -R 755 /var/cache/nginx && \
     chmod -R 755 /var/run && \
+    chmod 644 /var/run/nginx.pid && \
     chmod -R 755 /var/log/nginx
 
 # Add healthcheck
