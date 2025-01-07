@@ -98,11 +98,12 @@ const Professional: React.FC = () => (
               <span>Jan 2024 - Present</span>
             </div>
             <p>
-              I've had the unique opportunity to explore the intersection of criminal justice and
-              data science, conducting an in-depth analysis on capital punishment's relationship
-              with national murder rates. This project allowed me to apply statistical methods to
-              real-world policy questions, making complex data accessible and meaningful for policy
-              discussions.
+              As a Teaching Assistant for Statistical Analysis and Inference, I guided students
+              through the fascinating world of statistical modeling and hypothesis testing. Whether
+              we were diving into natural experiments, exploring real-world datasets using R, or
+              creating compelling visualizations to tell data stories, I loved seeing students have
+              those 'aha' moments.Seeing students transform from being intimidated by statistics to
+              confidently conducting their own analyses was so rewarding.
             </p>
           </motion.div>
         </div>
