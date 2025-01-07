@@ -33,9 +33,13 @@ COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh && \
     # Create nginx user if it doesn't exist
     adduser -D -H -u 101 -s /sbin/nologin nginx || true && \
-    # Set proper permissions
+    # Set proper permissions for nginx directories
     chown -R nginx:nginx /usr/share/nginx/html && \
-    chmod -R 755 /usr/share/nginx/html
+    chmod -R 755 /usr/share/nginx/html && \
+    # Create nginx config directory with proper permissions
+    mkdir -p /etc/nginx && \
+    chown -R nginx:nginx /etc/nginx && \
+    chmod -R 755 /etc/nginx
 
 # Add healthcheck
 HEALTHCHECK --interval=30s --timeout=3s \
