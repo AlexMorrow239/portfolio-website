@@ -38,30 +38,31 @@ const Home: React.FC = () => {
       icon: <Database size={24} />,
       title: 'Database Systems',
       description:
-        'Designing efficient database schemas and implementing optimized query patterns using MongoDB, PostgreSQL, and modern ORMs',
+        'I have designined efficient database schemas, and implemented them using MongoDB',
     },
     {
       icon: <Workflow size={24} />,
       title: 'System Architecture',
       description:
-        'Building scalable distributed systems with a focus on microservices, API design, and efficient data processing pipelines',
+        'I have built many projects from scratch, starting with system design. Check out my projects to see them in action!',
     },
     {
       icon: <Lock size={24} />,
       title: 'Security & Authentication',
-      description: 'Implementing robust security measures and OAuth2/JWT authentication systems',
+      description:
+        'One of my projects required profiles. This sent me down a spiral of learning about JWT tokens and bearer auth and secure encryption strategies',
     },
     {
       icon: <Terminal size={24} />,
       title: 'Tech Explorer',
       description:
-        'Constantly discovering and implementing cutting-edge tools and frameworks to enhance development efficiency',
+        'I love to explore new open source tools & plugins. There are so many amazing tools that help optimize projects and my workflow!',
     },
     {
       icon: <Code size={24} />,
-      title: 'Algorithm Enthusiast',
+      title: 'Life-Long Learner',
       description:
-        'Deep passion for computational problem-solving, from optimizing complex algorithms to implementing efficient data structures',
+        'At my core, I love the study of computer science as a whole. I love learning end-to-end about operating systems, algorithms, and system architecture',
     },
   ];
 
@@ -70,19 +71,19 @@ const Home: React.FC = () => {
       icon: <Cpu size={24} />,
       label: 'Systems Built',
       value: '5+',
-      description: 'Including distributed backends and data pipelines',
+      description: 'Explore these projects on my projects page!',
     },
     {
       icon: <GitBranch size={24} />,
       label: 'Technologies',
       value: '15+',
-      description: 'From Node.js to advanced cloud services',
+      description: 'I have a broad range of skills, from Machine Learning to AWS Services',
     },
     {
       icon: <Boxes size={24} />,
       label: 'Code Quality',
       value: 'A+',
-      description: 'Emphasis on clean, maintainable architecture',
+      description: 'I will never share code I am not proud to claim as my own',
     },
   ];
   return (
@@ -129,9 +130,9 @@ const Home: React.FC = () => {
             </motion.h1>
 
             <motion.p className="hero__subtitle" variants={heroVariants.item}>
-              Welcome to my portfolio! My name is Alex, and I am passionate about crafting robust,
-              scalable systems and exploring the endless possibilities of backend technology. Every
-              project is an opportunity to innovate and excel.
+              Welcome to my portfolio! My name is Alex, and I'm a sofware engineer with experience
+              across the entire stack. However, I have a particular passion for backend/systems
+              engineering & design.
             </motion.p>
 
             <motion.div className="hero__cta" variants={heroVariants.item}>
@@ -170,7 +171,7 @@ const Home: React.FC = () => {
             </motion.h2>
 
             <motion.p className="skills__subtitle" variants={skillsVariants.card}>
-              Turning complex backend challenges into elegant, efficient solutions
+              Turning complex challenges into elegant, efficient solutions
             </motion.p>
 
             <div className="skills__grid">

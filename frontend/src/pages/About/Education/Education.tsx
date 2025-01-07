@@ -85,7 +85,7 @@ const Education: React.FC = () => (
           transition={defaultTransition}
         >
           <CheckCircle className="icon" />
-          <span>On track for dual graduation in 2027</span>
+          <span>I am on track for dual graduation in 2027</span>
         </motion.div>
       </motion.div>
     </motion.div>

@@ -89,8 +89,8 @@ const Contact: React.FC = () => {
         <Terminal className="contact__icon" size={48} />
         <h1 className="contact__title">Let's Discuss Architecture</h1>
         <p className="contact__description">
-          Interested in reaching out to me, or have a project in mind? Let's connect and explore how
-          we can work together.
+          Interested in reaching out to me? Have a project/idea in mind? Let's connect and explore
+          how we can work together!
         </p>
       </motion.section>
 

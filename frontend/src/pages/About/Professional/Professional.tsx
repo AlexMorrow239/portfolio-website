@@ -100,9 +100,9 @@ const Professional: React.FC = () => (
             <p>
               I've had the unique opportunity to explore the intersection of criminal justice and
               data science, conducting an in-depth analysis on capital punishment's relationship
-              with national murder rates. This project has allowed me to apply statistical methods
-              to real-world policy questions, making complex data accessible and meaningful for
-              policy discussions.
+              with national murder rates. This project allowed me to apply statistical methods to
+              real-world policy questions, making complex data accessible and meaningful for policy
+              discussions.
             </p>
           </motion.div>
         </div>

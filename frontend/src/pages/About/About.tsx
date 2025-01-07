@@ -28,9 +28,9 @@ const About: React.FC = () => (
       <Terminal className="about__section-icon" />
       <h1>Full-Stack Developer with Backend Passion</h1>
       <p>
-        While I enjoy crafting complete solutions across the stack, my true passion lies in backend
-        engineering and systems design. I thrive on building robust architectures, optimizing
-        performance, and solving complex computational challenges that power modern applications.
+        Learn more about my professional and personal journey. I've known this is what I wanted to
+        do since I was 16. Everything I've done since then has only strengthened my passion fo
+        programming. My dream is to show everyone how amazing code and computers can be.
       </p>
     </motion.section>
 
