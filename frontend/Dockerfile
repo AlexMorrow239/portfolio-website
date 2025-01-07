@@ -17,7 +17,6 @@ RUN npm run build
 
 # Production stage
 FROM nginx:alpine-slim
-# Use slim version for smaller image
 
 # Add curl for healthchecks (smaller than wget)
 RUN apk add --no-cache curl
@@ -29,17 +28,26 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf.template
 COPY docker-entrypoint.sh /
 
-# Configure permissions
+# Configure permissions and directories
 RUN chmod +x /docker-entrypoint.sh && \
     # Create nginx user if it doesn't exist
     adduser -D -H -u 101 -s /sbin/nologin nginx || true && \
     # Set proper permissions for nginx directories
     chown -R nginx:nginx /usr/share/nginx/html && \
     chmod -R 755 /usr/share/nginx/html && \
-    # Create nginx config directory with proper permissions
+    # Create and set permissions for nginx config directories
     mkdir -p /etc/nginx && \
+    mkdir -p /var/cache/nginx && \
+    mkdir -p /var/run && \
+    mkdir -p /var/log/nginx && \
     chown -R nginx:nginx /etc/nginx && \
-    chmod -R 755 /etc/nginx
+    chown -R nginx:nginx /var/cache/nginx && \
+    chown -R nginx:nginx /var/run && \
+    chown -R nginx:nginx /var/log/nginx && \
+    chmod -R 755 /etc/nginx && \
+    chmod -R 755 /var/cache/nginx && \
+    chmod -R 755 /var/run && \
+    chmod -R 755 /var/log/nginx
 
 # Add healthcheck
 HEALTHCHECK --interval=30s --timeout=3s \
