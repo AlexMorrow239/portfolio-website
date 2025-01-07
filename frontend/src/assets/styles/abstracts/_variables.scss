@@ -28,6 +28,7 @@ $color-green-600: #059669;
   --color-primary: #{$color-blue-600};
   --color-primary-dark: #{$color-blue-700};
   --color-primary-light: #{$color-blue-500};
+  --color-primary-transparent: #{rgba($color-blue-600, 0.2)};
   --color-secondary: #{$color-indigo-600};
   --color-secondary-dark: #{$color-indigo-700};
   --color-secondary-light: #{$color-indigo-500};
@@ -119,6 +120,7 @@ $color-green-600: #059669;
   --color-primary: #{$color-blue-500};
   --color-primary-dark: #{$color-blue-600};
   --color-primary-light: #{color.adjust($color-blue-500, $lightness: 10%)};
+  --color-primary-transparent: #{rgba($color-blue-500, 0.2)}; // Added this line
   --color-secondary: #{$color-indigo-500};
   --color-secondary-dark: #{$color-indigo-600};
   --color-secondary-light: #{color.adjust($color-indigo-500, $lightness: 10%)};
