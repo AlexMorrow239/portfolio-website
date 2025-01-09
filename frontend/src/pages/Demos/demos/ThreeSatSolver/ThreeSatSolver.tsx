@@ -3,13 +3,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 
-import { DemoRunner } from '@/pages/Demos/components/DemoRunner';
 import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
 import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
-import './ThreeSatDemo.scss';
+import './ThreeSatSolver.scss';
+import { DemoRunner } from './components/DemoRunner';
 
-const ThreeSatDemo: React.FC = () => {
+const ThreeSatSolver: React.FC = () => {
   return (
     <motion.div
       className="python-demo"
@@ -24,12 +24,16 @@ const ThreeSatDemo: React.FC = () => {
         variants={fadeInUp}
         transition={defaultTransition}
       >
-        <h1>Python Module Demo</h1>
-        <p>Interactive demonstration of a Python module running in a secure Docker container</p>
+        <h1>3-Satisfisfiability Problem Solver</h1>
+        <p>
+          This is a demonstration of a randomly generated 3-SAT problem solved using the DPLL
+          algorithm. I analyze this algorithm in depth and also look at other algorithms on my
+          Github.
+        </p>
 
         <motion.div className="python-demo__links" variants={fadeIn}>
           <a
-            href="https://github.com/yourusername/your-repo"
+            href="https://github.com/AlexMorrow239/3SAT-Problem"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn--ghost"
@@ -38,7 +42,7 @@ const ThreeSatDemo: React.FC = () => {
             <span>View Source</span>
           </a>
           <a
-            href="https://your-documentation-link.com"
+            href="https://github.com/AlexMorrow239/3SAT-Problem/blob/main/README.md"
             target="_blank"
             rel="noopener noreferrer"
             className="btn btn--ghost"
@@ -51,13 +55,10 @@ const ThreeSatDemo: React.FC = () => {
 
       {/* Demo Section */}
       <motion.section variants={fadeInUp} transition={defaultTransition}>
-        <DemoRunner
-          title="Try It Out"
-          description="Enter parameters below to run the Python module in a secure environment"
-        />
+        <DemoRunner />
       </motion.section>
     </motion.div>
   );
 };
 
-export default ThreeSatDemo;
+export default ThreeSatSolver;

@@ -5,7 +5,6 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, List, Optional
 
-
 class StatisticType(Enum):
     """Types of statistics that can be tracked"""
 
@@ -13,7 +12,18 @@ class StatisticType(Enum):
     TIMER = "timer"
     RATIO = "ratio"
     LIST = "list"
+    STEP_LOG = "step_log"
 
+@dataclass
+class StepLogEntry:
+    """Container for a single step in the solving process"""
+    step_number: int
+    depth: int
+    action_type: str
+    description: str
+    formula_state: str
+    assignments: Dict[int, bool]
+    success: bool = True
 
 @dataclass
 class StatisticValue:
@@ -133,6 +143,26 @@ class DPLLStatistics(SolverStatistics):
                 "variable_frequencies": StatisticValue(
                     StatisticType.LIST, [], "Frequency of variable selections"
                 ),
+                            "solution_steps": StatisticValue(
+                StatisticType.STEP_LOG, 
+                [], 
+                "Detailed log of solution steps"
+            ),
+            "simplification_effectiveness": StatisticValue(
+                StatisticType.RATIO, 
+                0.0, 
+                "Ratio of successful simplification attempts"
+            ),
+            "branch_success_rate": StatisticValue(
+                StatisticType.RATIO, 
+                0.0, 
+                "Success rate of branching decisions"
+            ),
+            "max_decision_depth": StatisticValue(
+                StatisticType.COUNTER, 
+                0, 
+                "Maximum depth reached in decision tree"
+            )
             }
         )
 

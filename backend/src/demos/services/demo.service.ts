@@ -20,8 +20,8 @@ export class DemoService {
 
   // Three-SAT demo constraints
   private readonly THREE_SAT_CONSTRAINTS = {
-    n: { min: 3, max: 10 },
-    ratio: { min: 0.1, max: 6.0 },
+    n: { min: 3, max: 5 },
+    ratio: { min: 2.0, max: 5.0 },
   };
 
   async runThreeSatDemo(params: ThreeSatParams): Promise<ThreeSatResult> {
@@ -81,68 +81,101 @@ export class DemoService {
 
   async executeThreeSatDemo(params: { n: number; ratio: number }) {
     const { n, ratio } = params;
-    // Calculate number of clauses based on ratio
-    const numClauses = Math.max(1, Math.floor(n * ratio));
 
     try {
       this.logger.debug(
-        `Executing command: docker run --rm portfolio-website-three-sat-demo ${n} ${numClauses}`,
+        `Executing command: docker run --rm portfolio-website-three-sat-demo ${n} ${ratio}`,
       );
 
       const { stdout } = await execAsync(
-        `docker run --rm portfolio-website-three-sat-demo ${n} ${numClauses}`,
+        `docker run --rm portfolio-website-three-sat-demo ${n} ${ratio}`,
       );
 
       try {
-        return JSON.parse(stdout);
+        // Log the raw output for debugging
+        this.logger.debug(`Raw Docker output: ${stdout}`);
+
+        // Parse the JSON output
+        const rawResult = JSON.parse(stdout.trim());
+
+        // Validate the parsed result
+        return this.validateThreeSatResult(rawResult);
       } catch (parseError) {
         this.logger.error(`Failed to parse demo output: ${stdout}`);
-        throw new Error('Failed to parse demo output');
+        this.logger.error(`Parse error details: ${parseError.message}`);
+        throw new InternalServerErrorException('Failed to parse demo output');
       }
     } catch (error) {
       this.logger.error(`Demo execution failed: ${error.message}`);
-      throw new Error('Docker execution failed');
+      throw new InternalServerErrorException('Failed to execute demo');
     }
   }
 
   private validateThreeSatResult(result: any): ThreeSatResult {
-    // Ensure all required fields are present
+    // Validate base fields
+    if (!result || typeof result !== 'object') {
+      throw new Error('Result must be an object');
+    }
+
+    // Validate required fields
     const requiredFields = [
       'formula',
       'satisfiable',
       'assignment',
       'num_variables',
       'num_clauses',
+      'solving_process',
     ];
+
     for (const field of requiredFields) {
       if (!(field in result)) {
         throw new Error(`Missing required field: ${field}`);
       }
     }
 
-    // Type checking
-    if (typeof result.satisfiable !== 'boolean') {
-      throw new Error('satisfiable must be a boolean');
-    }
-    if (typeof result.formula !== 'string') {
-      throw new Error('formula must be a string');
-    }
-    if (typeof result.num_variables !== 'number') {
-      throw new Error('num_variables must be a number');
-    }
-    if (typeof result.num_clauses !== 'number') {
-      throw new Error('num_clauses must be a number');
-    }
-    if (typeof result.assignment !== 'object') {
-      throw new Error('assignment must be an object');
+    // Validate solving_process structure
+    if (!result.solving_process || typeof result.solving_process !== 'object') {
+      throw new Error('solving_process must be an object');
     }
 
+    if (!Array.isArray(result.solving_process.steps)) {
+      throw new Error('solving_process.steps must be an array');
+    }
+
+    if (
+      !result.solving_process.statistics ||
+      typeof result.solving_process.statistics !== 'object'
+    ) {
+      throw new Error('solving_process.statistics must be an object');
+    }
+
+    // Validate statistics fields
+    const requiredStats = [
+      'total_steps',
+      'max_depth',
+      'unit_propagations',
+      'pure_literals',
+      'backtracks',
+      'two_clause_rules',
+    ];
+
+    for (const stat of requiredStats) {
+      if (typeof result.solving_process.statistics[stat] !== 'number') {
+        throw new Error(`statistics.${stat} must be a number`);
+      }
+    }
+
+    // Return the validated result
     return {
       formula: result.formula,
       satisfiable: result.satisfiable,
       assignment: result.assignment,
       num_variables: result.num_variables,
       num_clauses: result.num_clauses,
+      solving_process: {
+        steps: result.solving_process.steps,
+        statistics: result.solving_process.statistics,
+      },
     };
   }
 

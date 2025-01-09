@@ -1,7 +1,7 @@
 import About from '@/pages/About/About';
 import Contact from '@/pages/Contact/Contact';
-import Demos from '@/pages/Demos/Demos';
-import ThreeSatDemo from '@/pages/Demos/components/ThreeSatDemo/ThreeSatDemo';
+import { ThreeSatSolver } from '@/pages/Demos';
+import Demos from '@/pages/Demos/DemosPage';
 import Home from '@/pages/Home/Home';
 import ProjectDetail from '@/pages/ProjectDetails/ProjectDetails';
 import Projects from '@/pages/Projects/Projects';
@@ -38,8 +38,8 @@ export const publicRoutes = [
             element: <Demos />,
           },
           {
-            path: 'three-sat-module',
-            element: <ThreeSatDemo />,
+            path: 'three-sat-solver',
+            element: <ThreeSatSolver />,
           },
           // Add more demo routes here as needed
         ],

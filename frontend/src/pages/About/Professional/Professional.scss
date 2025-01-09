@@ -1,0 +1,221 @@
+@use '../../../assets/styles/abstracts/index' as *;
+
+.professional {
+  &__timeline {
+    position: relative;
+    padding-left: var(--spacing-md);
+
+    @include respond-to('sm') {
+      padding-left: var(--spacing-xl);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--color-primary);
+      opacity: 0.2;
+      transform: translateX(-50%);
+    }
+  }
+
+  &__role {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+    padding: var(--spacing-sm);
+
+    @include respond-to('sm') {
+      margin-bottom: var(--spacing-xl);
+      padding: var(--spacing-md);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spacing-md) * -1);
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 2px solid var(--color-background);
+      box-shadow: 0 0 0 2px var(--color-primary-transparent);
+      transition: all 0.2s ease;
+      transform: translateX(-50%);
+      top: 0.75rem;
+
+      @include respond-to('sm') {
+        left: calc(var(--spacing-xl) * -1);
+      }
+    }
+
+    @include respond-to('sm') {
+      &:hover {
+        transform: translateX(var(--spacing-sm));
+
+        &::before {
+          transform: translateX(-50%) scale(1.2);
+          box-shadow:
+            0 0 0 2px var(--color-primary-transparent),
+            0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+      }
+    }
+  }
+
+  &__role-header {
+    @include flexBetween;
+    margin-bottom: var(--spacing-md);
+
+    h3 {
+      font-size: 1.25rem;
+      color: var(--color-primary);
+      margin: 0;
+
+      @include respond-to('sm') {
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  &__company-link {
+    @include flexCenter;
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: var(--color-background-alt);
+
+      .icon {
+        color: var(--color-primary);
+      }
+    }
+
+    .icon {
+      width: 1.25rem;
+      height: 1.25rem;
+      color: var(--color-text-light);
+      transition: color 0.3s ease;
+    }
+  }
+
+  &__positions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin-left: var(--spacing-sm);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -0.5rem;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--color-primary);
+      opacity: 0.1;
+    }
+
+    @include respond-to('sm') {
+      margin-left: var(--spacing-md);
+      gap: var(--spacing-lg);
+    }
+  }
+
+  &__position {
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -0.6rem;
+      top: 1.25rem;
+      width: 0.25rem;
+      height: 0.25rem;
+      border-radius: 50%;
+      background: var(--color-primary);
+      opacity: 0.5;
+      z-index: 1;
+    }
+  }
+
+  &__position-card {
+    background: var(--color-background-alt);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-left: 2px solid var(--color-primary-transparent);
+    margin-left: var(--spacing-xs);
+    transition: all 0.3s ease;
+
+    @include respond-to('sm') {
+      padding: var(--spacing-lg);
+      margin-left: var(--spacing-sm);
+    }
+
+    @supports (backdrop-filter: blur(8px)) {
+      backdrop-filter: blur(8px);
+      background: color-mix(in srgb, var(--color-background-alt) 80%, transparent);
+    }
+
+    @include respond-to('sm') {
+      &:hover {
+        border-color: var(--color-primary);
+        box-shadow:
+          0 8px 24px rgba(0, 0, 0, 0.1),
+          0 0 0 1px var(--color-primary-transparent);
+        transform: translateY(-2px) translateX(var(--spacing-xs));
+      }
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      margin: 0 0 var(--spacing-xs);
+      color: var(--color-text);
+      font-weight: 600;
+
+      @include respond-to('sm') {
+        font-size: 1.25rem;
+      }
+    }
+
+    p {
+      margin: var(--spacing-sm) 0 0;
+      color: var(--color-text-light);
+      line-height: 1.6;
+      font-size: 0.95rem;
+
+      @include respond-to('sm') {
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+    }
+  }
+
+  &__date {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+
+    .icon {
+      width: 1rem;
+      height: 1rem;
+      color: var(--color-text-light);
+    }
+
+    span {
+      position: relative;
+      top: 1px;
+    }
+  }
+}

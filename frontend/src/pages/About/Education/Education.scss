@@ -1,0 +1,184 @@
+@use '../../../assets/styles/abstracts/index' as *;
+
+.education {
+  &__timeline {
+    position: relative;
+    padding-left: var(--spacing-md);
+
+    @include respond-to('sm') {
+      padding-left: var(--spacing-xl);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--color-primary);
+      opacity: 0.2;
+      transform: translateX(-50%);
+    }
+  }
+
+  &__school {
+    position: relative;
+    margin-bottom: var(--spacing-lg);
+
+    @include respond-to('sm') {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: calc(var(--spacing-md) * -1);
+      width: 0.5rem;
+      height: 0.5rem;
+      border-radius: 50%;
+      background: var(--color-primary);
+      border: 2px solid var(--color-background);
+      box-shadow: 0 0 0 2px var(--color-primary-transparent);
+      transition: all 0.2s ease;
+      transform: translateX(-50%);
+      top: 0.75rem;
+
+      @include respond-to('sm') {
+        left: calc(var(--spacing-xl) * -1);
+      }
+    }
+
+    @include respond-to('sm') {
+      &:hover::before {
+        transform: translateX(-50%) scale(1.2);
+        box-shadow:
+          0 0 0 2px var(--color-primary-transparent),
+          0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    &-title {
+      margin-bottom: var(--spacing-md);
+
+      h3 {
+        font-size: 1.5rem;
+        color: var(--color-primary);
+        font-weight: 600;
+
+        @include respond-to('sm') {
+          font-size: 2rem;
+        }
+      }
+    }
+  }
+
+  &__degree {
+    background: var(--color-background-alt);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) 0;
+    border: 1px solid var(--color-border);
+    transition: all 0.3s ease;
+
+    @include respond-to('sm') {
+      padding: var(--spacing-lg);
+      margin: var(--spacing-md) 0;
+    }
+
+    @supports (backdrop-filter: blur(8px)) {
+      backdrop-filter: blur(8px);
+      background: color-mix(in srgb, var(--color-background-alt) 80%, transparent);
+    }
+
+    @include respond-to('sm') {
+      &:hover {
+        border-color: var(--color-primary);
+        box-shadow:
+          0 8px 24px rgba(0, 0, 0, 0.1),
+          0 0 0 1px var(--color-primary-transparent);
+        transform: translateX(var(--spacing-sm));
+      }
+    }
+
+    .icon {
+      color: var(--color-primary);
+      flex-shrink: 0;
+    }
+
+    &-content {
+      flex-grow: 1;
+    }
+
+    h4 {
+      font-size: 1.1rem;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--spacing-sm);
+
+      @include respond-to('sm') {
+        font-size: 1.25rem;
+      }
+    }
+  }
+
+  &__gpa {
+    background: var(--color-primary-transparent);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--border-radius);
+    font-family: var(--mono-font), var(--mono-fallback);
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary-transparent);
+    display: inline-block;
+    margin-top: var(--spacing-xs);
+
+    @include respond-to('sm') {
+      margin-top: 0;
+      margin-left: var(--spacing-sm);
+    }
+  }
+
+  &__degree-detail {
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    margin-top: var(--spacing-xs);
+  }
+
+  &__minor {
+    margin: var(--spacing-md) 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-background-alt);
+    border-radius: var(--border-radius);
+    display: inline-flex;
+
+    span {
+      font-size: 1rem;
+      color: var(--color-text-secondary);
+
+      @include respond-to('sm') {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  &__status {
+    margin-top: var(--spacing-lg);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--color-success-transparent);
+    border-radius: var(--border-radius);
+    display: inline-flex;
+
+    .icon {
+      color: var(--color-success);
+    }
+
+    span {
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+    }
+  }
+}

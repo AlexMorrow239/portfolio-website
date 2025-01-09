@@ -1,0 +1,46 @@
+@use '@/assets/styles/abstracts/index' as *;
+
+.demo-layout {
+  @include container;
+  padding: var(--spacing-xl) var(--spacing-md);
+
+  &__back {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--color-text-light);
+    margin-bottom: var(--spacing-lg);
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: var(--color-primary);
+    }
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: var(--spacing-xl);
+
+    h1 {
+      @include gradient-text;
+      margin-bottom: var(--spacing-md);
+    }
+
+    p {
+      color: var(--color-text-light);
+      max-width: 600px;
+      margin: 0 auto var(--spacing-lg);
+      line-height: 1.6;
+    }
+  }
+
+  &__links {
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+  }
+
+  &__content {
+    margin-top: var(--spacing-xl);
+  }
+}

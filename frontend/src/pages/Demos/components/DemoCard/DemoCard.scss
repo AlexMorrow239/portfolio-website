@@ -1,0 +1,44 @@
+@use '@/assets/styles/abstracts/index' as *;
+
+.demo-card {
+  @include card-base;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  background: var(--color-background-alt);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  &__icon {
+    @include icon-base(40px);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  h2 {
+    color: var(--color-text);
+    font-size: 1.5rem;
+  }
+
+  p {
+    color: var(--color-text-light);
+    flex-grow: 1;
+  }
+
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
+
+    .tag {
+      background: var(--color-background);
+      color: var(--color-primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: var(--border-radius);
+      font-size: 0.875rem;
+    }
+  }
+}

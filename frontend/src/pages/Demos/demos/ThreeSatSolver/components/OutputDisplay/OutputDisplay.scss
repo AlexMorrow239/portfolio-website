@@ -1,0 +1,132 @@
+@use '@/assets/styles/abstracts/index' as *;
+
+.output-display {
+  @include card-base;
+  background: var(--color-background-alt);
+  min-height: 200px;
+
+  &__loading,
+  &__error,
+  &__empty {
+    @include flexCenter;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--color-text-light);
+
+    .icon {
+      width: 24px;
+      height: 24px;
+      opacity: 0.5;
+    }
+  }
+
+  &__error {
+    color: var(--color-error);
+    .icon {
+      color: var(--color-error);
+      opacity: 1;
+    }
+  }
+}
+
+.output-content {
+  padding: var(--spacing-lg);
+
+  .formula-info {
+    margin-bottom: var(--spacing-xl);
+
+    h3 {
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .info-item {
+      @include card-base(var(--spacing-md));
+      text-align: center;
+
+      .label {
+        font-size: 0.875rem;
+        color: var(--color-text-light);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .value {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--color-primary);
+      }
+    }
+  }
+
+  .formula-result {
+    h3 {
+      color: var(--color-primary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .result-box {
+      @include card-base(var(--spacing-lg));
+      border-left: 4px solid var(--color-primary);
+
+      &.satisfiable {
+        border-left-color: var(--color-success);
+        .result {
+          color: var(--color-success);
+        }
+      }
+
+      &.unsatisfiable {
+        border-left-color: var(--color-error);
+        .result {
+          color: var(--color-error);
+        }
+      }
+
+      .formula {
+        font-family: var(--mono-font);
+        font-size: 0.875rem;
+        background: var(--color-background);
+        padding: var(--spacing-sm);
+        border-radius: var(--border-radius);
+        margin-bottom: var(--spacing-md);
+      }
+
+      .result {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: var(--spacing-md);
+      }
+
+      .assignments {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--spacing-xs);
+
+        .assignment {
+          padding: 4px 8px;
+          border-radius: var(--border-radius);
+          font-family: var(--mono-font);
+          font-size: 0.875rem;
+
+          &.true {
+            background: var(--color-success-light);
+            color: var(--color-success);
+          }
+
+          &.false {
+            background: var(--color-error-light);
+            color: var(--color-error);
+          }
+        }
+      }
+    }
+  }
+}
