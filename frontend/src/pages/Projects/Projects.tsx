@@ -3,11 +3,15 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 
-import { defaultTransition, pageTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { ErrorState } from '@/components/common/ErrorState/ErrorState';
 import Loader from '@/components/common/Loader/Loader';
 import { useProjects } from '@/hooks/useProject';
+import {
+  defaultTransition,
+  pageTransition,
+  staggerTransition,
+} from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './Projects.scss';
 import FeaturedProjects from './components/FeaturedProjects/FeaturedProjects';

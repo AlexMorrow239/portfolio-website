@@ -1,147 +1,170 @@
 import {
   Injectable,
+  Logger,
   BadRequestException,
   InternalServerErrorException,
-  Logger,
   RequestTimeoutException,
 } from '@nestjs/common';
-import { exec } from 'child_process';
 import { promisify } from 'util';
+import { exec } from 'child_process';
+import {
+  ThreeSatParams,
+  ThreeSatResult,
+} from '../interfaces/three-sat.interface';
 
 const execAsync = promisify(exec);
-
-interface PythonDemoParams {
-  integer: number;
-  float: number;
-}
 
 @Injectable()
 export class DemoService {
   private readonly logger = new Logger(DemoService.name);
 
-  async runPythonDemo(params: PythonDemoParams) {
+  // Three-SAT demo constraints
+  private readonly THREE_SAT_CONSTRAINTS = {
+    n: { min: 3, max: 10 },
+    ratio: { min: 0.1, max: 6.0 },
+  };
+
+  async runThreeSatDemo(params: ThreeSatParams): Promise<ThreeSatResult> {
     try {
-      // Input validation
-      this.validatePythonDemoParams(params);
-
-      // Run the demo in Docker with resource limits and timeout
-      const result = await this.executePythonDemo(params);
-
-      this.logger.log(
-        `Python demo executed successfully with params: ${JSON.stringify(params)}`,
+      this.logger.debug(
+        `Received Three-SAT demo request with params: ${JSON.stringify(params)}`,
       );
+
+      // Input validation
+      this.validateThreeSatParams(params);
+      this.logger.debug('Parameters validated successfully');
+
+      // Run the demo
+      const result = await this.executeThreeSatDemo(params);
+      this.logger.debug(
+        `Demo execution completed successfully: ${JSON.stringify(result)}`,
+      );
+
       return result;
     } catch (error) {
-      this.handleError(error);
+      this.logger.error(
+        `Error in runThreeSatDemo: ${error.message}`,
+        error.stack,
+      );
+      throw this.handleError(error);
     }
   }
 
-  private validatePythonDemoParams(params: PythonDemoParams) {
-    const { integer, float } = params;
+  private validateThreeSatParams(params: ThreeSatParams): void {
+    const { n, ratio } = params;
 
-    // Validate integer parameter
-    if (!Number.isInteger(integer)) {
-      throw new BadRequestException('Integer parameter must be a whole number');
+    // Check if parameters are numbers
+    if (typeof n !== 'number' || typeof ratio !== 'number') {
+      throw new BadRequestException('Parameters must be numbers');
     }
-    if (integer < 3 || integer > 10) {
+
+    // Validate n (number of variables)
+    if (
+      n < this.THREE_SAT_CONSTRAINTS.n.min ||
+      n > this.THREE_SAT_CONSTRAINTS.n.max
+    ) {
       throw new BadRequestException(
-        'Integer parameter must be between 3 and 10',
+        `Number of variables must be between ${this.THREE_SAT_CONSTRAINTS.n.min} and ${this.THREE_SAT_CONSTRAINTS.n.max}`,
       );
     }
 
-    // Validate float parameter
-    if (typeof float !== 'number' || isNaN(float)) {
-      throw new BadRequestException('Float parameter must be a valid number');
-    }
-    if (float < 0.1 || float > 6.0) {
+    // Validate ratio
+    if (
+      ratio < this.THREE_SAT_CONSTRAINTS.ratio.min ||
+      ratio > this.THREE_SAT_CONSTRAINTS.ratio.max
+    ) {
       throw new BadRequestException(
-        'Float parameter must be between 0.1 and 6.0',
+        `Clause ratio must be between ${this.THREE_SAT_CONSTRAINTS.ratio.min} and ${this.THREE_SAT_CONSTRAINTS.ratio.max}`,
       );
     }
   }
 
-  private async executePythonDemo(params: PythonDemoParams) {
-    const containerId = `python-demo-${Date.now()}`;
+  async executeThreeSatDemo(params: { n: number; ratio: number }) {
+    const { n, ratio } = params;
+    // Calculate number of clauses based on ratio
+    const numClauses = Math.max(1, Math.floor(n * ratio));
 
     try {
-      // Run the container with resource limits
-      const { stdout, stderr } = await execAsync(
-        `docker run --rm \
-          --name ${containerId} \
-          --memory=512m \
-          --cpus=0.5 \
-          --read-only \
-          --tmpfs /tmp:size=64M \
-          --security-opt no-new-privileges \
-          python-demo ${params.integer} ${params.float}`,
-        { timeout: 60000 }, // 60 second timeout
+      this.logger.debug(
+        `Executing command: docker run --rm portfolio-website-three-sat-demo ${n} ${numClauses}`,
       );
 
-      if (stderr) {
-        this.logger.warn(`Python demo warning: ${stderr}`);
-      }
+      const { stdout } = await execAsync(
+        `docker run --rm portfolio-website-three-sat-demo ${n} ${numClauses}`,
+      );
 
-      return {
-        success: true,
-        output: stdout.trim(),
-        warnings: stderr ? stderr.trim() : null,
-      };
-    } catch (error) {
-      // Handle specific error types
-      if (error.code === 'ETIMEDOUT') {
-        throw new RequestTimeoutException('Demo execution timed out');
-      }
-
-      if (error.code === 'ENOENT') {
-        throw new InternalServerErrorException('Docker is not available');
-      }
-
-      if (error.killed) {
-        throw new RequestTimeoutException(
-          'Demo execution was terminated due to resource limits',
-        );
-      }
-
-      // Check if it's a Docker error
-      if (error.stderr && error.stderr.includes('docker')) {
-        throw new InternalServerErrorException(
-          'Failed to execute demo in Docker container',
-        );
-      }
-
-      throw error;
-    } finally {
-      // Cleanup: ensure container is removed even if there was an error
       try {
-        await execAsync(`docker rm -f ${containerId} 2>/dev/null || true`);
-      } catch (cleanupError) {
-        this.logger.error(
-          `Failed to cleanup container ${containerId}: ${cleanupError.message}`,
-        );
+        return JSON.parse(stdout);
+      } catch (parseError) {
+        this.logger.error(`Failed to parse demo output: ${stdout}`);
+        throw new Error('Failed to parse demo output');
       }
+    } catch (error) {
+      this.logger.error(`Demo execution failed: ${error.message}`);
+      throw new Error('Docker execution failed');
     }
   }
 
-  private handleError(error: any) {
-    // Log the error with appropriate level
+  private validateThreeSatResult(result: any): ThreeSatResult {
+    // Ensure all required fields are present
+    const requiredFields = [
+      'formula',
+      'satisfiable',
+      'assignment',
+      'num_variables',
+      'num_clauses',
+    ];
+    for (const field of requiredFields) {
+      if (!(field in result)) {
+        throw new Error(`Missing required field: ${field}`);
+      }
+    }
+
+    // Type checking
+    if (typeof result.satisfiable !== 'boolean') {
+      throw new Error('satisfiable must be a boolean');
+    }
+    if (typeof result.formula !== 'string') {
+      throw new Error('formula must be a string');
+    }
+    if (typeof result.num_variables !== 'number') {
+      throw new Error('num_variables must be a number');
+    }
+    if (typeof result.num_clauses !== 'number') {
+      throw new Error('num_clauses must be a number');
+    }
+    if (typeof result.assignment !== 'object') {
+      throw new Error('assignment must be an object');
+    }
+
+    return {
+      formula: result.formula,
+      satisfiable: result.satisfiable,
+      assignment: result.assignment,
+      num_variables: result.num_variables,
+      num_clauses: result.num_clauses,
+    };
+  }
+
+  private handleError(error: any): Error {
     if (error instanceof BadRequestException) {
-      this.logger.warn(`Invalid demo parameters: ${error.message}`);
-    } else {
-      this.logger.error(`Demo execution failed: ${error.message}`, error.stack);
+      return error;
     }
 
-    // Rethrow known exceptions
-    if (
-      error instanceof BadRequestException ||
-      error instanceof RequestTimeoutException ||
-      error instanceof InternalServerErrorException
-    ) {
-      throw error;
+    if (error.code === 'ETIMEDOUT') {
+      return new RequestTimeoutException('Demo execution timed out');
     }
 
-    // Convert unknown errors to InternalServerErrorException
-    throw new InternalServerErrorException(
-      'An unexpected error occurred while running the demo',
-    );
+    if (error.message.includes('docker')) {
+      return new InternalServerErrorException('Docker execution failed');
+    }
+
+    if (error.message.includes('Invalid output format')) {
+      return new InternalServerErrorException(
+        'Demo returned invalid output format',
+      );
+    }
+
+    return new InternalServerErrorException('Failed to execute demo');
   }
 }

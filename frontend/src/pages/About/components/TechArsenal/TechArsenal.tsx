@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Cloud, Code2, Database, Server } from 'lucide-react';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './TechArsenal.scss';
 

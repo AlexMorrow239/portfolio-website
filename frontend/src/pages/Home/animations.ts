@@ -1,4 +1,4 @@
-import { defaultTransition, springTransition } from '@/animations/transitions';
+import { defaultTransition, springTransition } from '@/utils/animations/transitions';
 
 export const heroVariants = {
   container: {

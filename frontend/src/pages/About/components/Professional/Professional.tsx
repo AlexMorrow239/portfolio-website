@@ -3,8 +3,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Briefcase, Building2, Calendar, ExternalLink } from 'lucide-react';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, slideInLeft, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, slideInLeft, staggerContainer } from '@/utils/animations/variants';
 
 import './Professional.scss';
 

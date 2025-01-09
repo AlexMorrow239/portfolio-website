@@ -8,6 +8,7 @@ import { CommonModule } from './common/common.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ContactModule } from './contact/contact.module';
+import { DemosModule } from './demos/demos.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { ContactModule } from './contact/contact.module';
     MediaModule,
     CommonModule,
     ContactModule,
+    DemosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

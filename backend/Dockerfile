@@ -1,4 +1,8 @@
 FROM node:20-alpine AS builder
+
+# Install build dependencies
+RUN apk add --no-cache python3 make g++ docker-cli
+
 WORKDIR /app
 
 # Copy package files and configs first
@@ -23,6 +27,9 @@ RUN npm run build
 FROM node:20-alpine
 WORKDIR /app
 
+# Install Docker CLI and required dependencies
+RUN apk add --no-cache docker-cli python3 make g++
+
 # Copy production files
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/package*.json ./
@@ -30,8 +37,12 @@ COPY --from=builder /app/package*.json ./
 # Install only production dependencies
 RUN npm ci --omit=dev
 
+# Create directory for Docker socket
+RUN mkdir -p /var/run
+
 # Set environment and expose port
 ENV NODE_ENV=production
+ENV DOCKER_HOST=unix:///var/run/docker.sock
 EXPOSE 3000
 
 CMD ["node", "dist/main.js"]

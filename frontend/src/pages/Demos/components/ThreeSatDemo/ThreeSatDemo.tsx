@@ -3,9 +3,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github } from 'lucide-react';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { DemoRunner } from '@/pages/Demos/components/DemoRunner';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './ThreeSatDemo.scss';
 

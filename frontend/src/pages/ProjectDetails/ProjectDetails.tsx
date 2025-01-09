@@ -4,12 +4,12 @@ import { motion } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { ProjectLinks } from '@/components/ProjectElements/ProjectLinks/ProjectLinks';
 import { ProjectTags } from '@/components/ProjectElements/ProjectTags/ProjectTags';
 import { ProjectsService } from '@/services/projects.service';
 import { type Project } from '@/types/project';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './ProjectDetails.scss';
 

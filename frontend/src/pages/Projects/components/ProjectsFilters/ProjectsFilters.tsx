@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ChevronDown, Filter, X } from 'lucide-react';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './ProjectFilters.scss';
 

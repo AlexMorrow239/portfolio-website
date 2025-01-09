@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 
 import { motion } from 'framer-motion';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeInUp, staggerContainer } from '@/animations/variants';
+import { API_BASE_URL } from '@/config';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './DemoRunner.scss';
 import { InputForm } from './InputForm';
@@ -24,19 +25,22 @@ export const DemoRunner: React.FC<DemoRunnerProps> = ({ title, description }) =>
     setError(null);
 
     try {
-      const response = await fetch('/api/demos/python-module/run', {
+      const response = await fetch(`${API_BASE_URL}/demos/three-sat/run`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params),
+        body: JSON.stringify({
+          n: params.integer,
+          ratio: params.float,
+        }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || 'Failed to run demo');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to run demo');
       }
 
-      setOutput(data.output);
+      const data = await response.json();
+      setOutput(JSON.stringify(data, null, 2));
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {

@@ -1,8 +1,10 @@
 import React from 'react';
+
 import { motion } from 'framer-motion';
-import { Terminal, AlertCircle } from 'lucide-react';
-import { defaultTransition } from '@/animations/transitions';
-import { fadeIn } from '@/animations/variants';
+import { AlertCircle, Terminal } from 'lucide-react';
+
+import { defaultTransition } from '@/utils/animations/transitions';
+import { fadeIn } from '@/utils/animations/variants';
 
 interface OutputDisplayProps {
   output: string | null;
@@ -12,11 +14,7 @@ interface OutputDisplayProps {
 
 export const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, error, isLoading }) => {
   return (
-    <motion.div
-      className="demo-output"
-      variants={fadeIn}
-      transition={defaultTransition}
-    >
+    <motion.div className="demo-output" variants={fadeIn} transition={defaultTransition}>
       {isLoading ? (
         <div className="demo-output__loading">
           <Terminal className="icon" />

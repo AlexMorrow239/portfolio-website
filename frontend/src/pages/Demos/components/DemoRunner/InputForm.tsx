@@ -1,10 +1,13 @@
 import React from 'react';
+
 import { motion } from 'framer-motion';
-import { defaultTransition } from '@/animations/transitions';
-import { fadeInUp } from '@/animations/variants';
+
+import { defaultTransition, fadeInUp } from '@utils/animations';
+
+import './DemoRunner.scss';
 
 interface InputFormProps {
-  onSubmit: (params: { integer: number; float: number }) => void;
+  onSubmit: (values: { integer: number; float: number }) => void;
   isLoading: boolean;
 }
 
@@ -15,21 +18,23 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit, isLoading }) => 
   });
   const [errors, setErrors] = React.useState<Record<string, string>>({});
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setValues((prev) => ({
+      ...prev,
+      [id]: id === 'integer' ? parseInt(value) || '' : parseFloat(value) || '',
+    }));
+  };
+
   const validateInputs = () => {
     const newErrors: Record<string, string> = {};
 
-    if (!Number.isInteger(values.integer)) {
-      newErrors.integer = 'Must be a whole number';
-    }
     if (values.integer < 3 || values.integer > 10) {
-      newErrors.integer = 'Must be between 3 and 10';
+      newErrors.integer = 'Integer must be between 3 and 10';
     }
 
-    if (isNaN(values.float)) {
-      newErrors.float = 'Must be a valid number';
-    }
     if (values.float < 0.1 || values.float > 6.0) {
-      newErrors.float = 'Must be between 0.1 and 6.0';
+      newErrors.float = 'Float must be between 0.1 and 6.0';
     }
 
     setErrors(newErrors);
@@ -39,7 +44,7 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit, isLoading }) => 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateInputs()) {
-      onSubmit(values);
+      onSubmit(values as { integer: number; float: number });
     }
   };
 
@@ -56,9 +61,10 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit, isLoading }) => 
           type="number"
           id="integer"
           value={values.integer}
-          onChange={(e) => setValues({ ...values, integer: parseInt(e.target.value) })}
+          onChange={handleChange}
           min={3}
           max={10}
+          step={1}
           required
         />
         {errors.integer && <span className="error">{errors.integer}</span>}
@@ -70,7 +76,7 @@ export const InputForm: React.FC<InputFormProps> = ({ onSubmit, isLoading }) => 
           type="number"
           id="float"
           value={values.float}
-          onChange={(e) => setValues({ ...values, float: parseFloat(e.target.value) })}
+          onChange={handleChange}
           min={0.1}
           max={6.0}
           step={0.1}

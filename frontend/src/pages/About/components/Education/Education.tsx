@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Brain, Building2, Calculator, CheckCircle, GraduationCap, Laptop } from 'lucide-react';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, slideInLeft, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, slideInLeft, staggerContainer } from '@/utils/animations/variants';
 
 import './Education.scss';
 

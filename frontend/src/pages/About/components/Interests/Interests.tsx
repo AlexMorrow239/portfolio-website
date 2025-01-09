@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Activity, Dumbbell, Mountain, TreePine } from 'lucide-react';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './Interests.scss';
 

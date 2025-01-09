@@ -16,16 +16,20 @@ services:
       - GOOGLE_CLOUD_BUCKET=${GOOGLE_CLOUD_BUCKET}
       - ADMIN_USERNAME=${ADMIN_USERNAME}
       - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - DOCKER_HOST=unix:///var/run/docker.sock # Added for Docker-in-Docker
     ports:
       - "3000:3000"
       - "9229:9229" # Debug port
     volumes:
       - ./backend:/app
       - /app/node_modules
+      - /var/run/docker.sock:/var/run/docker.sock # Added for Docker-in-Docker
     command: npm run start:dev
     depends_on:
       mongodb:
         condition: service_healthy
+      three-sat-demo:
+        condition: service_started
     healthcheck:
       test:
         [
@@ -83,11 +87,13 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
-  python-demo:
+
+  three-sat-demo:
     build:
-      context: ./backend/src/demos/docker/python-demo
+      context: ./backend/src/demos/docker/three-sat-demo
       dockerfile: Dockerfile
-    container_name: python-demo
+    container_name: portfolio-website-three-sat-demo
+    image: portfolio-website-three-sat-demo # Added explicit image name
     restart: "no"
     deploy:
       resources:
@@ -100,6 +106,11 @@ services:
     tmpfs:
       - /tmp:size=64M
     stop_grace_period: 65s
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys; sys.exit(0)"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
 
 volumes:
   mongodb_data:

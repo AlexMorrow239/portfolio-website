@@ -2,8 +2,8 @@ import { type FC } from 'react';
 
 import { motion } from 'framer-motion';
 
-import { fadeIn } from '@/animations';
-import { defaultTransition } from '@/animations/transitions';
+import { fadeIn } from '@/utils/animations';
+import { defaultTransition } from '@/utils/animations/transitions';
 
 import './ProjectTags.scss';
 

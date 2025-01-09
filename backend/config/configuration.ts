@@ -1,5 +1,5 @@
 export default () => ({
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT as string, 10) || 3000,
   database: {
     uri: process.env.MONGODB_URI,
   },
@@ -9,7 +9,7 @@ export default () => ({
   },
   media: {
     uploadDir: process.env.UPLOAD_DIR || 'uploads',
-    maxFileSize: parseInt(process.env.MAX_FILE_SIZE, 10) || 5242880, // 5MB
+    maxFileSize: parseInt(process.env.MAX_FILE_SIZE as string, 10) || 5242880, // 5MB
     allowedMimeTypes: [
       'image/jpeg',
       'image/png',

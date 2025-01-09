@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeInUp, staggerContainer } from '@/animations/variants';
 import SectionDivider from '@/components/common/SectionDivider/SectionDivider';
 import Education from '@/pages/About/components/Education/Education';
 import Professional from '@/pages/About/components/Professional/Professional';
 import TechArsenal from '@/pages/About/components/TechArsenal/TechArsenal';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './About.scss';
 import Interests from './components/Interests/Interests';

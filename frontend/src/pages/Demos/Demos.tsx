@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { Terminal } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeInUp, staggerContainer } from '@/animations/variants';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './Demos.scss';
 

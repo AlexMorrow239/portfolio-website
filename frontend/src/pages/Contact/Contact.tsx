@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 import { AlertCircle, Send, Terminal } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 
-import { defaultTransition, fadeInUp, staggerContainer } from '@/animations';
 import Loader from '@/components/common/Loader/Loader';
 import { API_BASE_URL } from '@/config';
+import { defaultTransition, fadeInUp, staggerContainer } from '@/utils/animations';
 
 import './Contact.scss';
 
