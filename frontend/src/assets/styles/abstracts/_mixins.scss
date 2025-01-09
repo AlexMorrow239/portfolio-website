@@ -92,15 +92,24 @@
 }
 
 @mixin gradient-text(
-  $direction: 135deg,
+  $direction: 45deg,
   $start-color: var(--color-primary),
   $end-color: var(--color-secondary)
 ) {
-  background: linear-gradient($direction, $start-color, $end-color);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -webkit-box-decoration-break: clone;
+  & {
+    background: linear-gradient($direction, $start-color, $end-color);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  @media (min-width: 768px) {
+    @content;
+  }
+
+  @media (min-width: 1024px) {
+    @content;
+  }
 
   @supports not (background-clip: text) {
     background: none;

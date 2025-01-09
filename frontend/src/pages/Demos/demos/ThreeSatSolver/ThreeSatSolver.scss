@@ -7,7 +7,9 @@
 
     h2 {
       @include gradient-text;
-      margin-bottom: var(--spacing-lg);
+      & {
+        margin-bottom: var(--spacing-lg);
+      }
     }
 
     .info-grid {
