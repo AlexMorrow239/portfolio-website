@@ -14,6 +14,13 @@ export default defineConfig(({ mode }) => {
         scss: {
           // Use modern API
           api: 'modern',
+          // Add additionalData for SCSS path aliases
+          additionalData: `
+            $assets-path: '@assets';
+            @use "sass:math";
+          `,
+          // Add includePaths to resolve aliases
+          includePaths: [path.resolve(__dirname, './src')],
         },
       },
     },

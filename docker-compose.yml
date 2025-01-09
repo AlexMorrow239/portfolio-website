@@ -83,6 +83,23 @@ services:
       timeout: 10s
       retries: 5
       start_period: 40s
+  python-demo:
+    build:
+      context: ./backend/src/demos/docker/python-demo
+      dockerfile: Dockerfile
+    container_name: python-demo
+    restart: "no"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64M
+    stop_grace_period: 65s
 
 volumes:
   mongodb_data:

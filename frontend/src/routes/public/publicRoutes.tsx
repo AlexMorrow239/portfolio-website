@@ -1,5 +1,7 @@
 import About from '@/pages/About/About';
 import Contact from '@/pages/Contact/Contact';
+import Demos from '@/pages/Demos/Demos';
+import ThreeSatDemo from '@/pages/Demos/components/ThreeSatDemo/ThreeSatDemo';
 import Home from '@/pages/Home/Home';
 import ProjectDetail from '@/pages/ProjectDetails/ProjectDetails';
 import Projects from '@/pages/Projects/Projects';
@@ -26,6 +28,20 @@ export const publicRoutes = [
             path: ':id',
             element: <ProjectDetail />,
           },
+        ],
+      },
+      {
+        path: 'demos',
+        children: [
+          {
+            index: true,
+            element: <Demos />,
+          },
+          {
+            path: 'three-sat-module',
+            element: <ThreeSatDemo />,
+          },
+          // Add more demo routes here as needed
         ],
       },
       {

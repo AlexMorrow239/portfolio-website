@@ -9,10 +9,10 @@ import { ErrorState } from '@/components/common/ErrorState/ErrorState';
 import Loader from '@/components/common/Loader/Loader';
 import { useProjects } from '@/hooks/useProject';
 
-import FeaturedProjects from './FeaturedProjects/FeaturedProjects';
 import './Projects.scss';
-import ProjectsFilters from './ProjectsFilters/ProjectsFilters';
-import ProjectList from './ProjectsList/ProjectList';
+import FeaturedProjects from './components/FeaturedProjects/FeaturedProjects';
+import ProjectsFilters from './components/ProjectsFilters/ProjectsFilters';
+import ProjectList from './components/ProjectsList/ProjectList';
 
 const Projects: React.FC = () => {
   const { projects, isLoading, error, fetchProjects } = useProjects();
