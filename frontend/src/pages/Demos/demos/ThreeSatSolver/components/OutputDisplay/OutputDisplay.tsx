@@ -7,7 +7,7 @@ import { defaultTransition } from '@/utils/animations/transitions';
 import { fadeIn, fadeInUp } from '@/utils/animations/variants';
 
 import { SolverOutput } from '../../types';
-import { SolvingProcess } from '../SolvingProcess';
+import { SolvingProcess } from '../SolvingProcess/SolvingProcess';
 import './OutputDisplay.scss';
 
 interface OutputDisplayProps {

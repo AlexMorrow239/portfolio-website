@@ -30,14 +30,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
         Featured Projects
       </motion.h2>
 
-      <motion.div
-        className="featured-projects__grid"
-        variants={staggerContainer}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        transition={staggerTransition(0.2)}
-      >
+      <motion.div className="featured-projects__grid">
         {projects.map((project) => (
           <motion.article
             key={project._id}
@@ -46,15 +39,14 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
             transition={defaultTransition}
             whileHover={{ y: -8 }}
           >
-            <Link
-              to={`/projects/${project._id}`}
-              className="featured-project-card__content-wrapper"
-            >
+            <div className="featured-project-card__content-wrapper">
               {project.imageUrl && (
-                <motion.div className="featured-project-card__image" variants={fadeIn}>
-                  <img src={project.imageUrl} alt={project.title} />
-                  <div className="featured-project-card__image-overlay" />
-                </motion.div>
+                <Link to={`/projects/${project._id}`}>
+                  <motion.div className="featured-project-card__image" variants={fadeIn}>
+                    <img src={project.imageUrl} alt={project.title} />
+                    <div className="featured-project-card__image-overlay" />
+                  </motion.div>
+                </Link>
               )}
 
               <motion.div
@@ -63,8 +55,10 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
                 transition={staggerTransition(0.1)}
               >
                 <motion.header variants={fadeIn}>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
+                  <Link to={`/projects/${project._id}`}>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                  </Link>
                 </motion.header>
 
                 <motion.div
@@ -85,14 +79,18 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({ projects }) => {
                   )}
 
                   {project.links && (
-                    <motion.div className="featured-project-card__section" variants={fadeIn}>
+                    <motion.div
+                      className="featured-project-card__section"
+                      variants={fadeIn}
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <h4>Links</h4>
                       <ProjectLinks links={project.links} variant="featured" />
                     </motion.div>
                   )}
                 </motion.div>
               </motion.div>
-            </Link>
+            </div>
           </motion.article>
         ))}
       </motion.div>

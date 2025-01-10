@@ -168,6 +168,24 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ mode }) => {
                 />
                 {errors.links?.live && <span className="error-message">{errors.links.live}</span>}
               </div>
+              <div className="form-group">
+                <label htmlFor="demoLink">
+                  <LinkIcon size={16} /> Demo URL
+                </label>
+                <input
+                  type="url"
+                  id="demoLink"
+                  value={formData.links.demo ?? ''}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      links: { ...prev.links, demo: e.target.value },
+                    }))
+                  }
+                  placeholder="https://demos.your-site.com/demo-name"
+                />
+                {errors.links?.demo && <span className="error-message">{errors.links.demo}</span>}
+              </div>
             </div>
           </div>
 

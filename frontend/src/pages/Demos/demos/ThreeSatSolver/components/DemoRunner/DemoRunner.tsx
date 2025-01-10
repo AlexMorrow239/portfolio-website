@@ -8,8 +8,8 @@ import { defaultTransition, staggerTransition } from '@/utils/animations/transit
 import { fadeIn, fadeInUp } from '@/utils/animations/variants';
 
 import { SolverInput, SolverOutput } from '../../types';
-import { InputForm } from '../InputForm';
-import { OutputDisplay } from '../OutputDisplay';
+import { InputForm } from '../InputForm/InputForm';
+import { OutputDisplay } from '../OutputDisplay/OutputDisplay';
 import './DemoRunner.scss';
 
 export const DemoRunner: React.FC = () => {

@@ -7,7 +7,7 @@ import { defaultTransition, staggerTransition } from '@/utils/animations/transit
 import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
 import './ThreeSatSolver.scss';
-import { DemoRunner } from './components/DemoRunner';
+import { DemoRunner } from './components/DemoRunner/DemoRunner';
 
 const ThreeSatSolver: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'demo' | 'theory'>('demo');

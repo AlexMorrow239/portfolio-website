@@ -7,6 +7,7 @@ export interface ProjectLinks {
   github?: string;
   live?: string;
   documentation?: string;
+  demo?: string;
 }
 
 export interface ProjectFormData {
