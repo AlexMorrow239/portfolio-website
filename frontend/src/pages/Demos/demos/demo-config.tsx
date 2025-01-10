@@ -7,7 +7,7 @@ export const availableDemos: DemoInfo[] = [
     id: 'three-sat-solver',
     title: 'SAT Solver Demo',
     description:
-      'Interactive demonstration of a Python-based SAT solver running in a secure Docker container',
+      'Explore the demo here. If youre interested I cover the topic in more depth on my github. Just go to this repo!',
     icon: <Terminal size={24} />,
     tags: ['Python', 'Docker', 'Backend'],
     path: '/demos/three-sat-solver',
