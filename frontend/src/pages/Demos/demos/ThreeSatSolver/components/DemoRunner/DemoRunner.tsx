@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
 import { motion } from 'framer-motion';
+import { HelpCircle, Info, RotateCw } from 'lucide-react';
 
 import { API_BASE_URL } from '@/config';
-import { defaultTransition } from '@/utils/animations/transitions';
-import { fadeIn } from '@/utils/animations/variants';
+import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
+import { fadeIn, fadeInUp } from '@/utils/animations/variants';
 
 import { SolverInput, SolverOutput } from '../../types';
 import { InputForm } from '../InputForm';
@@ -15,6 +16,7 @@ export const DemoRunner: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [output, setOutput] = useState<SolverOutput | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [runCount, setRunCount] = useState(0);
 
   const runDemo = async (params: SolverInput) => {
     setIsLoading(true);
@@ -39,11 +41,17 @@ export const DemoRunner: React.FC = () => {
 
       const data: SolverOutput = await response.json();
       setOutput(data);
+      setRunCount((prev) => prev + 1);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleReset = () => {
+    setOutput(null);
+    setError(null);
   };
 
   return (
@@ -56,26 +64,68 @@ export const DemoRunner: React.FC = () => {
     >
       <div className="demo-runner__container">
         <div className="demo-runner__content">
-          <aside className="demo-runner__sidebar">
-            <InputForm onSubmit={runDemo} isLoading={isLoading} />
-
-            <div className="demo-runner__info">
-              <h3>How it Works</h3>
-              <p>This demo generates a random 3-SAT formula based on your inputs:</p>
-              <ul>
-                <li>
-                  <strong>Number of Variables:</strong> Determines the complexity of the formula
-                </li>
-                <li>
-                  <strong>Clause/Variable Ratio:</strong> Affects the likelihood of satisfiability
-                </li>
-              </ul>
+          <motion.aside
+            className="demo-runner__sidebar"
+            variants={fadeInUp}
+            transition={staggerTransition(0.1)}
+          >
+            {/* Control Panel */}
+            <div className="control-panel">
+              <div className="panel-header">
+                <h3>Demo Controls</h3>
+                {runCount > 0 && (
+                  <button className="reset-button" onClick={handleReset} disabled={isLoading}>
+                    <RotateCw size={16} />
+                    <span>Reset</span>
+                  </button>
+                )}
+              </div>
+              <InputForm onSubmit={runDemo} isLoading={isLoading} />
             </div>
-          </aside>
 
-          <main className="demo-runner__main">
+            {/* Info Cards */}
+            <div className="info-section">
+              <div className="info-card">
+                <div className="card-header">
+                  <Info size={20} />
+                  <h3>How it Works</h3>
+                </div>
+                <div className="card-content">
+                  <p>
+                    This demo generates and solves random 3-SAT formulas using the DPLL algorithm.
+                    The parameters you choose affect the problem's complexity and solvability.
+                  </p>
+                  <div className="parameter-info">
+                    <h4>
+                      <span>Parameters</span>
+                      <HelpCircle size={16} />
+                    </h4>
+                    <ul>
+                      <li>
+                        <strong>Number of Variables (n):</strong>
+                        <p>More variables increase the problem's complexity exponentially.</p>
+                      </li>
+                      <li>
+                        <strong>Clause/Variable Ratio:</strong>
+                        <p>
+                          Higher ratios typically make formulas harder to satisfy. The phase
+                          transition occurs around 4.3.
+                        </p>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.aside>
+
+          <motion.main
+            className="demo-runner__main"
+            variants={fadeInUp}
+            transition={staggerTransition(0.2)}
+          >
             <OutputDisplay output={output} error={error} isLoading={isLoading} />
-          </main>
+          </motion.main>
         </div>
       </div>
     </motion.div>

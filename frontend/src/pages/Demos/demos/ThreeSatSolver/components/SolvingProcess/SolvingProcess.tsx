@@ -15,6 +15,8 @@ interface SolvingProcessProps {
 }
 
 export const SolvingProcess: React.FC<SolvingProcessProps> = ({ steps, statistics }) => {
+  console.log('Steps data:', steps);
+
   return (
     <motion.div
       className="solving-process"
@@ -59,7 +61,7 @@ export const SolvingProcess: React.FC<SolvingProcessProps> = ({ steps, statistic
         <div className="step-list">
           {steps.map((step, index) => (
             <motion.div
-              key={`step-${step.step}-${index}`}
+              key={`step-${step.step_number}-${index}`}
               className={`step-item ${step.success ? 'success' : 'failure'}`}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -67,21 +69,23 @@ export const SolvingProcess: React.FC<SolvingProcessProps> = ({ steps, statistic
             >
               <div className="step-header">
                 <GitCommit size={16} className="step-icon" />
-                <span className="step-number">Step {step.step}</span>
+                <span className="step-number">Step {step.step_number}</span>
                 <span className="step-depth">Depth {step.depth}</span>
-                {step.action && ( // Add conditional rendering
-                  <span className={`step-action ${step.action.toLowerCase()}`}>{step.action}</span>
+                {step.action_type && (
+                  <span className={`step-action ${step.action_type.toLowerCase()}`}>
+                    {step.action_type}
+                  </span>
                 )}
               </div>
               <div className="step-content">
                 <p className="description">{step.description}</p>
                 <div className="formula">
-                  <pre>{step.formula}</pre>
+                  <pre>{step.formula_state}</pre>
                 </div>
                 <div className="assignments">
                   {Object.entries(step.assignments).map(([variable, value]) => (
                     <span
-                      key={`${step.step}-${variable}`}
+                      key={`${step.step_number}-${variable}`}
                       className={`assignment ${value ? 'true' : 'false'}`}
                     >
                       {variable} = {value.toString()}

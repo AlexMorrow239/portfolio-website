@@ -2,131 +2,234 @@
 
 .output-display {
   @include card-base;
-  background: var(--color-background-alt);
+  background: var(--color-background);
   min-height: 200px;
+  overflow: hidden;
+  max-width: 100%;
 
+  // States
   &__loading,
   &__error,
   &__empty {
     @include flexCenter;
-    flex-direction: column;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
     padding: var(--spacing-xl);
-    text-align: center;
-    color: var(--color-text-light);
+    text-align: left;
+    color: var(--color-text);
 
     .icon {
-      width: 24px;
-      height: 24px;
-      opacity: 0.5;
+      flex-shrink: 0;
+      opacity: 0.7;
     }
+
+    h4 {
+      font-size: 1.125rem;
+      margin-bottom: var(--spacing-xs);
+    }
+
+    p {
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+    }
+  }
+
+  &__loading .icon {
+    color: var(--color-primary);
   }
 
   &__error {
     color: var(--color-error);
+
     .icon {
-      color: var(--color-error);
       opacity: 1;
     }
+
+    .error-text h4 {
+      color: var(--color-error);
+    }
+  }
+
+  .spin {
+    animation: spin 1.5s linear infinite;
   }
 }
 
 .output-content {
-  padding: var(--spacing-lg);
+  max-width: 100%;
+  overflow-x: hidden;
 
-  .formula-info {
-    margin-bottom: var(--spacing-xl);
+  .status-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-background-alt);
 
-    h3 {
-      color: var(--color-primary);
-      margin-bottom: var(--spacing-md);
+    &.success {
+      background: var(--overlay-success);
+      .status-icon {
+        color: var(--color-success);
+      }
+      h4 {
+        color: var(--color-success);
+      }
     }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: var(--spacing-md);
+    &.error {
+      background: var(--overlay-error);
+      .status-icon {
+        color: var(--color-error);
+      }
+      h4 {
+        color: var(--color-error);
+      }
     }
 
-    .info-item {
-      @include card-base(var(--spacing-md));
-      text-align: center;
-
-      .label {
-        font-size: 0.875rem;
-        color: var(--color-text-light);
+    .status-text {
+      h4 {
+        font-size: 1.125rem;
         margin-bottom: var(--spacing-xs);
       }
 
-      .value {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--color-primary);
+      p {
+        color: var(--color-text-light);
+        font-size: 0.875rem;
+        margin: 0;
       }
     }
   }
 
-  .formula-result {
+  .panel-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    color: var(--color-primary);
+
     h3 {
-      color: var(--color-primary);
-      margin-bottom: var(--spacing-md);
+      font-size: 1.125rem;
+      margin: 0;
+      color: var(--color-text);
+    }
+  }
+
+  .statistics-panel {
+    padding: var(--spacing-lg);
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: var(--spacing-md);
+      max-width: 100%;
+      overflow-x: auto;
     }
 
-    .result-box {
-      @include card-base(var(--spacing-lg));
-      border-left: 4px solid var(--color-primary);
+    .stat-card {
+      @include card-base(var(--spacing-md));
+      text-align: center;
+      background: var(--color-background-alt);
 
-      &.satisfiable {
-        border-left-color: var(--color-success);
-        .result {
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--color-primary);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      .stat-label {
+        font-size: 0.75rem;
+        color: var(--color-text-light);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+
+  .formula-panel {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+
+    .formula-content {
+      background: var(--color-background-alt);
+      padding: var(--spacing-md);
+      border-radius: var(--border-radius);
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    .formula-text {
+      font-family: var(--mono-font);
+      font-size: 0.875rem;
+      color: var(--color-text);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+  }
+
+  .assignment-panel {
+    padding: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+
+    .assignment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: var(--spacing-md);
+    }
+
+    .assignment-card {
+      @include card-base(var(--spacing-sm));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-xs);
+      text-align: center;
+
+      &.true {
+        background: var(--overlay-success);
+        border-color: var(--color-success);
+        .value {
           color: var(--color-success);
         }
       }
 
-      &.unsatisfiable {
-        border-left-color: var(--color-error);
-        .result {
+      &.false {
+        background: var(--overlay-error);
+        border-color: var(--color-error);
+        .value {
           color: var(--color-error);
         }
       }
 
-      .formula {
+      .variable {
         font-family: var(--mono-font);
         font-size: 0.875rem;
-        background: var(--color-background);
-        padding: var(--spacing-sm);
-        border-radius: var(--border-radius);
-        margin-bottom: var(--spacing-md);
+        color: var(--color-text);
       }
 
-      .result {
-        font-size: 1.25rem;
+      .value {
         font-weight: 600;
-        margin-bottom: var(--spacing-md);
+        font-size: 1rem;
       }
+    }
+  }
+}
 
-      .assignments {
-        display: flex;
-        flex-wrap: wrap;
-        gap: var(--spacing-xs);
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-        .assignment {
-          padding: 4px 8px;
-          border-radius: var(--border-radius);
-          font-family: var(--mono-font);
-          font-size: 0.875rem;
-
-          &.true {
-            background: var(--color-success-light);
-            color: var(--color-success);
-          }
-
-          &.false {
-            background: var(--color-error-light);
-            color: var(--color-error);
-          }
-        }
-      }
+@include respond-to('md') {
+  .output-display {
+    &__loading,
+    &__error,
+    &__empty {
+      padding: var(--spacing-xxxl);
     }
   }
 }

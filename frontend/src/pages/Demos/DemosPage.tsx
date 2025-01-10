@@ -6,6 +6,7 @@ import { Filter, Search } from 'lucide-react';
 import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
 import { fadeIn, fadeInUp, staggerContainer } from '@/utils/animations/variants';
 
+import './DemosPage.scss';
 import { DemoCard } from './components/DemoCard/DemoCard';
 import { availableDemos } from './demos';
 

@@ -13,15 +13,15 @@ export interface SolverInput {
  */
 export interface SolvingStep {
   /** Step number in the solving sequence */
-  step: number;
+  step_number: number;
   /** Current depth in the search tree */
   depth: number;
   /** Type of operation performed (e.g., 'UNIT_PROPAGATION', 'PURE_LITERAL', 'BACKTRACK', 'BRANCH') */
-  action: string;
+  action_type: string;
   /** Human-readable description of the step */
   description: string;
   /** Current state of the formula */
-  formula: string;
+  formula_state: string;
   /** Current variable assignments */
   assignments: Record<string, boolean>;
   /** Whether this step led to a successful path */
