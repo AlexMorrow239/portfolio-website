@@ -18,11 +18,7 @@ export interface ProjectFormData {
   imageUrl?: string;
   featured: boolean;
   visible: boolean;
-  links: {
-    github?: string;
-    live?: string;
-    documentation?: string;
-  };
+  links: ProjectLinks;
 }
 
 export interface ProjectFormErrors {
@@ -31,11 +27,7 @@ export interface ProjectFormErrors {
   technologies?: string;
   skills?: string;
   image?: string;
-  links?: {
-    github?: string;
-    live?: string;
-    documentation?: string;
-  };
+  links?: ProjectLinks;
 }
 
 export interface Project {

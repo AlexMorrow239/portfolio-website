@@ -3,11 +3,12 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-import { defaultTransition, staggerTransition } from '@/animations/transitions';
-import { fadeIn, fadeInUp, staggerContainer } from '@/animations/variants';
 import { ProjectLinks } from '@/components/ProjectElements/ProjectLinks/ProjectLinks';
 import { ProjectTags } from '@/components/ProjectElements/ProjectTags/ProjectTags';
 import { type Project } from '@/types/project';
+
+import { defaultTransition, staggerTransition } from '@utils/animations/transitions';
+import { fadeIn, fadeInUp, staggerContainer } from '@utils/animations/variants';
 
 import './FeaturedProjects.scss';
 
