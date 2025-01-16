@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { HelpCircle, Info, RotateCw } from 'lucide-react';
 
-import { API_BASE_URL } from '@/config';
+import { runSatSolver } from '@/services/demos.service';
 import { defaultTransition, staggerTransition } from '@/utils/animations/transitions';
 import { fadeIn, fadeInUp } from '@/utils/animations/variants';
 
@@ -23,26 +23,16 @@ export const DemoRunner: React.FC = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/demos/three-sat/run`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          n: params.integer,
-          ratio: params.float,
-        }),
-      });
+      console.log('Running demo with params:', params); // Debug log
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to run demo');
-      }
+      const data = await runSatSolver(params);
+      console.log('Received response:', data); // Debug log
 
-      const data: SolverOutput = await response.json();
       setOutput(data);
       setRunCount((prev) => prev + 1);
     } catch (err) {
+      console.error('Demo Runner Error:', err); // Debug log
+
       setError(err instanceof Error ? err.message : 'An error occurred');
     } finally {
       setIsLoading(false);
