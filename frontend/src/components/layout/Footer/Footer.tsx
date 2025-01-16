@@ -18,7 +18,7 @@ const Footer: React.FC = () => {
         <div className="footer__content">
           <div className="footer__social">
             <a
-              href={SOCIAL_LINKS.linkedin}
+              href={SOCIAL_LINKS.github}
               target="_blank"
               rel="noopener noreferrer"
               className="footer__social-link"
