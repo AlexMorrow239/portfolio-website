@@ -1,9 +1,9 @@
+import { Storage } from '@google-cloud/storage';
 import {
-  Injectable,
   BadRequestException,
+  Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
-import { Storage } from '@google-cloud/storage';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
@@ -14,25 +14,31 @@ export class CloudStorageService {
 
   constructor(private configService: ConfigService) {
     const credentialsJson = this.configService.get<string>(
-      'GOOGLE_CLOUD_CREDENTIALS',
+      'googleCloud.credentials',
     );
-    const keyFilename = this.configService.get<string>('GOOGLE_CLOUD_KEY_FILE');
+    const keyFilename = this.configService.get<string>('googleCloud.keyFile');
 
     try {
       if (credentialsJson) {
         // Parse credentials from environment variable
         const credentials = JSON.parse(credentialsJson);
         this.storage = new Storage({ credentials });
+        console.log('✓ Google Cloud Storage initialized with credentials JSON');
       } else if (keyFilename) {
         // Fallback to keyfile if no credentials in env
         this.storage = new Storage({ keyFilename });
+        console.log(
+          '✓ Google Cloud Storage initialized with keyfile:',
+          keyFilename,
+        );
       } else {
         throw new Error('No Google Cloud credentials provided');
       }
 
       this.bucket =
-        this.configService.get<string>('GOOGLE_CLOUD_BUCKET') ||
+        this.configService.get<string>('googleCloud.bucket') ||
         'personal-media-uploads';
+      console.log(`✓ Using GCS bucket: ${this.bucket}`);
     } catch (error) {
       console.error('Failed to initialize Google Cloud Storage:', error);
       throw new Error('Failed to initialize storage service');

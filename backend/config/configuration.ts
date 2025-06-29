@@ -17,4 +17,13 @@ export default () => ({
       'application/pdf',
     ],
   },
+  googleCloud: {
+    credentials: process.env.GOOGLE_CLOUD_CREDENTIALS,
+    keyFile: process.env.GOOGLE_CLOUD_KEY_FILE,
+    bucket:
+      process.env.GOOGLE_CLOUD_BUCKET ||
+      (process.env.NODE_ENV === 'production'
+        ? 'portfolio-media-prod'
+        : 'portfolio-media-dev'),
+  },
 });

@@ -5,17 +5,21 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Project } from './schemas/project.schema';
+import { StorageFactory, StorageService } from '../media/storage.factory';
 import { CreateProjectDto } from './dto/create-project.dto';
-import { CloudStorageService } from '../media/cloud-storage.service';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { Project } from './schemas/project.schema';
 
 @Injectable()
 export class ProjectsService {
+  private storageService: StorageService;
+
   constructor(
     @InjectModel(Project.name) private projectModel: Model<Project>,
-    private cloudStorageService: CloudStorageService,
-  ) {}
+    private storageFactory: StorageFactory,
+  ) {
+    this.storageService = this.storageFactory.getStorageService();
+  }
 
   async create(
     createProjectDto: CreateProjectDto,
@@ -25,7 +29,7 @@ export class ProjectsService {
       let imageUrl: string | undefined;
 
       if (file) {
-        imageUrl = await this.cloudStorageService.uploadImage(file);
+        imageUrl = await this.storageService.uploadImage(file);
       }
 
       const project = new this.projectModel({
@@ -70,13 +74,13 @@ export class ProjectsService {
 
       // Handle image updates
       if (removeImage && project.imageUrl) {
-        await this.cloudStorageService.deleteImage(project.imageUrl);
+        await this.storageService.deleteImage(project.imageUrl);
         updateProjectDto.imageUrl = null;
       } else if (file) {
         if (project.imageUrl) {
-          await this.cloudStorageService.deleteImage(project.imageUrl);
+          await this.storageService.deleteImage(project.imageUrl);
         }
-        const imageUrl = await this.cloudStorageService.uploadImage(file);
+        const imageUrl = await this.storageService.uploadImage(file);
         updateProjectDto.imageUrl = imageUrl;
       }
 
@@ -108,9 +112,9 @@ export class ProjectsService {
       throw new NotFoundException('Project not found');
     }
 
-    // Delete the image from cloud storage if it exists
+    // Delete the image from storage if it exists
     if (project.imageUrl) {
-      await this.cloudStorageService.deleteImage(project.imageUrl);
+      await this.storageService.deleteImage(project.imageUrl);
     }
     return project;
   }
