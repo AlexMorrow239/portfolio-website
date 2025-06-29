@@ -48,7 +48,12 @@ export class CloudStorageService {
 
     try {
       const bucket = this.storage.bucket(this.bucket);
-      const fileName = `${Date.now()}-${file.originalname}`;
+      // Sanitize filename: remove/replace problematic characters
+      const sanitizedName = file.originalname
+        .replace(/[^\w\.-]/g, '_') // Replace non-word chars with underscores
+        .replace(/_+/g, '_') // Replace multiple underscores with single
+        .replace(/^_|_$/g, ''); // Remove leading/trailing underscores
+      const fileName = `${Date.now()}-${sanitizedName}`;
 
       const blob = bucket.file(fileName);
 
